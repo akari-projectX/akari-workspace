@@ -27,7 +27,7 @@ S2-1 状态变更与版本 bump 同事务 · S2-2 禁用节点 = 下发空状态
 - 裁决 R3：禁用节点的期望状态定义为"无 inbound、无用户"，连接照常接受并推送空快照。原因：当前的连接期拒绝会让 agent 一直带着旧配置运行。
 
 ## Sprint 3（计划）
-P0-6 UserDelta 下发 + agent 重建后重发 Hello（跨仓：proto 不变，agent 与 panel 两侧都要改）。
+P0-6 UserDelta 下发；用 pg_notify 做按节点定向的通知（提交后才投递，支持多实例）；agent 断联失效租约（默认 24h）；F3 agent 读协程 join；删除节点 + 吊销证书。
 
 ## Sprint 4（计划）
 P1-7 ~ P1-15 与 CI、文档去漂移。
@@ -36,3 +36,11 @@ P1-7 ~ P1-15 与 CI、文档去漂移。
 - **R1（2026-09-30）** 采纳 red team 的结论：首次 Snapshot 后 agent 不重发 Hello，导致记账 session 永久错位，只要重连就会重复计费。只改面板的修复被否决。新方案：`TrafficReport.session_id` 由 CoreManager 在 Rebuild 时原子生成；面板在 SQL 内用 PG18 `RETURNING OLD/NEW` 算 delta（同一事务、按行加锁），内存中不保留 pending；#10 的验收改为"下次上报能完整补回"。另外采纳：u64 溢出防护（列为 P1 安全项）、登出失败必须对用户可见、REVIEW 行号勘误。#12 SIGTERM 降级为运维项。
 - **R2（2026-09-30）** 采纳 Phase B 的结论。H1：乱序的旧值会触发新 epoch 并重复计费，而且每翻转一次就再多计一次 → **整个删除 epoch 机制**（生产环境没有旧 agent，不留兼容）；缺 session_id 的上报直接丢弃；会话内出现更低的值忽略即可（由 GREATEST 保底）。H2：启动时强制检查 PG ≥ 18（否则会静默地计 0）。M1：按 SQLSTATE 区分瞬时错误与数据错误。M2：批量写入前排序，避免死锁。M3：登出后界面停在原页，改用 removeQueries + resetQueries。SEC-1 追加：405 响应会暴露前缀是否正确，所有不匹配一律返回空 404。L1：traffic_counters 的行是计费基线，清理任务只能删除已确认结束的会话。合并目标改为 `fix/p0-sprint1b`，它包含 1 的全部内容。
 - **R4（2026-09-30）** Phase C 结论 MERGE。smoke 发现错误方法的拒绝仍带 `allow` 头（axum 的 MethodRouter 在中间件外追加）→ lead 修复（`5e14d77`：把整个路由包成一个服务，最外层重新生成拒绝响应），red team 复核确认。F1 → Sprint 2；F2 发布顺序：**先升级 agent 再升级面板**；F3（agent 读协程未 join）→ Sprint 3；F4 已写入文档。
+- **R5（2026-09-30）** 采纳 Sprint 2 Phase A 的结论，要点如下：
+  - 启用和禁用都要 bump config_version。
+  - agent 应用失败时保留原来持有的版本（防止失败在下次 Hello 时被当成已收敛）；面板把 last_error 和失败版本持久化，并设退避与重发抑制，避免重建风暴。
+  - 所有写操作在同一事务内完成，按全局锁序 nodes → users → node_users；每个会话 60 s 对账一次。
+  - 到期判断统一用一个谓词，只用数据库时钟，并加幂等标记；已签发的 JWT 也要拦截已到期用户。
+  - online_session 列解决多实例下的在线状态；F1 上限规则要保护诚实节点。
+  - 暂缓：用 pg_notify 做按节点定向的通知（Sprint 3，同时满足多实例需求）；agent 断联后的失效租约（Sprint 3，默认 24h，可配置；可用性优先，同时保留控制力的上界）。
+  - 否决：内容寻址版本号，改为保留版本计数器，并用表驱动测试保证每次改动都 bump。
