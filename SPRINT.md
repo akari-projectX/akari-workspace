@@ -29,7 +29,7 @@ S2-1 状态变更与版本 bump 同事务 · S2-2 禁用节点 = 下发空状态
 - 追加 F1（Phase C，中危）：节点可伪造 session 给任意用户记账 → 只对 node_users 中存在的 (node,user) 对计费、限制每节点活跃 session 数及新建速率、对单次增量做合理性上限。
 - 裁决 R3：禁用节点的期望状态定义为"无 inbound、无用户"，连接照常接受并推送空快照。原因：当前的连接期拒绝会让 agent 一直带着旧配置运行。
 
-## Sprint 3 · 3a ✅ 已合并（panel PR#4 → a0399e0，agent PR#3 → 482b535）；3b 进行中（分支 `feat/s3b-notify`）
+## Sprint 3 ✅ 已合并 · 3a（panel PR#4、agent PR#3）· 3b（panel PR#5 → dd1b935，agent PR#4 → c0565a1）
 - **3a 协议与 agent**
   - F3：新流开始前先 join 旧的读协程。
   - UserDelta：带 base/target 版本，base 不匹配时拒绝并回退到 Snapshot，重复下发按无操作处理；采用 REPLACE 语义；移除用户前先上报其最终计数；核实 xray 重新添加用户后计数器是否重置。
@@ -43,7 +43,7 @@ S2-1 状态变更与版本 bump 同事务 · S2-2 禁用节点 = 下发空状态
   - 服务端证书的 EKU 收紧为 ServerAuth。
 
 ## Sprint 4（计划）
-P1-7 ~ P1-15 与 CI、文档去漂移。
+P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、CI（设为必需检查）、fake-agent 测试 harness、文档去漂移；外加 R14 跟进：面板侧 flush 故障期间的额度补偿（N1）、监听器 PID 守卫（N2）、Hello 之前的流量拒收（N3）、L4b 评估。
 
 ## 裁决记录
 - **R1（2026-09-30）** 采纳 red team 的结论：首次 Snapshot 后 agent 不重发 Hello，导致记账 session 永久错位，只要重连就会重复计费。只改面板的修复被否决。新方案：`TrafficReport.session_id` 由 CoreManager 在 Rebuild 时原子生成；面板在 SQL 内用 PG18 `RETURNING OLD/NEW` 算 delta（同一事务、按行加锁），内存中不保留 pending；#10 的验收改为"下次上报能完整补回"。另外采纳：u64 溢出防护（列为 P1 安全项）、登出失败必须对用户可见、REVIEW 行号勘误。#12 SIGTERM 降级为运维项。
@@ -89,3 +89,4 @@ P1-7 ~ P1-15 与 CI、文档去漂移。
   - 必修 1：GCRA 窗口 W = 租约时长会让节点上限对突发流量失效（约 108TB 可一次性灌给单个用户）→ 常规突发窗口改为 300 s；只有 DB 记录到的真实断连才给一次性补偿，补偿上限为 min(断连时长, 租约)。
   - 必修 2：departed 宽限窗口会随 flush 次数成倍放大 → 按用户对持久化累计已计量。
   - 一并修复：发送加超时，终止会话不再依赖 send_lock；refresh_members 也纳入读许可；时间戳单调；forget_node 移出监听任务；UNLISTEN 加超时；reaper 单个节点出错后继续处理其余节点；删除中的节点显示为 deleting。
+- **R14（2026-10-01）** Sprint 3b Phase C 结论 MERGE，已合并（合并时遇到 GitHub 网络超时，已确认两个 PR 都是 MERGED 状态，并重新同步了本地 main）。N1–N3 纳入 Sprint 4。**M0 进度：Sprint 1–3 完成，剩 Sprint 4。**
