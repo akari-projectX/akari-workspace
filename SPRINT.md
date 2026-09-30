@@ -26,7 +26,7 @@ S2-1 状态变更与版本 bump 同事务 · S2-2 禁用节点 = 下发空状态
 - 追加 F1（Phase C，中危）：节点可伪造 session 给任意用户记账 → 只对 node_users 中存在的 (node,user) 对计费、限制每节点活跃 session 数及新建速率、对单次增量做合理性上限。
 - 裁决 R3：禁用节点的期望状态定义为"无 inbound、无用户"，连接照常接受并推送空快照。原因：当前的连接期拒绝会让 agent 一直带着旧配置运行。
 
-## Sprint 3（计划，设计已由 R8 定稿）
+## Sprint 3（进行中）· 3a 分支 `feat/s3a-delta`（wt-panel-s3 / wt-agent-s3），由新 worker 实现
 - **3a 协议与 agent**
   - F3：新流开始前先 join 旧的读协程。
   - UserDelta：带 base/target 版本，base 不匹配时拒绝并回退到 Snapshot，重复下发按无操作处理；采用 REPLACE 语义；移除用户前先上报其最终计数；核实 xray 重新添加用户后计数器是否重置。
