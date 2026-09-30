@@ -11,6 +11,8 @@
 
 ## 权威文档（先读）
 
+- `ROADMAP.md` — 详细开发计划（里程碑 M0–M7、sprint 任务、生产级出口标准）
+- `SPRINT.md` — 当前 sprint 看板与裁决记录
 - `akari-panel/PLAN.md` — 阶段计划与决策记录（含 Phase 0.5 质量修复清单）
 - `akari-panel/HANDOVER.md` — 交接与踩坑（依赖版本坑、axum 路由语义、WSL 运维坑）
 - `REVIEW-2026-09-30.md` — 接手代码审查：架构评估 + 带行号的缺陷清单
