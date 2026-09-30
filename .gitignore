@@ -1,0 +1,4 @@
+# The three product repos are independent; this meta repo only tracks workspace docs.
+/akari-panel/
+/akari-agent/
+/akari-client/
