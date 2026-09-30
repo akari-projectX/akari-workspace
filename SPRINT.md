@@ -26,7 +26,7 @@ S2-1 状态变更与版本 bump 同事务 · S2-2 禁用节点 = 下发空状态
 - 追加 F1（Phase C，中危）：节点可伪造 session 给任意用户记账 → 只对 node_users 中存在的 (node,user) 对计费、限制每节点活跃 session 数及新建速率、对单次增量做合理性上限。
 - 裁决 R3：禁用节点的期望状态定义为"无 inbound、无用户"，连接照常接受并推送空快照。原因：当前的连接期拒绝会让 agent 一直带着旧配置运行。
 
-## Sprint 3（进行中）· 3a 分支 `feat/s3a-delta`（wt-panel-s3 / wt-agent-s3），由新 worker 实现
+## Sprint 3 · 3a ✅ 已合并（panel PR#4 → a0399e0，agent PR#3 → 482b535）；3b 进行中（分支 `feat/s3b-notify`）
 - **3a 协议与 agent**
   - F3：新流开始前先 join 旧的读协程。
   - UserDelta：带 base/target 版本，base 不匹配时拒绝并回退到 Snapshot，重复下发按无操作处理；采用 REPLACE 语义；移除用户前先上报其最终计数；核实 xray 重新添加用户后计数器是否重置。
@@ -70,3 +70,4 @@ P1-7 ~ P1-15 与 CI、文档去漂移。
   - 失联租约的产品决定：面板进程在但数据库不可用时**不续约**，因为此时面板已无法执行管控；兜底是 24h 的默认租约。
 - **R9（2026-09-30）** C2 发现按节点索引在并发下会漂移 → 更新索引时持有条目锁，并在 prune 时重建索引自愈；smoke 的 pkill 改为精确匹配完整命令行。lead 亲自验证：压力测试连续 11 次通过，53 个测试通过。**Sprint 2 合并**：旧分支的合并基准过期导致冲突，改为 cherry-pick 到新 main（文件树与测试过的提交一致）后 rebase 合并，没有改写历史。
 - **R10（2026-09-30）** Sprint 3a Phase B：修复后可合并。没有多计费或访问泄露；Vision/TLS 和 Trojan 的在线连接撤销实测有效。**保留 gate**：如果改成"删除时重建"，每次禁用、到期都会断开所有人的连接。必修 F1：刚被取消分配的用户，其最终计数被丢弃 → 新增 departed 表，给 15 分钟宽限期。一并完成：状态哈希 v2 覆盖 inbounds（F2）、非 ASCII 测试向量、拒绝 fakedns（F4）、各协议的撤销金丝雀测试进入 agent 测试套件、`remove_mode=rebuild` 应急开关。
+- **R11（2026-09-30）** Sprint 3a Phase C 结论 MERGE，已合并。3b 追加：L1 fakedns 检查收窄为只看 `sniffing.destOverride`；L2 departed 宽限期内只接纳该用户在取消分配前已见过的 session。两个 subagent 的上下文都已超过 40 万，3b 换一对新的 worker 和 red team（同时在线仍只有 2 个）。
