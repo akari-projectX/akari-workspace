@@ -17,6 +17,9 @@
 | — | 终验 Phase C | red team | ✅ MERGE |
 | — | 合并 | lead | ✅ panel PR#1 → main 2ca0dc3；agent PR#1 → main 2863bbe（rebase 合并） |
 
+## Lead 待办
+- Sprint 3b 合并后、下一轮 worker 启动前：提醒用户升级 WSL 3.0.1；升级后重跑 agent 测试和 smoke。
+
 ## 新增（仓库全部公开后，2026-09-30）
 - **SEC-1 伪装站可被指纹识别** → 按用户决定（2026-09-30）**删除伪装站**：所有拒绝统一为空 body 的 404，不带安全头，字节同构；提前到 Sprint 1b 由 worker 执行。原问题：：`decoy.html` 已公开，扫描器可以用它的字节哈希识别出所有 Akari 部署，"零指纹"的前提不再成立。改为每个安装使用运营方提供或随机生成的伪装内容，404 同字节的约束不变。优先级 P0，放进 Sprint 2。
 - REVIEW 中未修复缺陷的细节已公开；P0 修复要尽快合并。
