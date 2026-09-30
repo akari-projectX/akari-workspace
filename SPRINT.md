@@ -18,7 +18,7 @@
 | — | 合并 | lead | ✅ panel PR#1 → main 2ca0dc3；agent PR#1 → main 2863bbe（rebase 合并） |
 
 ## Lead 待办
-- Sprint 3b 合并后、下一轮 worker 启动前：提醒用户升级 WSL 3.0.1；升级后重跑 agent 测试和 smoke。
+- ✅ WSL 3.0.1 已升级（2026-10-01，内核 6.18.40）；agent 测试含撤权金丝雀、cargo test 92/92、smoke 全绿。
 
 ## 新增（仓库全部公开后，2026-09-30）
 - **SEC-1 伪装站可被指纹识别** → 按用户决定（2026-09-30）**删除伪装站**：所有拒绝统一为空 body 的 404，不带安全头，字节同构；提前到 Sprint 1b 由 worker 执行。原问题：：`decoy.html` 已公开，扫描器可以用它的字节哈希识别出所有 Akari 部署，"零指纹"的前提不再成立。改为每个安装使用运营方提供或随机生成的伪装内容，404 同字节的约束不变。优先级 P0，放进 Sprint 2。
@@ -42,7 +42,11 @@ S2-1 状态变更与版本 bump 同事务 · S2-2 禁用节点 = 下发空状态
   - L4：按节点汇总的流量上限，时间差取自 DB 的 traffic_flushed_at，超限时按用户比例缩放。
   - 服务端证书的 EKU 收紧为 ServerAuth。
 
-## Sprint 4（计划）
+## Sprint 4（2026-10-01 开始，v2 快速模式）
+- **4a（T2，Sonnet worker）**：三仓 CI（fmt/clippy/test/tsc/cargo-deny/govulncheck/check-proto/smoke）并设为必需检查、fake-agent 集成测试 harness、文档去漂移、state.json 权限改 0600、gRPC 错误不泄露 DB 细节。分支 `chore/s4a-ci`。
+- **4b（T1，Opus worker + red team 单轮 B）**：S4-1 反代（trusted_proxies、cookie_secure、只计失败登录）、S4-2 会话吊销（pwd_ver）与最后一个管理员保护、S4-3 SIGTERM 优雅退出加最终 flush、R14 N1 面板侧 flush 故障期间的额度补偿、N2 监听器 PID 守卫、N3 Hello 之前的流量拒收。分支 `feat/s4b-hardening`。
+
+### 原计划
 P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、CI（设为必需检查）、fake-agent 测试 harness、文档去漂移；外加 R14 跟进：面板侧 flush 故障期间的额度补偿（N1）、监听器 PID 守卫（N2）、Hello 之前的流量拒收（N3）、L4b 评估。
 
 ## 裁决记录

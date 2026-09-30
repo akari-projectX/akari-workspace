@@ -17,14 +17,25 @@
 
 ---
 
-## 1. 团队与工作流
+## 1. 团队与工作流（2026-10-01 起为 v2 快速模式）
 
 - **Lead**（主会话）：排期、裁决、合并、对用户汇报（只报里程碑与需要决策的事项）。
-- **Worker**（subagent 1）：在功能分支或 worktree 上实现，自带测试。
-- **Red team**（subagent 2）：A 阶段独立推导不变量与攻击面；B 阶段实测攻击 diff，结论为 MERGE / MERGE-WITH-FIXES / REJECT。
 - 同时最多 2 个 subagent；开发环境（PG/Valkey/8080/8443）同一时刻只归一方使用，由 lead 调度。
 - 分支：`fix/*`、`feat/*` → PR → 合并 `main`（四个仓库的 `main` 都要求走 PR、禁止强推）。
-- **Definition of Done**（每个任务）：代码 + 测试 + 相关 CLAUDE.md/README 更新 + 全部门禁绿 + red team 放行 + lead 在 SPRINT.md 记下裁决。
+
+### 风险分级（决定走多少轮对抗）
+| 级别 | 范围 | 流程 |
+|---|---|---|
+| **T1 高风险** | 计费、控制协议、并发/收敛、认证鉴权、证书、安全边界 | worker 开工时直接拿到"常见缺陷清单"（替代 Phase A）→ 实现 → red team **单轮 B** → 修复 → lead 用 red team 的复现测试自行验证（不再走 C 轮，除非修复涉及新设计） |
+| **T2 中风险** | 运维、CI、部署、API 小改、测试基础设施 | worker 实现 → lead 审 diff + 跑门禁 → 合并；不派 red team |
+| **T3 低风险** | 文档、注释、配置默认值 | lead 直接改或随其他 PR 带上 |
+
+### 提速措施
+- **流水线**：red team 攻击 sprint N 时，另一个 worker 已在做 N+1（或同一 sprint 的 T2 部分），合并时 cherry-pick/rebase。
+- **每个 sprint 用全新 subagent**，不复用上下文超过约 20 万的 agent（重放开销是撞限额的主因）。
+- **模型分级**：设计型和 T1 工作用 Opus；T2 的机械性工作（CI、文档、脚手架）以及修复验证用 Sonnet。
+- **常见缺陷清单**（从 R1–R14 提炼，每个 T1 brief 都附上）：提交前先通知；旧读覆盖新写；锁序反转；被攻陷节点导致内存/计费无上界；计费多计（只允许少计）；拒绝响应不同构；删除/禁用必须在所有路径上生效；多实例下的进程内假设；时间戳倒退（`now()` 是事务开始时间）；NULL 让上限失效；取整超过上限。
+- **Definition of Done**：代码 + 测试 + 相关 CLAUDE.md 更新 + 门禁全绿 +（T1）red team 放行，并把裁决记入 SPRINT.md。
 
 ## 2. 质量门禁（逐步收紧）
 
