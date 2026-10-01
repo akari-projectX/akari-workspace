@@ -116,3 +116,9 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
   3. **支付**：只接支付宝**当面付**（沙箱密钥在 ~/secrets/，不得入库），先做订单 → 预下单二维码 → 异步通知验签 → 幂等开通套餐。
   4. **安全不能变成负担**：管理员 2FA 改为可选但推荐（后台横幅提示）；去掉一次性注册码；绑定页显示二维码（本地生成）；恢复码可下载。配置项 `auth.require_admin_2fa` 默认 false，需要的部署可以打开。
   并行分工：W1 节点表单 + 一键安装（面板 + agent，Opus）；W2 i18n + 2FA 简化 + UI 打磨（Opus）；W3 支付宝当面付 + 订单（Opus）；W4 加固 A1–A10、A24–A31（Sonnet，只碰 grpc/traffic/sub/enroll 与 agent）。迁移编号分段：W1 0030+、W2 0035+、W3 0040+、W4 0050+。
+- **R19（2026-10-02）** W4 已合并（agent PR#10、panel PR#17）。
+  - **smoke 隔离**：`SMOKE_DB` 加上按库区分的 Valkey 逻辑库编号，并行的 worktree 不再互相干扰。
+  - **面板加固**：A1–A4、A6、A9（流量缓冲：snapshot 64→28ms，prune 从每 5s 2.2s 降到每 60s 46ms）、A10、A18、A19。
+  - **agent 加固**：A24–A29、A31。
+  - **重要发现**：M6 的签名工具 `cmd/akari-sign` 源码从未提交（`.gitignore` 里的裸 `akari-sign` 规则把目录一起忽略了），W4 按命令行约定重写，并把 .gitignore 规则改为锚定写法。
+  - **许可证裁决**：xray 静态链接了 `sagernet/sing*`（GPL-3.0-or-later），因此 agent **二进制**按 GPL-3.0-or-later 组合作品分发（源码公开，自有代码仍为 MIT）。在 README 和发布说明中注明（随下一个文档 PR）；不维护去掉 Shadowsocks 的 xray 补丁。
