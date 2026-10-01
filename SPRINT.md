@@ -45,7 +45,8 @@ S2-1 状态变更与版本 bump 同事务 · S2-2 禁用节点 = 下发空状态
 ## M1 可生产部署（2026-10-01 开始，v3 流程）
 - **M1a ✅ 已合并（panel PR#9、agent PR#6）**：M1-1 发布制品（panel 静态二进制 + distroless 镜像，agent 多架构，版本号与 git sha 注入，release 工作流，SBOM + cosign 签名）；M1-2 部署模板与文档（systemd、生产 compose、Caddy/nginx 反代示例）；M1-3 启动时配置校验；M1-4 Prometheus `/metrics`（独立的内网端口）+ 请求 ID + 告警规则样例；M1-5 备份恢复脚本与演练文档。
 - **M1b ✅ 已合并（panel PR#10）**：M1-6 管理员 TOTP 双因素（管理员必须启用）；M1-7 审计日志（谁、何时、改了什么、前后值）+ 管理端查询；M1-9 秘密轮换（route prefix、jwt 密钥、用户自助重置订阅 token）；M1-10 订阅端点限速，token 不写入日志。
-- **M1c（之后）**：M1-8 agent CSR 注册与证书轮换（跨仓，改协议）。
+- **M1c ✅ 已合并（panel PR#11、agent PR#7）**：CSR 注册（节点本地生成 P-256 私钥 + 一次性令牌）、证书续期（协议 2）、管理员首次 2FA 注册码、agent 侧拒收 grpc 传输、心跳补全。
+- **M1 完成（2026-10-01）**：panel main 与新 agent 一起跑 CI 全绿（含 smoke）。未完成：在真实 VPS 上按 DEPLOY.md 计时部署（需要用户提供 VPS）；SPA 尚未在真实浏览器中验证。
 
 ## Sprint 4（2026-10-01 开始，v2 快速模式）
 - **4a ✅ 已合并**（panel PR#6/#7，agent PR#5，workspace PR#2）。CI 已上线；main 必需检查：panel = rust、spa、cargo-deny；agent = go、govulncheck、check-proto；smoke 连续跑绿后再设为必需。
