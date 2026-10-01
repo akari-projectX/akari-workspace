@@ -7,10 +7,11 @@
 |---|---|---|---|
 | `akari-panel/` | Rust + React | 控制面板、契约正本 `proto/agent.proto`、集成冒烟 `smoke.sh` | `akari-panel/CLAUDE.md` |
 | `akari-agent/` | Go | 节点 agent，内嵌 xray-core，出站 mTLS gRPC | `akari-agent/CLAUDE.md` |
-| `akari-client/` | Go（未开工） | 自研客户端，内嵌 mihomo | `akari-client/CLAUDE.md` |
+| `akari-client/` | Go（M4 MVP 已合并，**已暂停**） | 自研客户端，mihomo 作为独立子进程（GPL-3.0） | `akari-client/CLAUDE.md` |
 
 ## 权威文档（先读）
 
+- `OPUS-GUIDE.md` — 接手导读：阅读顺序、三仓架构与质量评估（2026-10-01）、后续路线、工作规程、文档维护规则
 - `ROADMAP.md` — 详细开发计划（里程碑 M0–M7、sprint 任务、生产级出口标准）
 - `SPRINT.md` — 当前 sprint 看板与裁决记录
 - `akari-panel/PLAN.md` — 阶段计划与决策记录（含 Phase 0.5 质量修复清单）
