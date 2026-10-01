@@ -17,7 +17,9 @@
 
 ---
 
-## 1. 团队与工作流（2026-10-01 起为 v2 快速模式）
+## 1. 团队与工作流（2026-10-01 起为 v3：不再派 red team）
+
+> **v3（用户决定，2026-10-01）**：不再进行 red team 对抗测试。质量门槛 = CI 必需检查（fmt/clippy --all-targets/cargo test --locked（含真库测试）/spa/cargo-deny；agent：fmt/vet/test 含撤权金丝雀与 -race/govulncheck/check-proto）+ smoke + lead 的代码审查（非测试代码不出现 unwrap/expect/todo、改动范围、文档同步）。worker 的 brief 继续附带常见缺陷清单。下面关于 red team 的 v2 描述作废，仅作历史参考。
 
 - **Lead**（主会话）：排期、裁决、合并、对用户汇报（只报里程碑与需要决策的事项）。
 - 同时最多 2 个 subagent；开发环境（PG/Valkey/8080/8443）同一时刻只归一方使用，由 lead 调度。

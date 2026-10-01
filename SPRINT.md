@@ -45,7 +45,8 @@ S2-1 状态变更与版本 bump 同事务 · S2-2 禁用节点 = 下发空状态
 ## Sprint 4（2026-10-01 开始，v2 快速模式）
 - **4a ✅ 已合并**（panel PR#6/#7，agent PR#5，workspace PR#2）。CI 已上线；main 必需检查：panel = rust、spa、cargo-deny；agent = go、govulncheck、check-proto；smoke 连续跑绿后再设为必需。
 - 原计划 4a（T2，Sonnet worker）：三仓 CI（fmt/clippy/test/tsc/cargo-deny/govulncheck/check-proto/smoke）并设为必需检查、fake-agent 集成测试 harness、文档去漂移、state.json 权限改 0600、gRPC 错误不泄露 DB 细节。分支 `chore/s4a-ci`。
-- **4b（T1，Opus worker + red team 单轮 B）**：S4-1 反代（trusted_proxies、cookie_secure、只计失败登录）、S4-2 会话吊销（pwd_ver）与最后一个管理员保护、S4-3 SIGTERM 优雅退出加最终 flush、R14 N1 面板侧 flush 故障期间的额度补偿、N2 监听器 PID 守卫、N3 Hello 之前的流量拒收。分支 `feat/s4b-hardening`。
+- **4b ✅ 已合并**（panel PR#8 → 28e7c23）。
+- 原计划 4b（T1，Opus worker + red team 单轮 B）：S4-1 反代（trusted_proxies、cookie_secure、只计失败登录）、S4-2 会话吊销（pwd_ver）与最后一个管理员保护、S4-3 SIGTERM 优雅退出加最终 flush、R14 N1 面板侧 flush 故障期间的额度补偿、N2 监听器 PID 守卫、N3 Hello 之前的流量拒收。分支 `feat/s4b-hardening`。
 
 ### 原计划
 P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、CI（设为必需检查）、fake-agent 测试 harness、文档去漂移；外加 R14 跟进：面板侧 flush 故障期间的额度补偿（N1）、监听器 PID 守卫（N2）、Hello 之前的流量拒收（N3）、L4b 评估。
@@ -96,3 +97,4 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
   - 一并修复：发送加超时，终止会话不再依赖 send_lock；refresh_members 也纳入读许可；时间戳单调；forget_node 移出监听任务；UNLISTEN 加超时；reaper 单个节点出错后继续处理其余节点；删除中的节点显示为 deleting。
 - **R14（2026-10-01）** Sprint 3b Phase C 结论 MERGE，已合并（合并时遇到 GitHub 网络超时，已确认两个 PR 都是 MERGED 状态，并重新同步了本地 main）。N1–N3 纳入 Sprint 4。**M0 进度：Sprint 1–3 完成，剩 Sprint 4。**
 - **R15（2026-10-01）** 4a 走中风险流程，由 lead 审查后合并。审查发现 worker 以"agent 只拨出"为由把 govulncheck 的 GO-2026-6443（grpc 服务端在缺少 :authority 时 panic）加入白名单，但 xray 的 gRPC 传输 inbound 会在公网暴露 grpc 服务端，任何人都能远程打崩 agent → 在 grpc ≥1.85 发布前，面板拒绝 `network: grpc/gun` 的 inbound（已追加到 4b），agent 侧拒收放到下一轮。CI 首次运行中 smoke 失败（agent 浅克隆，找不到固定的旧提交）→ 已修复（PR#7），smoke 首次在 GitHub 跑通。
+- **R16（2026-10-01）** 用户决定：**不再进行 red team 对抗测试**，只验证代码可用、保证代码质量。4b 的 red team 已中途停止（未产出结论），残留已清理。4b 由 lead 验证：make lint/check、cargo deny、cargo test --locked 116/116、smoke（本地与 CI）全绿；代码审查无问题。已合并。**M0 质量基线完成**（Sprint 1–4）。流程改为 v3（见 ROADMAP §1）。
