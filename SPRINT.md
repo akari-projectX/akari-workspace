@@ -122,3 +122,7 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
   - **agent 加固**：A24–A29、A31。
   - **重要发现**：M6 的签名工具 `cmd/akari-sign` 源码从未提交（`.gitignore` 里的裸 `akari-sign` 规则把目录一起忽略了），W4 按命令行约定重写，并把 .gitignore 规则改为锚定写法。
   - **许可证裁决**：xray 静态链接了 `sagernet/sing*`（GPL-3.0-or-later），因此 agent **二进制**按 GPL-3.0-or-later 组合作品分发（源码公开，自有代码仍为 MIT）。在 README 和发布说明中注明（随下一个文档 PR）；不维护去掉 Shadowsocks 的 xray 补丁。
+- **R20（2026-10-02）** W1（节点模板 + 一键安装）交付，PR#18。
+  - 裁决：只有 IP、没有正规证书的面板，安装命令使用 `curl -k --pinnedpubkey sha256//…`。`-k` 只关闭 CA 链校验，公钥钉扎在握手阶段校验、早于 token 发出；绝不输出不带钉扎的 `-k`。R18 中"不用 -k"指的是无认证的 -k。
+  - 需知：Caddy 内部 CA 证书续期后会换钥，钉扎命令会失效（失败是安全的，重新生成命令即可）。
+  - CI 的 docker build 和 bench tooling 失败，已交给修复 worker；合并前必须全绿。
