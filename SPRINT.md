@@ -42,6 +42,11 @@ S2-1 状态变更与版本 bump 同事务 · S2-2 禁用节点 = 下发空状态
   - L4：按节点汇总的流量上限，时间差取自 DB 的 traffic_flushed_at，超限时按用户比例缩放。
   - 服务端证书的 EKU 收紧为 ServerAuth。
 
+## M1 可生产部署（2026-10-01 开始，v3 流程）
+- **M1a（Sonnet）· 分支 `feat/m1a-ops`**：M1-1 发布制品（panel 静态二进制 + distroless 镜像，agent 多架构，版本号与 git sha 注入，release 工作流，SBOM + cosign 签名）；M1-2 部署模板与文档（systemd、生产 compose、Caddy/nginx 反代示例）；M1-3 启动时配置校验；M1-4 Prometheus `/metrics`（独立的内网端口）+ 请求 ID + 告警规则样例；M1-5 备份恢复脚本与演练文档。
+- **M1b（Opus）· 分支 `feat/m1b-security`**：M1-6 管理员 TOTP 双因素（管理员必须启用）；M1-7 审计日志（谁、何时、改了什么、前后值）+ 管理端查询；M1-9 秘密轮换（route prefix、jwt 密钥、用户自助重置订阅 token）；M1-10 订阅端点限速，token 不写入日志。
+- **M1c（之后）**：M1-8 agent CSR 注册与证书轮换（跨仓，改协议）。
+
 ## Sprint 4（2026-10-01 开始，v2 快速模式）
 - **4a ✅ 已合并**（panel PR#6/#7，agent PR#5，workspace PR#2）。CI 已上线；main 必需检查：panel = rust、spa、cargo-deny；agent = go、govulncheck、check-proto；smoke 连续跑绿后再设为必需。
 - 原计划 4a（T2，Sonnet worker）：三仓 CI（fmt/clippy/test/tsc/cargo-deny/govulncheck/check-proto/smoke）并设为必需检查、fake-agent 集成测试 harness、文档去漂移、state.json 权限改 0600、gRPC 错误不泄露 DB 细节。分支 `chore/s4a-ci`。
