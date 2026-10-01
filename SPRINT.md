@@ -18,7 +18,7 @@
 | — | 合并 | lead | ✅ panel PR#1 → main 2ca0dc3；agent PR#1 → main 2863bbe（rebase 合并） |
 
 ## Lead 待办
-- ⏸ **用户指示（2026-10-01）**：M2 完成（验证并合并）后**暂停**，不再启动新工作，等用户恢复（用量额度原因）。
+- ▶ 2026-10-02 用户恢复并取消 2 个 subagent 的上限，要求加快进度。并行进行三路：M2 收尾（Sonnet，`feat/m2-perf`）、M3 运营模型（Opus，`feat/m3-plans`，基于 M2）、M4 akari-client MVP（Opus，akari-client `feat/m4-mvp`）。
 - ✅ WSL 3.0.1 已升级（2026-10-01，内核 6.18.40）；agent 测试含撤权金丝雀、cargo test 92/92、smoke 全绿。
 
 ## 新增（仓库全部公开后，2026-09-30）
