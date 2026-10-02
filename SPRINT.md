@@ -234,3 +234,17 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
 - **WSL 卡死（10-02 22:47）**：/tmp 是 7.7G tmpfs，被写满。改用 `.work/`，见记忆 scratchpad-tmpfs。
 - **部署（用户已批准）**：agent v0.4.1 已发布；面板 v0.3.0 发布中 → 生产切换为 ghcr 镜像 → 两节点重装 → agent v0.4.2 做首次生产自更新灰度 → hk-1 LE 测试。
 - **R36（2026-10-03，用户选 A）** 隐藏路由前缀保持现状：门户、后台、订阅、安装链接全部在 `/{prefix}` 下，前缀之外一律返回统一的拒绝 404（防主动探测）。不把门户挪到根路径。
+- **R35 部署完成（2026-10-03）**：
+  - 面板：v0.3.0（ghcr `0.3.0@sha256:6d7ffbb6…`），迁移到 0120，备份 20261002T193006Z。
+  - 节点：两节点重装后装上 updater；**首次生产 M6 自更新** v0.4.1→v0.4.2 灰度（waves 50/100）约 10s 成功。
+  - hk-1 Let's Encrypt：HTTP-01 8s 签发（sslip.io）；VLESS-WS-TLS、Trojan-TLS、Hy2 在开启证书校验下用 xray 和 mihomo 均连通。
+  - lead 账号已重置，凭据在 `~/secrets/akari-lead.*`。
+  - 用户 root 密码已重置（只给用户，未存储）。
+  - 未完成：W17 告警的触发/恢复测试需重跑（停机 >6 分钟）。
+  - 发现：unit 中的 `ProcSubset=pid` 导致机器指标全为 0。
+- **R37（lead）** **W23**：
+  - 去掉 `ProcSubset=pid`；读不到的指标显示"未知"而不是 0。
+  - updater 随签名二进制下发并安装内嵌的 unit 文件（daemon-reload，回滚时一并恢复），以后改 unit 不再需要重装命令。
+  - 修 root 主机的卸载提示；重装后清理残留的 update_status。
+  - systemd CI 增加指标断言与 unit 刷新测试。
+- 面板 v0.3.0 不含 PR#42、W22，随下一个面板版本发布。
