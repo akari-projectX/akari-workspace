@@ -205,3 +205,9 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
   - **M6 自更新在 Debian 13 上失败**：systemd 把 DynamicUser 的 StateDirectory 挂成 noexec，暂存在其中的二进制无法执行。rollout 已 halt/abort，两节点仍在 v0.3.0，在线正常。
   - 面板镜像 ghcr 包仍是私有，需用户在网页上改为 Public。
 - **R34（lead）** 不采用"给可写目录加 ExecPaths"的方案（削弱 W^X，自动权限检查也已拦截）。**W18** 新增 root 一次性更新服务：`.path` 单元触发，只执行已安装的受信任二进制 `-apply-update`，先把暂存文件复制到 root 目录再验签（防 TOCTOU，O_NOFOLLOW），原子替换，失败回滚 `.prev`。现有节点需执行一次重装命令以安装新 unit。另外：面板不得把需要节点证书的入站下发给协议版本 <6 的 agent。CI 增加用真实 systemd 跑自更新的测试。
+- **合并 W15（panel#35）**：自助注册、找回密码、SMTP 发件箱、中英文邮件、邀请码。deny.toml 允许 0BSD（lettre 依赖 quoted_printable，无任何条件）。
+- 面板镜像 ghcr 包已由用户改为 Public：匿名拉取成功，cosign 验证通过（v0.2.0 = sha256:a3d59dba…）。
+- **队列（W17/W18 合并后）**：
+  1. Rust 1.98 → **1.99**（用户通知）：同步升级 rust-toolchain.toml、Dockerfile `RUST_IMAGE`、bench/fuzz 子 crate，修新 lint，`make bench` 确认无性能回退；edition 2024 迁移单独评估。
+  2. 部署：面板改用 ghcr 镜像（tag+digest），agent 发布 v0.4.1+，两节点各执行一次重装命令以安装 updater unit（需要用户批准写入远程节点），然后补做 hk-1 真实 Let's Encrypt 测试与 W11 生产检查。
+  3. 按 W19 UI 走查的问题清单安排修复。
