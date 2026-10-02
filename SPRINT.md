@@ -251,3 +251,7 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
 - **合并 W21（panel#39）、W23（panel#44、agent#21）**。部署 v0.4.3/v0.3.1 + 最后一次重装 + 告警测试（用户已批准）进行中。
 - **Rust 1.99（panel#45，就绪）**：只改两行，没有新 lint，A/B 测试无回退。等 v0.3.1 打 tag 后合并，避免打乱 release PR。
 - **edition 2024 评估**：18 个文件、约 101 行，大头是 `gen` 成为保留字（`crate::gen` 要改成 `r#gen`，建议把生成模块改名为 `pb`）、3 处宏 `expr`、if-let rescope；需要人工审查的是尾表达式临时值的析构顺序（几处 sqlx Transaction）。约半天，低风险，待用户决定。
+- **R38（2026-10-03，用户）** 支付宝配置进后台（W24，系统设置 → 支付，密钥加密存库）；注册时的邮箱验证改为可选开关（未配置 SMTP 时默认关闭）。
+- **R39（2026-10-03，用户："panel.toml 没有必要就删除，不用后备"）** panel.toml 只保留启动必需项（数据库、Valkey、监听/端口、数据目录、日志、metrics 监听等进程级配置）。凡是后台可设置的项，一律从文件中删除，不留后备，不做优先级合并：
+  - 支付宝：W24 实施。旧配置首次启动时导入数据库一次并告警，之后忽略。
+  - **W25（W24 合并后开工）**：清理 R22 域名（install.public_url、web.sub_domain、grpc.advertise/server_name、trust_cloudflare、cloudflare_ranges）、probe、acme、updates.release_keys（改为内置）、install.* 等所有在后台已有或应进后台的项，用同样的"导入一次 + 告警 + 忽略"迁移方式。最终交付最小的 panel.toml 示例。
