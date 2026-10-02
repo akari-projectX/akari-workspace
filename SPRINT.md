@@ -177,3 +177,8 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
   - agent 实时上报机器状态：CPU、负载、内存/swap、磁盘、网速、socket 数、在线用户、RSS。最新值存 Valkey；历史按分钟保留 48h、按小时保留 90d；节点详情页用自绘 SVG 图表。
   - 类 Clash Verge 的延迟测试：agent 每 5h 测 generate_204（url-test 语义，取 3 次中位数），面板测各入站 TCP 可达性，可"立即测速"；用户门户只展示延迟、在线状态、倍率、标签。
   - proto 字段号分配：W10 用 10–19，W11 用 20–49；迁移号：W10 用 0080–0084，W11 用 0085–0089。
+- **合并（2026-10-02）**：W11（panel#29、agent#16）、W10（panel#30、agent#15，agent 协议 6）。W10 采用"先面板、后 agent"的合并顺序打破跨仓 CI 互等。main 的 smoke 偶发失败（`| grep -q` 在 pipefail 下 Broken pipe），重跑后变绿，由 W12 统一清理。
+- **生产级收尾计划（对照 ROADMAP §0 的缺口）**：
+  1. 进行中：W12 smoke 能力门控 + R19 许可声明 + 延迟测试配置 UI；W13 关键解析器 fuzz + 计费核心覆盖率 ≥90% 门禁 + npm audit；部署 worker：agent v0.4.0 + akari.cc + M6 灰度实测 + hk-1 真实 Let's Encrypt。
+  2. 下一批：面板首个 tag/release（ghcr 镜像 + cosign，生产改用镜像仓库，A20）；按文档在全新环境 30 分钟部署演练；在 W7/W11 之后重测 §0 性能指标（200 节点 / 5 万用户）；备份恢复演练复测。
+  3. 之后 M7 剩余项（对标 xboard）：邮件（SMTP：找回密码、到期/流量提醒）、工单、优惠券、邀请返利；告警阈值 + Grafana 面板（W11 的后续）。
