@@ -149,3 +149,4 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
   - **发现前缀探测缺陷**：Caddy 2.11 会给转发的响应加 `Via: 1.1 Caddy`，前缀内外的 404 因此不一样，可借此探测前缀。已在服务器上修复，代码修复在 PR#20（同时把其他 Host 的默认 200 改为 404）。
   - 阻断项：agent 从未发布过正式版本 → R27。
 - **R27（2026-10-02，lead 依据用户授权决定）** 生成生产用的 Ed25519 发布密钥：私钥存 `~/secrets/akari-release-signing.key`（0600）并设为 GitHub secret `AKARI_RELEASE_SIGNING_KEY`，公钥提交到 `release-keys.txt`；发布 agent v0.2.0；akari.cc 配置 `updates.release_keys` 与安装回退地址，并把 v0.2.0 上传到面板的"更新"。由发布 worker 执行。
+- **R27 已完成**：发布密钥 `f2ad18a8bb718a1a`（公钥已固定在 agent 仓库，PR#11；面板文档 PR#21）；agent **v0.2.0** 已发布（linux amd64/arm64、Ed25519 manifest、cosign、SBOM、SHA256SUMS 全部验证通过）。akari.cc 已配置 `updates.release_keys` 与安装回退地址，并上传了 v0.2.0 amd64。后续：vps-1/hk-1 的 agent 是未固定公钥的旧构建，需各手工重装一次才能自动更新（放到下一轮部署做）；arm64 版本也要上传到面板。
