@@ -255,3 +255,10 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
 - **R39（2026-10-03，用户："panel.toml 没有必要就删除，不用后备"）** panel.toml 只保留启动必需项（数据库、Valkey、监听/端口、数据目录、日志、metrics 监听等进程级配置）。凡是后台可设置的项，一律从文件中删除，不留后备，不做优先级合并：
   - 支付宝：W24 实施。旧配置首次启动时导入数据库一次并告警，之后忽略。
   - **W25（W24 合并后开工）**：清理 R22 域名（install.public_url、web.sub_domain、grpc.advertise/server_name、trust_cloudflare、cloudflare_ranges）、probe、acme、updates.release_keys（改为内置）、install.* 等所有在后台已有或应进后台的项，用同样的"导入一次 + 告警 + 忽略"迁移方式。最终交付最小的 panel.toml 示例。
+- **R37 部署完成（2026-10-03）**：
+  - 面板 v0.3.1（`0.3.1@sha256:93f38219…`，迁移到 0135），agent v0.4.3。
+  - 两节点做了最后一次重装：unit 与 `-print-units` 字节一致，机器指标真实非零。
+  - 告警实测：hk-1 停机约 5 分 38 秒，离线告警按时触发，恢复后解除；用户此前自行配置的 Telegram 收到了触发和恢复两条通知。
+- **规程（lead）**：
+  - **CI 不绿不得打 tag**。这次 v0.4.3 是例外：失败的是测试脚本的竞争问题，与二进制无关；修复在 agent#22。
+  - 已派人修复 updater 遇到 systemd start-limit 时回滚慢的问题。
