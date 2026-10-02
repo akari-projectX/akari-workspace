@@ -262,3 +262,10 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
 - **规程（lead）**：
   - **CI 不绿不得打 tag**。这次 v0.4.3 是例外：失败的是测试脚本的竞争问题，与二进制无关；修复在 agent#22。
   - 已派人修复 updater 遇到 systemd start-limit 时回滚慢的问题。
+- **R40（2026-10-03，用户："后面不只支付宝一个接口"）** 修订 R18-3 中"只做支付宝"的范围，支付改为**可插拔的支付方式**：
+  - `PaymentProvider` trait：create / query / verify_notify / refund? / test_connection。
+  - `payment_methods` 表：同一种渠道可配多个实例，配置加密存储，修改要审计，只存数据库。
+  - 按支付方式区分回调地址 `/{prefix}/pay/{method_id}/notify`。
+  - 订单记录 payment_method_id；付款路径和所有资金不变量保持不变。
+  - 结账时可选择支付方式。
+  - W24 搭框架，支付宝当面付作为首个实现。后续渠道（易支付 / Stripe / USDT / 微信）按需逐个接入。
