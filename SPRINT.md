@@ -248,3 +248,6 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
   - 修 root 主机的卸载提示；重装后清理残留的 update_status。
   - systemd CI 增加指标断言与 unit 刷新测试。
 - 面板 v0.3.0 不含 PR#42、W22，随下一个面板版本发布。
+- **合并 W21（panel#39）、W23（panel#44、agent#21）**。部署 v0.4.3/v0.3.1 + 最后一次重装 + 告警测试（用户已批准）进行中。
+- **Rust 1.99（panel#45，就绪）**：只改两行，没有新 lint，A/B 测试无回退。等 v0.3.1 打 tag 后合并，避免打乱 release PR。
+- **edition 2024 评估**：18 个文件、约 101 行，大头是 `gen` 成为保留字（`crate::gen` 要改成 `r#gen`，建议把生成模块改名为 `pb`）、3 处宏 `expr`、if-let rescope；需要人工审查的是尾表达式临时值的析构顺序（几处 sqlx Transaction）。约半天，低风险，待用户决定。

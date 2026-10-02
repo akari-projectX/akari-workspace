@@ -122,7 +122,7 @@
 
 **smoke.sh**：1010 行、36 段、**282 处 `FAIL:` 断言**（HANDOVER 写的 "~30 项"差一个数量级），是本项目真正的验收门。脆弱点：起 panel 后固定 `sleep 2`（无健康等待）、agent 注册 `sleep 6`；TOTP 取码可能等下一 30s 步；固定端口与 `/tmp/akari-smoke`，不可并行；`set -e` 单脚本，前段失败后段全不跑。估算 4–8 分钟（不含构建），CI 冷缓存 15–25 分钟。**未覆盖**：vmess/trojan 端到端（仅 vless）、REALITY/WS 真实握手、`/me/totp/recovery-codes`、`PATCH /users/{id}/plan` 续期与套餐到期 pass、lease 失效 fail-closed、多实例变更传播（第二实例只用于续期）、浏览器级 SPA 行为。
 
-**CI / 发布**：panel 必需检查 = rust / spa / cargo-deny；smoke 与 docker 非必需（计划连续绿 10 次后设为必需）。缺口：无前端 lint、无 `npm audit`、无 Playwright；Rust 工具链 CI 用 `@stable` 浮动而 Dockerfile 钉 `rust:1.98-alpine`，无 `rust-toolchain.toml`；`ci.yml` 第三方 action 浮动 tag 而 `release.yml` 已按 SHA 钉死；`Makefile` 的 `make spa` 用 `npm install` 而 CI 用 `npm ci`；smoke 的 agent 默认跟 `main`，跨仓漂移会把 panel PR 打红。`release.yml`（原生双架构、SBOM、cosign keyless、provenance）设计扎实，但**尚无任何 git tag**，`deploy/.env.example` 的 `AKARI_VERSION=0.1.0` 指向不存在的镜像。
+**CI / 发布**：panel 必需检查 = rust / spa / cargo-deny；smoke 与 docker 非必需（计划连续绿 10 次后设为必需）。缺口：无前端 lint、无 `npm audit`、无 Playwright；Rust 工具链 CI 用 `@stable` 浮动而 Dockerfile 钉 `rust:1.99-alpine`，无 `rust-toolchain.toml`；`ci.yml` 第三方 action 浮动 tag 而 `release.yml` 已按 SHA 钉死；`Makefile` 的 `make spa` 用 `npm install` 而 CI 用 `npm ci`；smoke 的 agent 默认跟 `main`，跨仓漂移会把 panel PR 打红。`release.yml`（原生双架构、SBOM、cosign keyless、provenance）设计扎实，但**尚无任何 git tag**，`deploy/.env.example` 的 `AKARI_VERSION=0.1.0` 指向不存在的镜像。
 
 **deploy/ 与 docs/**：compose（read_only、cap_drop、internal 网络）、systemd 双单元（硬化齐全）、Caddy/nginx 只转发前缀且不记 URI、Prometheus 13 条告警的指标名已逐一核对存在。唯一未闭环：compose 场景下 Prometheus 抓取 panel metrics 的网络路径文档没写通。
 
@@ -229,7 +229,7 @@ M0 质量基线 ✅ → M1 可生产部署 ✅ → M2 性能 ✅ → M3 运营�
 | # | 任务 | 估算 |
 |---|---|---|
 | A18 | smoke 连续绿后设为必需检查（S4-4 遗留）；`sleep 2/6` 改轮询 `/healthz` 与 agent 日志 | S |
-| A19 | `rust-toolchain.toml` 与 Dockerfile `rust:1.98` 对齐；`ci.yml` action 按 SHA 钉死（与 release.yml 一致）；`make spa` 改 `npm ci`；CI 加 `npm audit --audit-level=high` | S |
+| A19 | `rust-toolchain.toml` 与 Dockerfile `rust:1.99` 对齐；`ci.yml` action 按 SHA 钉死（与 release.yml 一致）；`make spa` 改 `npm ci`；CI 加 `npm audit --audit-level=high` | S |
 | A20 | 打第一个 tag（`v0.1.0`），验证 release.yml 全链路（镜像、SBOM、cosign），使 `deploy/.env.example` 指向存在的镜像 | S |
 | A21 | smoke 补：vmess/trojan 端到端、`/me/totp/recovery-codes`、套餐到期 pass、lease 失效 fail-closed | L |
 | A22 | 文档去漂移（§5.3 全表） | M |
