@@ -182,3 +182,9 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
   1. 进行中：W12 smoke 能力门控 + R19 许可声明 + 延迟测试配置 UI；W13 关键解析器 fuzz + 计费核心覆盖率 ≥90% 门禁 + npm audit；部署 worker：agent v0.4.0 + akari.cc + M6 灰度实测 + hk-1 真实 Let's Encrypt。
   2. 下一批：面板首个 tag/release（ghcr 镜像 + cosign，生产改用镜像仓库，A20）；按文档在全新环境 30 分钟部署演练；在 W7/W11 之后重测 §0 性能指标（200 节点 / 5 万用户）；备份恢复演练复测。
   3. 之后 M7 剩余项（对标 xboard）：邮件（SMTP：找回密码、到期/流量提醒）、工单、优惠券、邀请返利；告警阈值 + Grafana 面板（W11 的后续）。
+- **合并（2026-10-02）**：W12（panel#31、agent#17：smoke 能力门控 + 清理 50 处管道写法、R19 THIRD_PARTY 许可清单随发布、延迟测试设置进系统设置）；W13（panel#32、agent#18：面板 10 个 + agent 12 个 fuzz 目标；修复 7 个缺陷，其中 agent 有一项安全问题：SS2022 键名只差大小写时退化为单用户、撤权失效；计费核心覆盖率 ≥93%，agent ≥91%）。
+- **R32（lead）** 必需检查收紧：
+  - 面板增加 coverage、smoke、e2e、docker build；
+  - agent 增加 coverage、reproducible build；
+  - fuzz 只作参考，另每晚跑一轮。
+  - 待办：面板 `check_inbound` 应拒绝只差大小写的重复 JSON 键（agent 已做权威检查，面板这边是纵深防御）。
