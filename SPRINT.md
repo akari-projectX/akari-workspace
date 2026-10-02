@@ -150,3 +150,9 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
   - 阻断项：agent 从未发布过正式版本 → R27。
 - **R27（2026-10-02，lead 依据用户授权决定）** 生成生产用的 Ed25519 发布密钥：私钥存 `~/secrets/akari-release-signing.key`（0600）并设为 GitHub secret `AKARI_RELEASE_SIGNING_KEY`，公钥提交到 `release-keys.txt`；发布 agent v0.2.0；akari.cc 配置 `updates.release_keys` 与安装回退地址，并把 v0.2.0 上传到面板的"更新"。由发布 worker 执行。
 - **R27 已完成**：发布密钥 `f2ad18a8bb718a1a`（公钥已固定在 agent 仓库，PR#11；面板文档 PR#21）；agent **v0.2.0** 已发布（linux amd64/arm64、Ed25519 manifest、cosign、SBOM、SHA256SUMS 全部验证通过）。akari.cc 已配置 `updates.release_keys` 与安装回退地址，并上传了 v0.2.0 amd64。后续：vps-1/hk-1 的 agent 是未固定公钥的旧构建，需各手工重装一次才能自动更新（放到下一轮部署做）；arm64 版本也要上传到面板。
+- **R28（2026-10-02，Xboard-Node 研究结论）** Xboard-Node 用的是 cedar2025 的 sing-box fork（GPL-3.0），给入站加了 `UpdateUsers`，做法是整表替换。它的问题：已删用户的现有连接、mux 和 QUIC 会话**不会被切断**，删除后新开的流**不计费、不限速**；用户身份是下标，删除后会错位，所有 sing-box 协议都存在下标竞争，TUIC/Hysteria2 的 QUIC 会话可能串号或让进程 panic；UDP 上下行计数反了；重启内核会丢流量。
+  - **不借鉴**它的删除路径，Akari 的 gate 撤权更强。
+  - **不引入** sing-box 内核：GPL、没有上游热更新 API、没有 gate 那样的钩子。只有当 TUIC/AnyTLS 成为硬需求时，再考虑作为隔离的第二内核。
+  - **借鉴两点**：
+    1. W7 限速：在 gate 只包写端；每用户一个稳定的限速对象，原地改参数；burst 不小于 MultiBuffer；上下行分桶；核实 Vision/splice 不会绕过（已发给 W7）。
+    2. **W9 候选**：SS2022 删除改为"墓碑"——不调用 xray `RemoveUser`，由 gate 撤权并保留表项，下标就不会移动，删除用户不再需要重建节点；下次 Snapshot 时压缩；重新添加/轮换仍然走 Snapshot。需要金丝雀验证。
