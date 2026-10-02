@@ -1,0 +1,422 @@
+diff --git a/adapter/managed_user.go b/adapter/managed_user.go
+new file mode 100644
+index 0000000..d8f9cdb
+--- /dev/null
++++ b/adapter/managed_user.go
+@@ -0,0 +1,62 @@
++package adapter
++
++import (
++	"context"
++	"sync"
++
++	"github.com/sagernet/sing/common/auth"
++)
++
++// ManagedUser is the immutable identity of one user in one published user
++// table of an inbound. Handshakes carry the *pointer* in the auth context
++// (auth.ContextWithUser) all the way to the router and its trackers, so a
++// concurrent table replacement can never re-attribute an in-flight
++// connection (no positional indices), and a rotated credential (same name,
++// new record) is distinguishable from the old one by pointer identity.
++type ManagedUser struct {
++	Name string
++}
++
++func ManagedUserFromContext(ctx context.Context) (*ManagedUser, bool) {
++	return auth.UserFromContext[*ManagedUser](ctx)
++}
++
++// UserReplaceableInbound: ReplaceUsers atomically publishes a new user
++// table built from users (the inbound's own option user type). Existing
++// connections and sessions are untouched; handshakes that started against
++// the previous table finish against it. Revoking access of removed users'
++// live connections is the caller's job (route-time tracker), because the
++// inbound does not track connections.
++type UserReplaceableInbound interface {
++	Inbound
++	ReplaceUsers(users any) ([]*ManagedUser, error)
++}
++
++// ManagedUserTable hands out identities for successive user tables of one
++// inbound: a user whose (name, credential) is unchanged keeps its pointer
++// (its live connections stay valid); anything else gets a fresh pointer.
++type ManagedUserTable struct {
++	access sync.Mutex
++	byCred map[string]*ManagedUser
++}
++
++// Next returns one identity per entry (creds[i] = canonical credential of
++// user i) and makes this the current generation. Callers publish the
++// protocol table built from the result atomically afterwards.
++func (t *ManagedUserTable) Next(names []string, creds []string) []*ManagedUser {
++	t.access.Lock()
++	defer t.access.Unlock()
++	next := make(map[string]*ManagedUser, len(names))
++	result := make([]*ManagedUser, len(names))
++	for i, name := range names {
++		key := name + "\x00" + creds[i]
++		user := t.byCred[key]
++		if user == nil {
++			user = &ManagedUser{Name: name}
++		}
++		next[key] = user
++		result[i] = user
++	}
++	t.byCred = next
++	return result
++}
+diff --git a/protocol/hysteria2/inbound.go b/protocol/hysteria2/inbound.go
+index 977b5a9..44e286c 100644
+--- a/protocol/hysteria2/inbound.go
++++ b/protocol/hysteria2/inbound.go
+@@ -23,7 +23,6 @@ import (
+ 	"github.com/sagernet/sing-quic/hysteria2"
+ 	"github.com/sagernet/sing-quic/hysteria2/realm"
+ 	"github.com/sagernet/sing/common"
+-	"github.com/sagernet/sing/common/auth"
+ 	E "github.com/sagernet/sing/common/exceptions"
+ 	M "github.com/sagernet/sing/common/metadata"
+ 	N "github.com/sagernet/sing/common/network"
+@@ -41,8 +40,8 @@ type Inbound struct {
+ 	logger       log.ContextLogger
+ 	listener     *listener.Listener
+ 	tlsConfig    tls.ServerConfig
+-	service      *hysteria2.Service[int]
+-	userNameList []string
++	service      *hysteria2.Service[*adapter.ManagedUser]
++	managedUsers adapter.ManagedUserTable
+ }
+ 
+ func NewInbound(ctx context.Context, router adapter.Router, logger log.ContextLogger, tag string, options option.Hysteria2InboundOptions) (adapter.Inbound, error) {
+@@ -181,7 +180,7 @@ func NewInbound(ctx context.Context, router adapter.Router, logger log.ContextLo
+ 			}
+ 		}
+ 	}
+-	hysteriaService, err := hysteria2.NewService[int](hysteria2.ServiceOptions{
++	hysteriaService, err := hysteria2.NewService[*adapter.ManagedUser](hysteria2.ServiceOptions{
+ 		Context:            ctx,
+ 		Logger:             logger,
+ 		BrutalDebug:        options.BrutalDebug,
+@@ -211,20 +210,31 @@ func NewInbound(ctx context.Context, router adapter.Router, logger log.ContextLo
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	userList := make([]int, 0, len(options.Users))
+-	userNameList := make([]string, 0, len(options.Users))
+-	userPasswordList := make([]string, 0, len(options.Users))
+-	for index, user := range options.Users {
+-		userList = append(userList, index)
+-		userNameList = append(userNameList, user.Name)
+-		userPasswordList = append(userPasswordList, user.Password)
+-	}
+-	hysteriaService.UpdateUsers(userList, userPasswordList)
+ 	inbound.service = hysteriaService
+-	inbound.userNameList = userNameList
++	if _, err = inbound.ReplaceUsers(options.Users); err != nil {
++		return nil, err
++	}
+ 	return inbound, nil
+ }
+ 
++// ReplaceUsers publishes a new immutable user table (atomic in sing-quic).
++// Live QUIC sessions are untouched; their identity is the *ManagedUser they
++// authenticated with.
++func (h *Inbound) ReplaceUsers(anyUsers any) ([]*adapter.ManagedUser, error) {
++	users, ok := anyUsers.([]option.Hysteria2User)
++	if !ok {
++		return nil, E.New("hysteria2: ReplaceUsers: want []option.Hysteria2User")
++	}
++	managed := make([]*adapter.ManagedUser, len(users))
++	passwords := make([]string, len(users))
++	for i, u := range users {
++		passwords[i] = u.Password
++	}
++	managed = h.managedUsers.Next(common.Map(users, func(it option.Hysteria2User) string { return it.Name }), passwords)
++	h.service.UpdateUsers(managed, passwords)
++	return managed, nil
++}
++
+ func (h *Inbound) NewConnectionEx(ctx context.Context, conn net.Conn, source M.Socksaddr, destination M.Socksaddr, onClose N.CloseHandlerFunc) {
+ 	ctx = log.ContextWithNewID(ctx)
+ 	var metadata adapter.InboundContext
+@@ -237,8 +247,8 @@ func (h *Inbound) NewConnectionEx(ctx context.Context, conn net.Conn, source M.S
+ 	metadata.Source = source
+ 	metadata.Destination = destination
+ 	h.logger.InfoContext(ctx, "inbound connection from ", metadata.Source)
+-	userID, _ := auth.UserFromContext[int](ctx)
+-	if userName := h.userNameList[userID]; userName != "" {
++	if managedUser, loaded := adapter.ManagedUserFromContext(ctx); loaded && managedUser.Name != "" {
++		userName := managedUser.Name
+ 		metadata.User = userName
+ 		h.logger.InfoContext(ctx, "[", userName, "] inbound connection to ", metadata.Destination)
+ 	} else {
+@@ -259,8 +269,8 @@ func (h *Inbound) NewPacketConnectionEx(ctx context.Context, conn N.PacketConn,
+ 	metadata.Source = source
+ 	metadata.Destination = destination
+ 	h.logger.InfoContext(ctx, "inbound packet connection from ", metadata.Source)
+-	userID, _ := auth.UserFromContext[int](ctx)
+-	if userName := h.userNameList[userID]; userName != "" {
++	if managedUser, loaded := adapter.ManagedUserFromContext(ctx); loaded && managedUser.Name != "" {
++		userName := managedUser.Name
+ 		metadata.User = userName
+ 		h.logger.InfoContext(ctx, "[", userName, "] inbound packet connection to ", metadata.Destination)
+ 	} else {
+diff --git a/protocol/tuic/inbound.go b/protocol/tuic/inbound.go
+index 531d426..5eaeeef 100644
+--- a/protocol/tuic/inbound.go
++++ b/protocol/tuic/inbound.go
+@@ -16,7 +16,6 @@ import (
+ 	qtls "github.com/sagernet/sing-quic"
+ 	"github.com/sagernet/sing-quic/tuic"
+ 	"github.com/sagernet/sing/common"
+-	"github.com/sagernet/sing/common/auth"
+ 	E "github.com/sagernet/sing/common/exceptions"
+ 	M "github.com/sagernet/sing/common/metadata"
+ 	N "github.com/sagernet/sing/common/network"
+@@ -34,8 +33,8 @@ type Inbound struct {
+ 	logger       log.ContextLogger
+ 	listener     *listener.Listener
+ 	tlsConfig    tls.ServerConfig
+-	server       *tuic.Service[int]
+-	userNameList []string
++	server       *tuic.Service[*adapter.ManagedUser]
++	managedUsers adapter.ManagedUserTable
+ }
+ 
+ func NewInbound(ctx context.Context, router adapter.Router, logger log.ContextLogger, tag string, options option.TUICInboundOptions) (adapter.Inbound, error) {
+@@ -64,7 +63,7 @@ func NewInbound(ctx context.Context, router adapter.Router, logger log.ContextLo
+ 	} else {
+ 		udpTimeout = C.UDPTimeout
+ 	}
+-	service, err := tuic.NewService[int](tuic.ServiceOptions{
++	service, err := tuic.NewService[*adapter.ManagedUser](tuic.ServiceOptions{
+ 		Context:   ctx,
+ 		Logger:    logger,
+ 		TLSConfig: tlsConfig,
+@@ -87,11 +86,24 @@ func NewInbound(ctx context.Context, router adapter.Router, logger log.ContextLo
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	var userList []int
+-	var userNameList []string
+-	var userUUIDList [][16]byte
+-	var userPasswordList []string
+-	for index, user := range options.Users {
++	inbound.server = service
++	if _, err = inbound.ReplaceUsers(options.Users); err != nil {
++		return nil, err
++	}
++	return inbound, nil
++}
++
++// ReplaceUsers validates everything first, then publishes one immutable
++// table (user + password together) atomically in sing-quic.
++func (h *Inbound) ReplaceUsers(anyUsers any) ([]*adapter.ManagedUser, error) {
++	users, ok := anyUsers.([]option.TUICUser)
++	if !ok {
++		return nil, E.New("tuic: ReplaceUsers: want []option.TUICUser")
++	}
++	managed := make([]*adapter.ManagedUser, len(users))
++	uuids := make([][16]byte, len(users))
++	passwords := make([]string, len(users))
++	for index, user := range users {
+ 		if user.UUID == "" {
+ 			return nil, E.New("missing uuid for user ", index)
+ 		}
+@@ -99,15 +111,13 @@ func NewInbound(ctx context.Context, router adapter.Router, logger log.ContextLo
+ 		if err != nil {
+ 			return nil, E.Cause(err, "invalid uuid for user ", index)
+ 		}
+-		userList = append(userList, index)
+-		userNameList = append(userNameList, user.Name)
+-		userUUIDList = append(userUUIDList, userUUID)
+-		userPasswordList = append(userPasswordList, user.Password)
++		uuids[index] = userUUID
++		passwords[index] = user.Password
+ 	}
+-	service.UpdateUsers(userList, userUUIDList, userPasswordList)
+-	inbound.server = service
+-	inbound.userNameList = userNameList
+-	return inbound, nil
++	managed = h.managedUsers.Next(common.Map(users, func(it option.TUICUser) string { return it.Name }),
++		common.Map(users, func(it option.TUICUser) string { return it.UUID + "\x00" + it.Password }))
++	h.server.UpdateUsers(managed, uuids, passwords)
++	return managed, nil
+ }
+ 
+ func (h *Inbound) NewConnectionEx(ctx context.Context, conn net.Conn, source M.Socksaddr, destination M.Socksaddr, onClose N.CloseHandlerFunc) {
+@@ -122,8 +132,8 @@ func (h *Inbound) NewConnectionEx(ctx context.Context, conn net.Conn, source M.S
+ 	metadata.Source = source
+ 	metadata.Destination = destination
+ 	h.logger.InfoContext(ctx, "inbound connection from ", metadata.Source)
+-	userID, _ := auth.UserFromContext[int](ctx)
+-	if userName := h.userNameList[userID]; userName != "" {
++	if managedUser, loaded := adapter.ManagedUserFromContext(ctx); loaded && managedUser.Name != "" {
++		userName := managedUser.Name
+ 		metadata.User = userName
+ 		h.logger.InfoContext(ctx, "[", userName, "] inbound connection to ", metadata.Destination)
+ 	} else {
+@@ -144,8 +154,8 @@ func (h *Inbound) NewPacketConnectionEx(ctx context.Context, conn N.PacketConn,
+ 	metadata.Source = source
+ 	metadata.Destination = destination
+ 	h.logger.InfoContext(ctx, "inbound packet connection from ", metadata.Source)
+-	userID, _ := auth.UserFromContext[int](ctx)
+-	if userName := h.userNameList[userID]; userName != "" {
++	if managedUser, loaded := adapter.ManagedUserFromContext(ctx); loaded && managedUser.Name != "" {
++		userName := managedUser.Name
+ 		metadata.User = userName
+ 		h.logger.InfoContext(ctx, "[", userName, "] inbound packet connection to ", metadata.Destination)
+ 	} else {
+diff --git a/protocol/vless/inbound.go b/protocol/vless/inbound.go
+index 1589bfb..02c699e 100644
+--- a/protocol/vless/inbound.go
++++ b/protocol/vless/inbound.go
+@@ -4,6 +4,7 @@ import (
+ 	"context"
+ 	"net"
+ 	"os"
++	"sync/atomic"
+ 
+ 	"github.com/sagernet/sing-box/adapter"
+ 	"github.com/sagernet/sing-box/adapter/inbound"
+@@ -18,10 +19,8 @@ import (
+ 	"github.com/sagernet/sing-vmess/packetaddr"
+ 	"github.com/sagernet/sing-vmess/vless"
+ 	"github.com/sagernet/sing/common"
+-	"github.com/sagernet/sing/common/auth"
+ 	"github.com/sagernet/sing/common/bufio"
+ 	E "github.com/sagernet/sing/common/exceptions"
+-	F "github.com/sagernet/sing/common/format"
+ 	"github.com/sagernet/sing/common/logger"
+ 	M "github.com/sagernet/sing/common/metadata"
+ 	N "github.com/sagernet/sing/common/network"
+@@ -35,14 +34,14 @@ var _ adapter.TCPInjectableInbound = (*Inbound)(nil)
+ 
+ type Inbound struct {
+ 	inbound.Adapter
+-	ctx       context.Context
+-	router    adapter.ConnectionRouterEx
+-	logger    logger.ContextLogger
+-	listener  *listener.Listener
+-	users     []option.VLESSUser
+-	service   *vless.Service[int]
+-	tlsConfig tls.ServerConfig
+-	transport adapter.V2RayServerTransport
++	ctx          context.Context
++	router       adapter.ConnectionRouterEx
++	logger       logger.ContextLogger
++	listener     *listener.Listener
++	service      atomic.Pointer[vless.Service[*adapter.ManagedUser]]
++	tlsConfig    tls.ServerConfig
++	transport    adapter.V2RayServerTransport
++	managedUsers adapter.ManagedUserTable
+ }
+ 
+ func NewInbound(ctx context.Context, router adapter.Router, logger log.ContextLogger, tag string, options option.VLESSInboundOptions) (adapter.Inbound, error) {
+@@ -51,22 +50,15 @@ func NewInbound(ctx context.Context, router adapter.Router, logger log.ContextLo
+ 		ctx:     ctx,
+ 		router:  uot.NewRouter(router, logger),
+ 		logger:  logger,
+-		users:   options.Users,
+ 	}
+ 	var err error
+ 	inbound.router, err = mux.NewRouterWithOptions(inbound.router, logger, common.PtrValueOrDefault(options.Multiplex))
+ 	if err != nil {
+ 		return nil, err
+ 	}
+-	service := vless.NewService[int](logger, adapter.NewUpstreamContextHandler(inbound.newConnectionEx, inbound.newPacketConnectionEx))
+-	service.UpdateUsers(common.MapIndexed(inbound.users, func(index int, _ option.VLESSUser) int {
+-		return index
+-	}), common.Map(inbound.users, func(it option.VLESSUser) string {
+-		return it.UUID
+-	}), common.Map(inbound.users, func(it option.VLESSUser) string {
+-		return it.Flow
+-	}))
+-	inbound.service = service
++	if _, err = inbound.ReplaceUsers(options.Users); err != nil {
++		return nil, err
++	}
+ 	if options.TLS != nil {
+ 		inbound.tlsConfig, err = tls.NewServerWithOptions(tls.ServerOptions{
+ 			Context: ctx,
+@@ -138,9 +130,27 @@ func (h *Inbound) Start(stage adapter.StartStage) error {
+ 	return nil
+ }
+ 
++// ReplaceUsers builds a fresh service over an immutable user table and
++// publishes it atomically. Handshakes in flight finish on the old service.
++func (h *Inbound) ReplaceUsers(anyUsers any) ([]*adapter.ManagedUser, error) {
++	users, ok := anyUsers.([]option.VLESSUser)
++	if !ok {
++		return nil, E.New("vless: ReplaceUsers: want []option.VLESSUser")
++	}
++	managed := h.managedUsers.Next(common.Map(users, func(it option.VLESSUser) string { return it.Name }),
++		common.Map(users, func(it option.VLESSUser) string { return it.UUID + "\x00" + it.Flow }))
++	service := vless.NewService[*adapter.ManagedUser](h.logger, adapter.NewUpstreamContextHandler(h.newConnectionEx, h.newPacketConnectionEx))
++	service.UpdateUsers(managed, common.Map(users, func(it option.VLESSUser) string {
++		return it.UUID
++	}), common.Map(users, func(it option.VLESSUser) string {
++		return it.Flow
++	}))
++	h.service.Store(service)
++	return managed, nil
++}
++
+ func (h *Inbound) Close() error {
+ 	return common.Close(
+-		h.service,
+ 		h.listener,
+ 		h.tlsConfig,
+ 		h.transport,
+@@ -157,7 +167,7 @@ func (h *Inbound) NewConnection(ctx context.Context, conn net.Conn, metadata ada
+ 		}
+ 		conn = tlsConn
+ 	}
+-	err := h.service.NewConnection(adapter.WithContext(ctx, &metadata), conn, metadata.Source, onClose)
++	err := h.service.Load().NewConnection(adapter.WithContext(ctx, &metadata), conn, metadata.Source, onClose)
+ 	if err != nil {
+ 		N.CloseOnHandshakeFailure(conn, onClose, err)
+ 		h.logger.ErrorContext(ctx, E.Cause(err, "process connection from ", metadata.Source))
+@@ -167,17 +177,13 @@ func (h *Inbound) NewConnection(ctx context.Context, conn net.Conn, metadata ada
+ func (h *Inbound) newConnectionEx(ctx context.Context, conn net.Conn, metadata adapter.InboundContext, onClose N.CloseHandlerFunc) {
+ 	metadata.Inbound = h.Tag()
+ 	metadata.InboundType = h.Type()
+-	userIndex, loaded := auth.UserFromContext[int](ctx)
++	managedUser, loaded := adapter.ManagedUserFromContext(ctx)
+ 	if !loaded {
+ 		N.CloseOnHandshakeFailure(conn, onClose, os.ErrInvalid)
+ 		return
+ 	}
+-	user := h.users[userIndex].Name
+-	if user == "" {
+-		user = F.ToString(userIndex)
+-	} else {
+-		metadata.User = user
+-	}
++	user := managedUser.Name
++	metadata.User = user
+ 	h.logger.InfoContext(ctx, "[", user, "] inbound connection to ", metadata.Destination)
+ 	h.router.RouteConnectionEx(ctx, conn, metadata, onClose)
+ }
+@@ -185,17 +191,13 @@ func (h *Inbound) newConnectionEx(ctx context.Context, conn net.Conn, metadata a
+ func (h *Inbound) newPacketConnectionEx(ctx context.Context, conn N.PacketConn, metadata adapter.InboundContext, onClose N.CloseHandlerFunc) {
+ 	metadata.Inbound = h.Tag()
+ 	metadata.InboundType = h.Type()
+-	userIndex, loaded := auth.UserFromContext[int](ctx)
++	managedUser, loaded := adapter.ManagedUserFromContext(ctx)
+ 	if !loaded {
+ 		N.CloseOnHandshakeFailure(conn, onClose, os.ErrInvalid)
+ 		return
+ 	}
+-	user := h.users[userIndex].Name
+-	if user == "" {
+-		user = F.ToString(userIndex)
+-	} else {
+-		metadata.User = user
+-	}
++	user := managedUser.Name
++	metadata.User = user
+ 	if metadata.Destination.Fqdn == packetaddr.SeqPacketMagicAddress {
+ 		metadata.Destination = M.Socksaddr{}
+ 		conn = packetaddr.NewConn(bufio.NewNetPacketConn(conn), metadata.Destination)
