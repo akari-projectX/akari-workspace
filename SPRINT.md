@@ -303,3 +303,12 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
     - C2 有界发送，C3 64 MiB，W1 只上报变化行（闲置时 0.25 ms / 0 次分配），W2 / W6 / W7 / W8。
     - lead 核对：面板的 traffic_counters 只按会话墓碑清理，不受"闲置行不刷新"影响。
   - 待合并：面板侧云端会话的 PR。W25（精简 panel.toml）的提示词已交给用户，用户发到云端会话执行。
+- **REVIEW-2026-10-02 全部落地（2026-10-03）**：
+  - panel#50（squash 合并；分支内含合并提交，无法 rebase 合并）：
+    - C1 argon2 改为 spawn_blocking + 信号量（许可在阻塞闭包内持有，取消请求不会突破上限）。
+    - C3 AgentChannel 64 MiB / AgentEnrollment 64 KiB，并记录 snapshot 大小指标。
+    - C4 握手上限 1024。
+    - W3 session key 用 Arc<str>（不用 Uuid：协议允许任意 id，retention 按原文比对）。
+    - W4 增量 diff 复用摘要（−40%）；W5；W9（心跳管道化、限速器本地令牌桶兜底）。
+  - 删除了重复云端会话遗留的无 PR 分支 fix/review-1002-panel。
+  - 两个云端会话的 routine 均为一次性，已执行完毕。
