@@ -328,3 +328,9 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
   - panel#57：P3 中立模型 + xray 适配器 + 由模型渲染订阅；P5 由清单生成后台表单。
   - 金标准逐字节一致；无 proto/状态哈希变更；订阅渲染快 3–15%。sing-box 适配器所需工作见 #57 正文。
   - 同期合并：panel#55 rustfmt 2024 风格（lead 反向格式化验证：只有格式变化）。
+- **合并（2026-10-04）**：
+  - panel#58 面板一键安装器：
+    - 裸机 / Docker 交互式安装，cosign 校验；`akari-ctl` 支持升级（失败自动回滚）、卸载、裸机⇄Docker 迁移、换机。
+    - CI 在 Debian 13、Ubuntu 24.04 systemd 容器中做端到端测试，并测了带真实 agent 的迁移。
+  - panel#59：测试用假 Telegram token 换掉。密钥扫描告警 #1 已标为 used_in_tests 关闭。
+- **待决**：akari.cc 是旧方式部署的 Docker compose，需评估能否纳入 `akari-ctl` 管理；面板 v0.3.2 / agent v0.4.4 的发版部署等用户批准。
