@@ -334,3 +334,4 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
     - CI 在 Debian 13、Ubuntu 24.04 systemd 容器中做端到端测试，并测了带真实 agent 的迁移。
   - panel#59：测试用假 Telegram token 换掉。密钥扫描告警 #1 已标为 used_in_tests 关闭。
 - **待决**：akari.cc 是旧方式部署的 Docker compose，需评估能否纳入 `akari-ctl` 管理；面板 v0.3.2 / agent v0.4.4 的发版部署等用户批准。
+- **2026-10-04 用户决定**：两台 VPS 用 bin456789/reinstall 重装 Debian 13（重装前已备份到本机 `~/secrets/backup-before-reinstall/`）。**面板和 agent 由用户自己用 v0.3.2 一键安装器安装并测试**；lead 不再执行 akari.cc 部署，只负责发布 v0.3.2 并提供安装命令，按用户的测试反馈修复问题。
