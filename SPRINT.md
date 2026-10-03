@@ -291,3 +291,7 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
     4. P4：agent 按协议拆模块、按清单驱动金丝雀测试。
     5. P5：后台表单改为由清单生成（常用协议可定制）。
   - **估计**：约 4–5 个 worker 日；在 W24 和快照竞争修复合并之后进行。
+- **REVIEW-2026-10-02 落地（2026-10-03，用户指派两个云端 agent）**：
+  - **面板云端 worker**：C1（argon2 放到 spawn_blocking 并用信号量限并发）、C3 面板侧（gRPC 消息上限 64 MiB + snapshot 大小指标）、C4（TLS 握手并发上限）、W3（流量 key 改用 Uuid）、W4（复用摘要 / 借用 UserSet）、W5（has_shadowsocks 零拷贝）、W9（心跳管道化、毒化策略统一、限速器本地兜底）。不拆分 api.rs（W10），避免与进行中的分支冲突。
+  - **agent 云端 worker**：C2（有界发送）、C3 agent 侧（接收上限 64 MiB）、W1/A（预解析计数器，只上报变化行）、W2（state hash scratch buffer）、W6（退避抖动）、W7（无锁在线计数）、W8（Rebuild 时跳过空移除）。
+  - 两边互不依赖，无 proto 变更。合并前由 lead 审查；本地正在进行的 W24（支付）/ 竞争修复可能与之有轻微冲突，后合并的一方变基。
