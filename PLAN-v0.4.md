@@ -58,7 +58,8 @@
 
 **W36 前台替换为 Akari-theme**（用户追加，2026-10-04）。主题仓库 `mwnydev/Akari-theme`（私有）原本是为 xboard 做的前台主题，用户已把 xboard API 改成 mock。技术栈与本项目一致（React 19 / Vite 8 / Tailwind 4 / shadcn + radix，约 1.8 万行 TS），页面覆盖门户的全部功能。
 - **W36-a 审查与清理**（在主题仓库中进行，现在就能开始，不依赖其他任务）：全面检查代码质量，删除无用代码和兼容旧浏览器的代码。初步检查发现的问题：
-  - JS 混淆（`javascript-obfuscator`、`scripts/build-theme.mjs`、`scripts/license.mjs`）→ 删除；
+  - **离线授权机制整体删除**（用户要求）：`src/lib/license.ts`、`src/lib/license-pubkey.ts`、`scripts/license.mjs`，以及 `src/main.tsx`、`src/lib/http.ts`、`src/lib/site.ts`、`vite.config.ts`、`index.html` 中的授权校验和调用、相关的 i18n 文案，不留残余；
+  - JS 混淆（`javascript-obfuscator`、`scripts/build-theme.mjs`）→ 删除；
   - `index.html` 中的 3 段内联脚本违反 CSP（主题防闪烁、启动重试、字体加载）→ 改成外部模块或删除；
   - xboard 遗留（`window.__AKARI__` 配置注入、`LEGACY_PERIOD_MAPPING`、`deploy/akari-nginx.conf`）→ 删除，或改为读取本项目的站点配置和周期类型；
   - 旧存储键迁移（`beacon.locale`、旧 token 键、旧缓存）→ 删除；
