@@ -380,3 +380,8 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
 - **W32 已合并（2026-10-05）**：panel #66（节点安装器 Alpine/OpenRC + BBR/fq，`--no-bbr` 可关，卸载恢复原值）、agent #28（OpenRC 服务与更新器，`-init openrc`）。基准无回退（二进制 +0.07%）。OpenRC 已知差距见 DEPLOY §3h（更新器无沙箱、agent 无 syscall 沙箱、日志为文件）。agent 必需检查新增 "openrc self-update"。W31 panel #67 已合并。W28-c #71 审查通过（`{confirm:true}` 用于单用户确认，认可），rebase 中。
 - **xray-core GHSA-5wf9-h793-w73c（2026-10-05，用户："不管它，等上游更新"）**：agent Dependabot #1（pinnedPeerCertSha256 的客户端 TLS 校验缺陷）。agent 只跑入站 + freedom/blackhole 出站，不发起 TLS 连接，不用 pinnedPeerCertSha256，不受影响。修复仅在上游主干（2026-07-10），未发正式版；等 xray 下个正式版再升级（附基准与全量 CI），警告保持 open 不 dismiss。
 - **分支保护（2026-10-05，用户执行）**：panel 与 agent 的 main 关闭 "Require branches to be up to date"（strict=false），其余保护不变。无冲突的 PR 直接合并（仍用 rebase 保持线性），main 合并后跑全套 CI 兜底；发版前 release.yml 再跑全套。
+- **开发节奏调整（2026-10-05，用户："太乱了，重复很多工作，太浪费时间，开发太激进"）**：
+  - 收尾当前 PR：#68 → W27 系列（#70 → #74 → #75）→ W28-a 系列（#73 → #76 → #77）。W28-a 暂停到 W27 系列合并后再 rebase 一次。
+  - 收尾后重新开启 main 的"合并前分支必须最新"（strict=true）。
+  - 之后**串行开发**：面板同一时间只有一个 T1 任务（一个 worker），一个 PR 合并后才开下一个；不再做堆叠 PR；只有不碰面板 / agent 同一区域的任务（主题仓库、设计稿、纯文档）才可并行。
+  - 后续顺序：W27 剩余（域名 / 前缀 / 订阅路径、D10 清理、自助注销）→ W28-a 剩余（时区与分区、agent PR）→ W28-b → W30 → W33-b → W36-b → 阶段 C/D/E。
