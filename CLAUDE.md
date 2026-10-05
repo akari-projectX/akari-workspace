@@ -28,7 +28,7 @@
 ## 跨仓规则
 
 - 改控制协议：先改 `akari-panel/proto/agent.proto` → `make -C akari-agent sync-proto` → 两边一起改代码 → `make -C akari-agent check-proto`。
-- 任何改动的验收门：`make -C akari-panel check` + `make -C akari-panel smoke` 全绿；agent 侧 `make vet fmt-check`。
+- 任何改动的验收门：本地只跑快速检查（`make -C akari-panel check`、`cargo test --locked`；agent 侧 `make vet fmt-check`），smoke / e2e / 安装器等重型检查只在 GitHub Actions 上跑（W37），CI 全绿才合并。
 - 本机 WSL 有 HTTP_PROXY：curl 本地服务必须 `--noproxy '*'`。
 - `akari-panel/data/` 含 CA 私钥与 jwt.key：不可提交、不可外发；`make smoke` 会删除它（仅限开发机）。
 - 提交与推送仅在用户要求时进行；三仓远程均为 `git@github.com:akari-projectX/<repo>.git`。

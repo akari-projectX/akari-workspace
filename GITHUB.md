@@ -30,8 +30,9 @@
    （若用 gh：可先 `gh repo create akari-projectX/$r --private/--public` 再推；akari-panel/client
    选 Private，akari-agent 选 Public。）
 4. **分支保护**：每仓 Settings → Branches → `main`：
-   - akari-agent（公开仓）：require PR + require status check（ci）
-   - 私有仓：至少禁止 force push
+   - akari-agent（公开仓）：require PR + 必需检查 go、govulncheck、check-proto、coverage、reproducible build、systemd self-update、smoke (akari-panel main + this agent)
+   - akari-panel 必需检查：rust、spa、cargo-deny、coverage、smoke、e2e、docker build
+   - W37 分级：重型检查由各仓 `scripts/ci-changes.sh` 按改动范围决定真跑或跳过（跳过视为通过）；PR 加 `full-ci` 标签强制全套；main、每晚、发版前跑全套
 5. **组织设置建议**：Settings → 2FA enforcement 开启；Default repository permission = Read。
 6. **验证**：clone 到新目录，按各仓 README 构建（panel 需兄弟检出 onyx→akari 约定：
    `../akari-agent`）。
