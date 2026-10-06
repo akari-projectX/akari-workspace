@@ -5,19 +5,20 @@
 
 | 目录 | 语言 | 角色 | 子文档 |
 |---|---|---|---|
-| `akari-panel/` | Rust + React | 控制面板、契约正本 `proto/agent.proto`、集成冒烟 `smoke.sh` | `akari-panel/CLAUDE.md` |
+| `akari-panel/` | Rust + React | 控制面板（`spa/` 门户、`admin/` 后台）、契约正本 `proto/agent.proto`、集成冒烟 `smoke.sh` | `akari-panel/CLAUDE.md` |
 | `akari-agent/` | Go | 节点 agent，内嵌 xray-core，出站 mTLS gRPC | `akari-agent/CLAUDE.md` |
 | `akari-client/` | Go（M4 MVP 已合并，**已暂停**） | 自研客户端，mihomo 作为独立子进程（GPL-3.0） | `akari-client/CLAUDE.md` |
 
-## 权威文档（先读）
+## 权威文档（按顺序读）
 
-- `HANDOVER-2026-10-04.md` — **最新交接文档：现状、待办、凭据位置、工作规程（先读这个）**
-- `OPUS-GUIDE.md` — 接手导读：阅读顺序、三仓架构与质量评估（2026-10-01）、后续路线、工作规程、文档维护规则
-- `ROADMAP.md` — 详细开发计划（里程碑 M0–M7、sprint 任务、生产级出口标准）
-- `SPRINT.md` — 当前 sprint 看板与裁决记录
-- `akari-panel/PLAN.md` — 阶段计划与决策记录（含 Phase 0.5 质量修复清单）
-- `akari-panel/HANDOVER.md` — 交接与踩坑（依赖版本坑、axum 路由语义、WSL 运维坑）
-- `REVIEW-2026-09-30.md` — 接手代码审查：架构评估 + 带行号的缺陷清单
+1. `HANDOVER-2026-10-07.md` — **最新交接：现状、v0.4.0 内容、进行中的事、服务器与凭据位置、工作规程（先读这个）**
+2. `SPRINT.md` — 裁决记录（只追加）；开头的"当前有效裁决索引"按主题列出仍有效的裁决
+3. `PLAN-next.md` — 下一版本待办（阶段 C/D/E、CodeQL、未实测项等）
+4. `PLAN-v0.4.md` — v0.4 决定 D1–D12、任务卡、中转规格；开头有执行状态
+5. `briefs/COMMON.md`、`briefs/DEFECT-CHECKLIST.md` — worker / 云端会话通用规则，风险分级与缺陷清单（T1 brief 必附）
+6. `research/README.md` — 研究报告与验收清单索引
+
+已归档（`archive/`，只作历史）：旧交接、OPUS-GUIDE、ROADMAP、两份 REVIEW、GITHUB 清单。`akari-panel/PLAN.md`、`akari-panel/HANDOVER.md` 是 2026-09-30 的旧文档，以上面的文档为准。
 
 ## 已确认的战略决策（勿推翻）
 
