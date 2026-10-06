@@ -12,6 +12,8 @@
 - Alpine 节点的后台下发升级实测（Debian 已测）；面板升级失败自动回滚路径实测。
 
 ## 阶段 D：代码质量与技术债（计划在云端会话做）
+- 面板仓库旧文档：`akari-panel/PLAN.md`、`akari-panel/HANDOVER.md`（2026-09-30）已过时，在下一个面板文档 PR 中归档或删除。
+- 后台用户详情的流量明细目前只按节点分组（USR-23），按入口分组（R43）待补。
 - 全仓审查（面板后端 + spa/ + admin/ + agent + 安装器 + CI + 文档）→ REVIEW 文档 → 分批修复。
 - CodeQL 既有提示约 118 个：误报标记"不适用"写理由，真问题修复（src/auth.rs:380/391 insecure-cookie 重点确认；src/plans.rs、src/signup/pow.rs、src/account.rs、src/api.rs 的 hard-coded crypto；bench 明文传输）。
 - `akari-agent-uninstall --help` 会直接卸载、无确认。
