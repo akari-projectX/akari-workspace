@@ -1,8 +1,33 @@
 # 开发计划：面板 v0.4 / agent v0.5
 
-> **状态**：已定稿（2026-10-05）。**用户说"开始"之后才实施。**
+> **状态**：已定稿（2026-10-05），同日开工；执行进度见下方"执行状态"。
 > **使用方式**：§3 的每张任务卡都是一份完整的开发说明。lead 据此写英文 brief，交给全新的 agent 或云端会话执行。开发前必读：工作区 `CLAUDE.md`、`akari-panel/CLAUDE.md`、`akari-agent/CLAUDE.md`、`briefs/DEFECT-CHECKLIST.md`，以及本计划 §1、§2。
 > **不在本期范围**：sing-box 第二内核、自研客户端（M4/M5）、托管中转（agent 托管 realm）。
+
+## 执行状态（2026-10-07 更新）
+
+> 2026-10-05 开工。阶段 0、W37、阶段 A、阶段 B 全部完成并合并到 main；阶段 C / D / E 暂停，未开始的部分已移到 [`PLAN-next.md`](PLAN-next.md)。下面的计划正文保持原样，不再改写。PR 编号默认指 akari-panel。
+
+| 阶段 / 任务卡 | 状态 | 落地位置 |
+|---|---|---|
+| 阶段 0 数据库架构分析 | ✅ 完成 | `research/db-schema-review.md`，用户 10-05 通过（Q1–Q4）；迁移压缩 #65 |
+| W37 CI 分级 | ✅ 完成 | #62、agent #26；CI 提速 #81（完整 CI 约 15 分钟） |
+| W27 身份、登录与域名 | ✅ 完成 | #70、#74、#75；D4 / D8 / D10 / D11、自助注销、主密钥改名在 PR③ #85 |
+| W28 节点、入口与授权 | ✅ 完成 | W28-a #73、#76 + agent #31、#77、#80；W28-c #71；服务器拆分（Q1）、D5、D9 在 PR② #84 |
+| W29 节点审计规则 | ✅ 完成 | #68、agent #32；中转入站漏拦截已修（#88）。开启前后开销对比 → PLAN-next 阶段 C |
+| W30 订阅与客户端兼容 | ✅ 完成（GUI 客户端未实测） | PR② #84；mihomo / sing-box 真实加载通过。GUI 客户端实测 → PLAN-next |
+| W31 系统状态与发信 | ✅ 完成（发信未实测） | #67。SMTP / Resend 实测 → PLAN-next |
+| W32 agent 系统支持 | ✅ 完成 | #66、agent #28 |
+| 阶段 A 追加：运营逻辑批次 A/B/C、R46、R47、支付宝原路退款 | ✅ 完成 | PR① #83、PR③ #85 |
+| W33-a 后台设计稿 | ✅ 完成 | workspace #5 → `design/admin-v0.4/` |
+| W33-b 后台重写 | ✅ 完成 | #90（`akari-panel/admin/`，验收 `research/admin-inventory.md`） |
+| W36-a 主题审查清理 | ✅ 完成 | Akari-theme #1（仓库已归档） |
+| W36-b 前台接入 | ✅ 完成 | Akari-theme #2 + #89（`spa/` 成为门户，验收 `research/portal-gap.md`） |
+| 阶段 C 性能与稳定性 | ⏸ 部分完成，其余移到 PLAN-next | 第 1 项后台下发升级已在测试部署实测（Debian，含坏版本自动回滚，见 `research/test-deploy-2026-10.md`）；Alpine 实测、第 2–4 项 → PLAN-next |
+| 阶段 D 代码质量与技术债 | ⏸ 移到 PLAN-next | 只提前做了生成配置性能修复 #92（已合并） |
+| 阶段 E Red team | ⏸ 移到 PLAN-next | — |
+| 测试环境（§4） | ✅ 已部署 | 面板 v0.4.0-rc.2、agent v0.5.0-rc.2（`research/test-deploy-2026-10.md`）；部署 bug #87、#88 与低级别发现 #91 已修 |
+| 发版 v0.4.0 / v0.5.0 | ⏳ 进行中 | 阻断：main 的后台告警中心 e2e（#93，云端会话）。之后：完整 CI → 正式版标签 → 测试环境升级到正式版 + 后台下发节点到 v0.5.0 |
 
 ---
 
