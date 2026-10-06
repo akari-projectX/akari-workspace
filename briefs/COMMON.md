@@ -4,7 +4,7 @@
 - /home/lam/projectX/CLAUDE.md (workspace), akari-panel/CLAUDE.md + the sub-CLAUDE.md of every dir you touch (src/, spa/, migrations/, proto/), akari-agent/CLAUDE.md if you touch the agent.
 - /home/lam/projectX/PLAN-v0.4.md: §1 rules, §2 decisions D1–D12, your task card in §3, §5 relay spec.
 - /home/lam/projectX/research/db-schema-review.md (approved 2026-10-05) and the tail of /home/lam/projectX/SPRINT.md (rulings incl. "阶段 0 通过" Q1–Q4 and R43). These are binding.
-- /home/lam/projectX/OPUS-GUIDE.md §4.4 defect checklist — go through it before opening the PR and state in the PR body that you did.
+- /home/lam/projectX/briefs/DEFECT-CHECKLIST.md (risk tiers + defect checklist) — go through it before opening the PR and state in the PR body that you did.
 
 ## Code quality (hard)
 - No unwrap/expect/todo!/unimplemented! in non-test Rust; clippy -D warnings; no dead or commented-out code.
