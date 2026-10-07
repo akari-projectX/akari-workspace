@@ -15,6 +15,8 @@
 
 - **Turnstile 组件不够美观**（用户报告，门户与后台登录页）：改为 `appearance: interaction-only`（只有需要人工验证时才出现，平时完全看不见），`theme` 跟随站点浅色 / 深色，`size: flexible` 与输入框同宽，`language` 跟随界面语言（zh-CN / en），放在提交按钮上方并与表单间距统一，加载中 / 失败 / 过期有统一样式的提示与重试；后台设置说明建议在 Cloudflare 把组件模式设为 Managed 或 Invisible。CSP 不放宽（仍只在开启时放行 challenges.cloudflare.com）。桌面 + 手机、浅色 + 深色截图校验。
 
+- **登录时显示"人机验证未通过"（高，用户报告）**：最短提交时间设为 2 秒时，网站直接提示未通过人机验证。按设计 too_fast 应返回与普通失败相同的回应（`botguard::check` → Trap），`auth.captcha_failed` 只在 Turnstile 令牌缺失 / 被拒时返回；门户 `spa/src/api/guard.ts` 会等满 `form_min_secs` 再提交。待查：Turnstile 令牌未就绪 / 过期就提交、新后台登录页 `admin/src/login` 是否等待最短提交时间、错误映射。临时绕过：最短提交时间设 0 或关闭该表单的 Turnstile。修复后补 e2e（开启 Turnstile 测试键 + 最短提交时间 2 秒，正常用户一次登录成功）。
+
 ## 阶段 C：性能与稳定性
 - agent 24 小时以上稳定性压测（大量连接、频繁增删用户、限速、撤权、中转、断线重连；pprof 内存 / goroutine）。
 - 面板压测（登录洪水、订阅高并发、管理 API、大量节点重连、结算），瓶颈分析与优化。
