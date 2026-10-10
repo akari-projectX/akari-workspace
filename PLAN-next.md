@@ -15,7 +15,7 @@
 
 - **✅ 已完成（akari-panel #103，2026-10-10）** **Turnstile 组件不够美观**（用户报告，门户与后台登录页）：改为 `appearance: interaction-only`（只有需要人工验证时才出现，平时完全看不见），`theme` 跟随站点浅色 / 深色，`size: flexible` 与输入框同宽，`language` 跟随界面语言（zh-CN / en），放在提交按钮上方并与表单间距统一，加载中 / 失败 / 过期有统一样式的提示与重试；后台设置说明建议在 Cloudflare 把组件模式设为 Managed 或 Invisible。CSP 不放宽（仍只在开启时放行 challenges.cloudflare.com）。桌面 + 手机、浅色 + 深色截图校验。
 
-- **登录时显示"人机验证未通过"（高，用户报告）**：最短提交时间设为 2 秒时，网站直接提示未通过人机验证。按设计 too_fast 应返回与普通失败相同的回应（`botguard::check` → Trap），`auth.captcha_failed` 只在 Turnstile 令牌缺失 / 被拒时返回；门户 `spa/src/api/guard.ts` 会等满 `form_min_secs` 再提交。待查：Turnstile 令牌未就绪 / 过期就提交、新后台登录页 `admin/src/login` 是否等待最短提交时间、错误映射。临时绕过：最短提交时间设 0 或关闭该表单的 Turnstile。修复后补 e2e（开启 Turnstile 测试键 + 最短提交时间 2 秒，正常用户一次登录成功）。
+- **✅ 已完成（akari-panel bf6d700，2026-10-09，v0.4.1-rc.1 起）** （原因：已打开的登录页只在加载时读一次 `/auth/options`，运营改了最短提交时间或之后才开 Turnstile，旧页面拿不到表单令牌 / Turnstile 令牌，每次都被拒；现在门户与后台登录页每 30 秒、回到前台、每次提交后重读，之后才开的 Turnstile 让页面刷新一次；Cloudflare 站点侧错误改为 503 `auth.captcha_unavailable`；门户与后台 e2e 覆盖测试键 + 2 秒一次登录成功）**登录时显示"人机验证未通过"（高，用户报告）**：最短提交时间设为 2 秒时，网站直接提示未通过人机验证。按设计 too_fast 应返回与普通失败相同的回应（`botguard::check` → Trap），`auth.captcha_failed` 只在 Turnstile 令牌缺失 / 被拒时返回；门户 `spa/src/api/guard.ts` 会等满 `form_min_secs` 再提交。待查：Turnstile 令牌未就绪 / 过期就提交、新后台登录页 `admin/src/login` 是否等待最短提交时间、错误映射。临时绕过：最短提交时间设 0 或关闭该表单的 Turnstile。修复后补 e2e（开启 Turnstile 测试键 + 最短提交时间 2 秒，正常用户一次登录成功）。
 
 - **✅ 已完成（akari-panel #103，2026-10-10）** **优惠码输入位置**（用户报告）：门户商店页面上有优惠码输入框，应移到**确认订单**步骤（选好套餐 / 周期后的订单确认弹窗或页面）里输入，输入后即时显示折扣与应付金额（服务端报价），商店列表页不再出现优惠码框。e2e 覆盖：有效码、无效码、限定套餐的码、与余额 / 折算同时使用。
 
