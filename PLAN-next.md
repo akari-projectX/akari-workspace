@@ -90,6 +90,8 @@
 - 自研客户端 akari-client（暂停中，席位绑定制）；sing-box 第二内核（暂缓）。
 
 ## 通行密钥跨域名：WebAuthn 关联来源 ROR（2026-10-11 用户裁决：确定为 ROR 方案）
+**状态（2026-10-11）：已实现，akari-panel [#110](https://github.com/akari-projectX/akari-panel/pull/110)（分支 `claude/focused-bardeen-y5l1iq`，带 `full-ci`，CI 运行中；通过后合并并发版 v0.4.2）。** 下面的「设计」是定稿时的方案，与实现的差异和待办见本节末尾「实现记录与待办」。
+
 **问题**：D8 起主域名是列表，但通行密钥的 RP ID 只取首选主域名（`passkey.rs` `Rp::current`），用户在 akari.cc 绑定后从 mwny.net 访问，浏览器拒绝该 RP ID，通行密钥不可用（密码仍可登录）。WebAuthn 规定 RP ID 必须是页面域名或其可注册上级。
 
 **裁决**：Related Origin Requests。一个独立的**认证中心域名**（如 `passkey.akari.cc`）作 RP ID，其 `/.well-known/webauthn` 列出全部主域名；任一主域名上绑定一次、所有主域名通用，前台与后台登录页同样原地验证，**无跳转、无票据**。新项目不考虑旧凭据兼容。不采用「项目方托管的中心」（自托管、前缀不变量、单点故障，见 2026-10-11 评估）；跳转式中心不做，浏览器不支持时回退密码。
@@ -118,3 +120,18 @@
 - 来源：web.dev「Related Origin Requests」、Firefox `WebAuthnRelatedOriginFetcher.sys.mjs`、Mozilla 支持论坛 questions/1600732。
 
 **域名设置页（用户裁决）**：系统设置→域名新增独立的「通行密钥中心域名」一栏，与主域名/订阅域名/节点通信域名三个列表并列但分开；页面说明「专用于通行密钥验证，不提供门户、后台或订阅；不要轮换」；DNS 检查沿用 `/settings/dns-check`；保存前提示将受影响的是所有账户已绑定的通行密钥（换中心域名 = 全部需重新绑定）。域名影响预览（`removal_impact`）把中心域名的变更单独列出。Caddy `ask` 名单与证书申请范围加入中心域名（`Effective::ask_hosts`）。
+
+### 实现记录与待办（2026-10-11）
+**已做（迁移 1105）**
+- ROR：`panel_settings.passkey_domain`（单值）+ `PUT /settings/passkey-domain` + CLI `unset passkey-domain`；`HostRole::Passkey` 只答 `GET /.well-known/webauthn`（`web::passkey_centre`）；`Rp` 固定为中心域名、全部 https 主域名 `append_allowed_origin`；与 main/sub/node 互斥（两个写者互查）；后台「站点与域名」页中心域名一栏 + 注册域 > 5 警告 + 更换确认；`/auth/options` 增 `passkey_rp`、`passkey_register`。
+- **与设计的差异**：① 没设中心域名时回退为首选主域名作 RP（单域名部署无需配置，不再是「NULL = 不可用」）；② 中心域名只服务 well-known 文件，没有开放 `/auth/passkey/*`（验证直接发生在业务页上，用不到）；③ 域名设置沿用「普通管理员」权限，不加所有者限制。
+- **通行密钥注册 + 强制绑定邮箱（用户需求，已实现）**：采用「先建账户、后补邮箱」，但不让 `users.email` 变 NULL：占位地址 `pending-<id>@pending.invalid` + `users.email_pending`/`signup_method`（CHECK 保证待绑定 ⇔ 占位地址/未验证/通行密钥注册/role=user），D1（邮箱 NOT NULL 全局唯一）、D10 不变。`signup_settings.passkey_register`（默认关）；`POST /auth/register/passkey/{options,}`（PoW、蜜罐/Turnstile、邀请码、按客户端限速）；待绑定会话只到 `GET /me` 与 `POST /me/email/bind[/code]`（`auth::PendingUser`），其余 403 `account.email_required`；站点「注册需要验证邮箱」决定是否要验证码；24 小时未绑定自动删除；门户不可关闭弹窗、密码选填、无密码账户首次设密码需通行密钥确认；后台用户列表「注册方式」列/「待绑定邮箱」徽章。
+
+**待办 / 风险**
+- smoke.sh 与 Playwright e2e 没加用例（本地跑不了，CI 上跑）：建议补 ① well-known 的字节同构拒绝与内容、② 两个主机名上同一把通行密钥登录（e2e 已有 `portal.e2e.test` TLS 前端，需再加一个主机名和中心域名）、③ 通行密钥注册 → 弹窗绑定邮箱的整条流程（Chromium 虚拟认证器）。
+- 门户新增中文文案，**未重跑字体子集**（`scripts/subset-akari-font.py`）。
+- 浏览器行为未实测：Chrome 对「RP 自己是否计入 5 个标签上限」未查到（Firefox 源码确认不计）；新增主域名后 well-known 的浏览器缓存生效延迟；`getClientCapabilities().relatedOrigins` 检测未采用（失败后按 `SecurityError` 提示改用密码）；Firefox 稳定性（曾有 140 版 `OpaqueResponseBlocking` 反馈）。
+- 「仅通行密钥」策略在浏览器不支持 ROR / 中心域名不可达时会把账户挡在密码之外（兜底 `akari admin reset-login`）；是否在中心不可达时回退密码，待用户裁决。
+- 本地库测试有 3 个在原始 main 上也失败的用例（`w21_tests::site_name_setting`、`site_timezone_setting`、`mail::overrides::tests::edited_template_is_used_by_enqueue`，本地环境相关，`settings::init` 之后 `PUT /settings/site` 500），CI 上应通过；若 CI 也红则需排查。
+- 待绑定账户的占位地址未被 `email::parse` 拒绝（测试夹具大量用 `@test.invalid`）；风险极低（未验证、不收邮件、需猜中 UUID）。
+- 中心域名建议取稳定业务注册域的子域名（如 `passkey.akari.cc`），放 CDN 后面，不要轮换。
