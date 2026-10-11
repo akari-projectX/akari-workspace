@@ -95,9 +95,9 @@
 **裁决**：Related Origin Requests。一个独立的**认证中心域名**（如 `passkey.akari.cc`）作 RP ID，其 `/.well-known/webauthn` 列出全部主域名；任一主域名上绑定一次、所有主域名通用，前台与后台登录页同样原地验证，**无跳转、无票据**。新项目不考虑旧凭据兼容。不采用「项目方托管的中心」（自托管、前缀不变量、单点故障，见 2026-10-11 评估）；跳转式中心不做，浏览器不支持时回退密码。
 
 **设计**
-1. **设置**：`panel_settings.passkey_domain`（单值，NULL = 通行密钥不可用，与现在无主域名时一致；不扩展 `site_domains.kind`）。`PUT /settings/domains` 同一事务审计；校验 https 域名（非 IP）。
+1. **设置（用户裁决：中心域名单独设置，不同于主域名/订阅域名/节点通信域名）**：`panel_settings.passkey_domain`（单值，NULL = 通行密钥不可用，与现在无主域名时一致；不扩展 `site_domains.kind`，不属于三个域名列表之一）。**与 `site_domains` 的 main/sub/node 三类全部主机互斥**：保存时若与任一已配置域名同主机 → 409（`settings.passkey_domain_clash`），反向地，往三个列表里加域名时若与中心域名同主机同样 409（`check_domains` 与 `apply_update_passkey_domain` 互查，同事务锁 `panel_settings` 行）；审计 `settings.passkey_domain.update`（记前后值）；校验 https 域名（非 IP、含点、非通配）；新接口 `PUT /settings/passkey-domain`（`version` 乐观并发，同 `PUT /settings/site` 模式）；CLI `akari settings unset passkey-domain`。
 2. **RP**：`Rp` 固定为 RP ID = 中心域名，origin = 中心 origin，`append_allowed_origin` 追加全部主域名 origin（仅 https 域名，排除 IP/无点名；webauthn-rs 已在用该接口，`passkey.rs` localhost 分支）。去掉按首选主域名取 RP 的逻辑；`webauthn_credentials.rp_id` 仍保留列，值恒为中心域名，换中心域名时旧凭据不再「当前」（沿用现有语义）。
-3. **well-known**：`GET /.well-known/webauthn` 只在中心域名的 Host 上返回 `{"origins":[…]}`（`application/json`，不重定向，来自生效设置，改主域名即时生效），其余 Host = 规范拒绝。新 `HostRole::Passkey`：中心域名只开放该文件与 `/auth/passkey/*`（其余 `reject::not_found()`）；同一主机既是主域名又是中心时主域名角色优先。Caddy `ask` 名单加入中心域名。
+3. **well-known**：`GET /.well-known/webauthn` 只在中心域名的 Host 上返回 `{"origins":[…]}`（`application/json`，不重定向，来自生效设置，改主域名即时生效），其余 Host = 规范拒绝。新 `HostRole::Passkey`：中心域名只开放该文件与 `/auth/passkey/*`（其余 `reject::not_found()`；门户、后台前缀、订阅、安装链接、支付回调在此 Host 上一律规范拒绝）。因设置层已保证中心域名与三类域名互斥，角色表 `roles` 里不会出现冲突主机。Caddy `ask` 名单加入中心域名。
 4. **校验端**：登录/注册/本人确认的仪式状态记录 origin；服务端按「中心域名 + 主域名名单」校验 `clientDataJSON.origin`；`/auth/options` 的 `passkey` 由布尔改为对象（`available`、`rp_id`），前端用 `PublicKeyCredential.getClientCapabilities()` 的 `relatedOrigins` 检测，非 RP 域名且不支持 → 提示用密码。
 5. **域名设置页**：不同注册域（eTLD+1）超过 5 个给警告（Chrome 默认上限，需核实现行值）；删除域名的影响预览加一句「该域名将不再能用通行密钥」。
 6. **后台**：登录页（`/{prefix}/app`）与门户走同一接口，不涉及前缀传递；管理员账户在门户上仍是「错误密码的回答」。
@@ -111,8 +111,10 @@
 
 **补充（2026-10-11，域名更换与浏览器核实）**
 - **业务域名频繁更换**：凭据绑的是中心域名（RP ID），不是业务域名，所以换业务域名**不用重新绑定**；well-known 名单由生效的主域名列表动态生成（`settings::reload` 全实例即时生效），自动化换域名直接调域名设置接口即可。弃用/被封的域名要及时从主域名列表删除，否则占浏览器名额（域名设置页警告）。well-known 响应加短 `Cache-Control`（数分钟），上线后实测新增域名的生效延迟（浏览器缓存时长未查到）。
-- **中心域名必须稳定且用户可达**：它一换，RP ID 变，全部通行密钥失效须重新绑定；验证时浏览器要去取 well-known，中心域名在某地区被封则该地区通行密钥失败（回退密码）。设置页注明「不要轮换」；建议放 CDN/Cloudflare 后面、不与会轮换的业务域名混用；推荐做稳定业务注册域的子域名（如 `passkey.akari.cc`）。
+- **中心域名必须稳定且用户可达**：它一换，RP ID 变，全部通行密钥失效须重新绑定；验证时浏览器要去取 well-known，中心域名在某地区被封则该地区通行密钥失败（回退密码）。设置页注明「不要轮换」；建议放 CDN/Cloudflare 后面、不与会轮换的业务域名混用；中心域名是**单独设置的专用域名**（不是主域名、订阅域名或节点通信域名之一）；为不多占名额，推荐取稳定业务注册域的子域名（如 `passkey.akari.cc`，该子域名在设置里单独填写，不进主域名列表）。
 - **名额**：浏览器限制名单里不同注册域标签数 ≤ 5（Chrome 文档，同一注册域的子域名与同标签的不同后缀只算一个）；Firefox 源码（`WebAuthnRelatedOriginFetcher`，`kMaxLabels = 5`）只统计 `origins` 名单、**不计入 RP ID 自己**；Chrome/Safari 对 RP ID 是否计入未查到 → 中心域名取稳定业务注册域的子域名则无论如何都不多占。
 - **取文件方式**：`GET https://<RP ID>/.well-known/webauthn`，Firefox 10 秒超时、重定向每一跳须 https → 该文件必须直接 200 返回、`application/json`、不跳转。
 - **浏览器支持**：Chrome、Safari 已支持；Firefox 源码已有实现、但曾有 Firefox 140 报 `OpaqueResponseBlocking` 的反馈，web.dev（2026-01）仍写「考虑中」→ 当作**不保证可用**。`getClientCapabilities().relatedOrigins` 检测未查到资料，实现前单独核实；不行就改为「直接尝试，失败时提示改用密码」。
 - 来源：web.dev「Related Origin Requests」、Firefox `WebAuthnRelatedOriginFetcher.sys.mjs`、Mozilla 支持论坛 questions/1600732。
+
+**域名设置页（用户裁决）**：系统设置→域名新增独立的「通行密钥中心域名」一栏，与主域名/订阅域名/节点通信域名三个列表并列但分开；页面说明「专用于通行密钥验证，不提供门户、后台或订阅；不要轮换」；DNS 检查沿用 `/settings/dns-check`；保存前提示将受影响的是所有账户已绑定的通行密钥（换中心域名 = 全部需重新绑定）。域名影响预览（`removal_impact`）把中心域名的变更单独列出。Caddy `ask` 名单与证书申请范围加入中心域名（`Effective::ask_hosts`）。
