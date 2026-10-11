@@ -108,3 +108,11 @@
 **测试**：`passkey/tests.rs`（软件认证器）：多 origin 登录/注册、名单外 origin 拒绝、well-known 内容随主域名变化、非中心 Host 访问 well-known 为规范拒绝、`HostRole::Passkey` 只开放允许路径、无中心域名时公开端点规范拒绝、`access::tests::routes_match_the_portal` 不变；e2e 用两个主机名（localhost 与 e2e.localhost 已有）；smoke 断言 well-known 与拒绝字节同构。文档：根/`src/` CLAUDE.md 的 W27 与 D8 两节、`docs/DEPLOY.md`。
 
 **实现顺序**：① 迁移 + 设置 + Host 角色 + well-known；② `Rp`/校验端改造与测试；③ `/auth/options` 与门户、后台登录页的检测和提示；④ 域名设置页（选中心域名、上限警告）；⑤ 文档与不变量。
+
+**补充（2026-10-11，域名更换与浏览器核实）**
+- **业务域名频繁更换**：凭据绑的是中心域名（RP ID），不是业务域名，所以换业务域名**不用重新绑定**；well-known 名单由生效的主域名列表动态生成（`settings::reload` 全实例即时生效），自动化换域名直接调域名设置接口即可。弃用/被封的域名要及时从主域名列表删除，否则占浏览器名额（域名设置页警告）。well-known 响应加短 `Cache-Control`（数分钟），上线后实测新增域名的生效延迟（浏览器缓存时长未查到）。
+- **中心域名必须稳定且用户可达**：它一换，RP ID 变，全部通行密钥失效须重新绑定；验证时浏览器要去取 well-known，中心域名在某地区被封则该地区通行密钥失败（回退密码）。设置页注明「不要轮换」；建议放 CDN/Cloudflare 后面、不与会轮换的业务域名混用；推荐做稳定业务注册域的子域名（如 `passkey.akari.cc`）。
+- **名额**：浏览器限制名单里不同注册域标签数 ≤ 5（Chrome 文档，同一注册域的子域名与同标签的不同后缀只算一个）；Firefox 源码（`WebAuthnRelatedOriginFetcher`，`kMaxLabels = 5`）只统计 `origins` 名单、**不计入 RP ID 自己**；Chrome/Safari 对 RP ID 是否计入未查到 → 中心域名取稳定业务注册域的子域名则无论如何都不多占。
+- **取文件方式**：`GET https://<RP ID>/.well-known/webauthn`，Firefox 10 秒超时、重定向每一跳须 https → 该文件必须直接 200 返回、`application/json`、不跳转。
+- **浏览器支持**：Chrome、Safari 已支持；Firefox 源码已有实现、但曾有 Firefox 140 报 `OpaqueResponseBlocking` 的反馈，web.dev（2026-01）仍写「考虑中」→ 当作**不保证可用**。`getClientCapabilities().relatedOrigins` 检测未查到资料，实现前单独核实；不行就改为「直接尝试，失败时提示改用密码」。
+- 来源：web.dev「Related Origin Requests」、Firefox `WebAuthnRelatedOriginFetcher.sys.mjs`、Mozilla 支持论坛 questions/1600732。
