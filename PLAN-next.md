@@ -90,7 +90,7 @@
 - 自研客户端 akari-client（暂停中，席位绑定制）；sing-box 第二内核（暂缓）。
 
 ## 通行密钥跨域名：WebAuthn 关联来源 ROR（2026-10-11 用户裁决：确定为 ROR 方案）
-**状态（2026-10-11）：已实现，akari-panel [#110](https://github.com/akari-projectX/akari-panel/pull/110)（分支 `claude/focused-bardeen-y5l1iq`，带 `full-ci`，CI 运行中；通过后合并并发版 v0.4.2）。** 下面的「设计」是定稿时的方案，与实现的差异和待办见本节末尾「实现记录与待办」。
+**状态（2026-10-11）：已实现并合并，akari-panel [#110](https://github.com/akari-projectX/akari-panel/pull/110)（9891753，CI 24 项全绿）；随 v0.4.2 发布（版本号 PR [#111](https://github.com/akari-projectX/akari-panel/pull/111)）。** 下面的「设计」是定稿时的方案，与实现的差异和待办见本节末尾「实现记录与待办」。
 
 **问题**：D8 起主域名是列表，但通行密钥的 RP ID 只取首选主域名（`passkey.rs` `Rp::current`），用户在 akari.cc 绑定后从 mwny.net 访问，浏览器拒绝该 RP ID，通行密钥不可用（密码仍可登录）。WebAuthn 规定 RP ID 必须是页面域名或其可注册上级。
 
@@ -129,6 +129,7 @@
 
 **待办 / 风险**
 - smoke.sh 与 Playwright e2e 没加用例（本地跑不了，CI 上跑）：建议补 ① well-known 的字节同构拒绝与内容、② 两个主机名上同一把通行密钥登录（e2e 已有 `portal.e2e.test` TLS 前端，需再加一个主机名和中心域名）、③ 通行密钥注册 → 弹窗绑定邮箱的整条流程（Chromium 虚拟认证器）。
+- 合并后发现的两处遗漏：① `smoke.sh` 没有新接口的断言（项目规则要求；见上一条的建议用例）；② 新请求体（`OptionsReq`/`FinishReq`/`BindReq`/`BindCodeReq`/`PasskeyDomainReq`）还没加进 fuzz `json_bodies` 的严格解析清单。
 - 门户新增中文文案，**未重跑字体子集**（`scripts/subset-akari-font.py`）。
 - 浏览器行为未实测：Chrome 对「RP 自己是否计入 5 个标签上限」未查到（Firefox 源码确认不计）；新增主域名后 well-known 的浏览器缓存生效延迟；`getClientCapabilities().relatedOrigins` 检测未采用（失败后按 `SecurityError` 提示改用密码）；Firefox 稳定性（曾有 140 版 `OpaqueResponseBlocking` 反馈）。
 - 「仅通行密钥」策略在浏览器不支持 ROR / 中心域名不可达时会把账户挡在密码之外（兜底 `akari admin reset-login`）；是否在中心不可达时回退密码，待用户裁决。
