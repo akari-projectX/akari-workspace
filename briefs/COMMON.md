@@ -39,3 +39,6 @@ Do nothing in agent user space that the panel or the kernel/xray can do. Every a
 
 ## Fail fast on CI (user rule 2026-10-06)
 Watch your PR's checks while they run. As soon as ANY check fails, read its log, fix, and push — do not wait for the remaining checks to finish (pushing cancels the stale run). Never sit waiting on a run that already has a red check.
+
+## Context limit and handoff (user rule 2026-10-12)
+An agent's context must stay under 500k tokens. When you estimate you are near ~450k, stop at a clean point: commit and push your work (a WIP commit is fine), write `/home/lam/projectX/akari-workspace/.work/<task>/HANDOFF.md` (done, remaining, open problems, CI state, exact next steps), and report to the lead with "HANDOFF" in the first line. The lead starts a fresh agent that continues from the note.
