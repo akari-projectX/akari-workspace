@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>分流规则 · 交互样稿</title>
+<style>
+:root{
+  --bg:#f2f2f5; --panel:#ffffff; --panel-2:#f7f7f9; --line:rgba(0,0,0,.08); --line-2:rgba(0,0,0,.14);
+  --text:#1d1d1f; --muted:#6e6e73; --faint:#a1a1a6;
+  --brand:#2563eb; --brand-soft:rgba(37,99,235,.10);
+  --red:#dc2626; --red-soft:rgba(220,38,38,.10);
+  --green:#16a34a; --green-soft:rgba(22,163,74,.10);
+  --amber:#d97706; --amber-soft:rgba(217,119,6,.12);
+  --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 16px rgba(0,0,0,.05);
+  --r-sm:9px; --r:14px; --r-lg:18px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1c1c1e; --panel:#2c2c2e; --panel-2:#323235; --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.16);
+  --text:#f5f5f7; --muted:#a1a1a6; --faint:#6e6e73; --brand:#4a9dff; --brand-soft:rgba(74,157,255,.16);
+  --red:#ff6b6b; --red-soft:rgba(255,107,107,.14); --green:#4ade80; --green-soft:rgba(74,222,128,.14);
+  --amber:#fbbf24; --amber-soft:rgba(251,191,36,.14); --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.3);
+}}
+:root[data-theme="dark"]{
+  --bg:#1c1c1e; --panel:#2c2c2e; --panel-2:#323235; --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.16);
+  --text:#f5f5f7; --muted:#a1a1a6; --faint:#6e6e73; --brand:#4a9dff; --brand-soft:rgba(74,157,255,.16);
+  --red:#ff6b6b; --red-soft:rgba(255,107,107,.14); --green:#4ade80; --green-soft:rgba(74,222,128,.14);
+  --amber:#fbbf24; --amber-soft:rgba(251,191,36,.14); --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 16px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);
+  font:13.5px/1.55 -apple-system,BlinkMacSystemFont,"Inter","PingFang SC","Noto Sans SC","Microsoft YaHei",sans-serif}
+button,input,select{font:inherit;color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:24px 16px 120px}
+header.top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+h1{font-size:26px;font-weight:650;margin:0;letter-spacing:-.01em}
+.sub{color:var(--muted);margin-top:4px}
+.mock-note{font-size:12px;color:var(--amber);background:var(--amber-soft);padding:3px 9px;border-radius:99px;margin-left:8px;vertical-align:middle;font-weight:500}
+.seg{display:inline-flex;background:var(--panel-2);border:1px solid var(--line);border-radius:10px;padding:2px}
+.seg button{border:0;background:transparent;padding:5px 12px;border-radius:8px;cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--panel);color:var(--text);box-shadow:var(--shadow);font-weight:550}
+.grid{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px;align-items:start}
+@media (max-width:960px){.grid{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow)}
+.sec{padding:14px 16px 12px;border-top:1px solid var(--line)}
+.sec:first-child{border-top:0}
+.sec-h{display:flex;align-items:center;gap:10px;min-height:32px}
+.tile{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;font-size:16px;flex:none}
+.t-block{background:var(--red-soft)} .t-direct{background:var(--green-soft)} .t-svc{background:var(--brand-soft)} .t-rest{background:var(--panel-2)}
+.sec-title{font-weight:600;font-size:14.5px}
+.sec-desc{color:var(--muted);font-size:12.5px}
+.sec-h .grow{flex:1;min-width:0}
+.route{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:99px;background:var(--panel-2);border:1px solid var(--line);color:var(--text);font-size:12.5px;white-space:nowrap}
+.chip.primary{background:var(--brand-soft);border-color:transparent;color:var(--brand);font-weight:550}
+.chip.warn{background:var(--amber-soft);border-color:transparent;color:var(--amber)}
+.arrow{color:var(--faint)}
+.items{margin:8px 0 0 40px;display:flex;flex-direction:column}
+.item{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px}
+.item:hover{background:var(--panel-2)}
+.item .name{font-weight:500;white-space:nowrap}
+.item .kind{white-space:nowrap}
+.item .raw{min-width:0;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.item .raw{color:var(--faint);font-size:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.item .kind{font-size:11.5px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:0 6px;background:transparent;cursor:pointer}
+.item .kind[disabled]{cursor:default}
+.item .x{margin-left:auto;border:0;background:transparent;color:var(--faint);cursor:pointer;width:24px;height:24px;border-radius:6px;font-size:15px}
+.item .x:hover{background:var(--red-soft);color:var(--red)}
+.item.conflict .name{text-decoration:line-through;color:var(--muted)}
+.adder{position:relative;margin:4px 0 0 40px}
+.adder input{width:100%;max-width:420px;border:1px dashed var(--line-2);background:transparent;border-radius:8px;padding:6px 10px;outline:none}
+.adder input:focus{border-style:solid;border-color:var(--brand);background:var(--panel)}
+.sugg{position:absolute;z-index:20;top:100%;left:0;margin-top:4px;width:min(420px,100%);background:var(--panel);border:1px solid var(--line-2);border-radius:12px;box-shadow:var(--shadow);padding:4px;display:none}
+.sugg.open{display:block}
+.sugg button{display:flex;width:100%;gap:8px;align-items:baseline;text-align:left;border:0;background:transparent;padding:7px 10px;border-radius:8px;cursor:pointer}
+.sugg button[aria-selected="true"],.sugg button:hover{background:var(--brand-soft)}
+.sugg .hint{color:var(--faint);font-size:12px;margin-left:auto;font-family:ui-monospace,Menlo,monospace}
+.sugg .lab{font-size:11px;color:var(--muted);padding:6px 10px 2px}
+.btn{border:1px solid var(--line-2);background:var(--panel);border-radius:8px;padding:5px 11px;cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--panel-2)}
+.btn.blue{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn.blue:hover{filter:brightness(1.06)}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--brand)}
+.btn.ghost:hover{background:var(--brand-soft)}
+.btn.sm{padding:3px 9px;font-size:12.5px}
+.btn.icon{padding:3px 7px}
+.lines{margin:10px 0 2px 40px;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--panel-2)}
+.lines .row{display:flex;align-items:center;gap:8px;margin:6px 0;flex-wrap:wrap}
+.lines label{width:44px;color:var(--muted);font-size:12.5px}
+select{border:1px solid var(--line-2);background:var(--panel);border-radius:8px;padding:5px 8px;max-width:100%}
+.bk{display:flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:3px 4px 3px 9px}
+.bk .n{color:var(--faint);font-size:11.5px;width:14px}
+.bk button{border:0;background:transparent;cursor:pointer;color:var(--muted);border-radius:6px;width:22px;height:22px}
+.bk button:hover{background:var(--panel-2);color:var(--text)}
+.help{color:var(--muted);font-size:12px;margin-top:6px}
+.side{position:sticky;top:16px;display:flex;flex-direction:column;gap:14px}
+.side .card{padding:14px 16px}
+.side h3{margin:0 0 8px;font-size:13.5px;font-weight:600}
+.test input{width:100%;border:1px solid var(--line-2);background:var(--panel-2);border-radius:9px;padding:8px 10px;outline:none}
+.test input:focus{border-color:var(--brand);background:var(--panel)}
+.result{margin-top:10px;font-size:13px}
+.result .big{font-size:15px;font-weight:600;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.result .why{color:var(--muted);font-size:12.5px;margin-top:4px}
+.examples{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.examples button{border:1px solid var(--line);background:transparent;border-radius:99px;padding:1px 8px;font-size:12px;color:var(--muted);cursor:pointer}
+.examples button:hover{color:var(--brand);border-color:var(--brand)}
+.summary{font-size:13px;line-height:1.7}
+.summary b{font-weight:600}
+.tabs{display:flex;gap:2px;margin:22px 0 10px;border-bottom:1px solid var(--line)}
+.tabs button{border:0;background:transparent;padding:8px 12px;cursor:pointer;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs button[aria-selected="true"]{color:var(--text);border-bottom-color:var(--brand);font-weight:550}
+.clientgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+.cg{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+.cg .h{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.cg .t{font-weight:600}
+.cg .ty{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:0 5px}
+.cg .cur{color:var(--brand);font-size:12.5px;margin-top:2px}
+.cg ul{margin:6px 0 0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:4px}
+.cg li{font-size:12px;padding:1px 7px;border-radius:6px;background:var(--panel-2);border:1px solid var(--line)}
+.cg li.on{background:var(--brand-soft);color:var(--brand);border-color:transparent}
+pre.yaml{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;overflow:auto;font:12px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;max-height:560px;margin:0}
+details.adv{margin-top:14px}
+details.adv summary{cursor:pointer;color:var(--muted);padding:6px 0}
+.adv .card{padding:14px 16px;margin-top:6px}
+.adv .row{display:flex;gap:10px;align-items:center;margin:8px 0;flex-wrap:wrap}
+.adv .row label{width:150px;color:var(--muted)}
+.adv input[type=text]{flex:1;min-width:220px;border:1px solid var(--line-2);background:var(--panel-2);border-radius:8px;padding:6px 9px;font:12px ui-monospace,Menlo,monospace}
+.savebar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:var(--panel);border:1px solid var(--line-2);border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.18);padding:8px 8px 8px 16px;display:flex;align-items:center;gap:12px;z-index:30;width:min(640px,calc(100% - 32px))}
+.savebar .dot{width:8px;height:8px;border-radius:50%;background:var(--amber);flex:none}
+.savebar .msg{flex:1;min-width:0;font-size:13px}
+.savebar.clean .dot{background:var(--green)}
+.toast{position:fixed;top:18px;left:50%;transform:translateX(-50%) translateY(-20px);opacity:0;background:var(--text);color:var(--bg);padding:8px 14px;border-radius:10px;transition:.25s;z-index:40;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.dim{opacity:.45;pointer-events:none}
+.global-note{margin:10px 16px 0;padding:10px 12px;border-radius:10px;background:var(--brand-soft);color:var(--brand);font-size:12.5px}
+.addsvc{padding:12px 16px;border-top:1px solid var(--line);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.muted{color:var(--muted)}
+.order{display:flex;gap:2px}
+.order button{border:0;background:transparent;color:var(--faint);cursor:pointer;border-radius:6px;width:24px;height:24px}
+.order button:hover{background:var(--panel-2);color:var(--text)}
+@media (max-width:600px){.items,.adder,.lines{margin-left:0}.adv .row label{width:100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>分流规则 <span class="mock-note">交互样稿 · 数据为示例</span></h1>
+      <div class="sub">决定用户导入 Clash / sing-box 订阅后，每个网站走哪条线路。按去向分组，从上到下优先。</div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <div class="seg" id="mode" role="group" aria-label="模式">
+        <button data-mode="rules">规则分流（推荐）</button>
+        <button data-mode="global">全局代理</button>
+      </div>
+      <button class="btn" id="theme" title="切换明暗">◐</button>
+    </div>
+  </header>
+
+  <div class="grid">
+    <main>
+      <div class="card" id="editor"></div>
+
+      <div class="card" id="dns" style="margin-top:14px"></div>
+
+      <details class="adv">
+        <summary>高级：线路分组、规则库地址</summary>
+        <div class="card" id="advanced"></div>
+      </details>
+
+      <div class="tabs" role="tablist">
+        <button role="tab" data-tab="client" aria-selected="true">用户在 Clash 里看到的</button>
+        <button role="tab" data-tab="yaml">生成的 Clash 配置（节选）</button>
+      </div>
+      <div id="tabbody"></div>
+    </main>
+
+    <aside class="side">
+      <div class="card test">
+        <h3>测试：这个网站会走哪？</h3>
+        <input id="testq" placeholder="输入网址或 IP，例如 www.netflix.com" autocomplete="off">
+        <div class="examples" id="examples"></div>
+        <div class="result" id="result"></div>
+      </div>
+      <div class="card">
+        <h3>效果一句话</h3>
+        <div class="summary" id="summary"></div>
+      </div>
+      <div class="card">
+        <h3>说明</h3>
+        <div class="muted" style="font-size:12.5px;line-height:1.7">
+          · 在任一分区的输入框里直接输入：网址（如 <b>example.com</b>）、IP 段（如 <b>1.2.3.0/24</b>），或分类名（如 <b>奈飞</b>、<b>广告</b>），类型自动识别。<br>
+          · 也可以粘贴 https 规则集链接（Clash 的 .yaml / .list / .txt，如 blackmatrix7），自动下载并显示条数。<br>
+          · 服务的「推荐（自动容灾）」= 先用首选，挂了按备用顺序切换。<br>
+          · 用户可以在 Clash 里手动切换，客户端会记住。<br>
+          · 修改保存在本浏览器里（样稿），刷新不丢。
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div class="savebar clean" id="savebar">
+  <span class="dot"></span><span class="msg" id="savemsg">已保存</span>
+  <button class="btn sm" id="reset">恢复推荐设置</button>
+  <button class="btn sm" id="discard">放弃修改</button>
+  <button class="btn sm blue" id="save">保存</button>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+/* ───── 示例数据（真实实现里来自面板） ───── */
+const REGIONS = {HK:"🇭🇰 香港", JP:"🇯🇵 日本", KR:"🇰🇷 韩国", SG:"🇸🇬 新加坡", US:"🇺🇸 美国"};
+const ENTRANCES = [
+  {id:1, name:"香港 HKT", region:"HK", tags:["IPLC"]},
+  {id:2, name:"香港 BGP", region:"HK", tags:[]},
+  {id:3, name:"东京 01", region:"JP", tags:["解锁"]},
+  {id:4, name:"大阪 02", region:"JP", tags:[]},
+  {id:5, name:"首尔 01", region:"KR", tags:[]},
+  {id:6, name:"首尔 02", region:"KR", tags:["解锁"]},
+  {id:7, name:"新加坡 01", region:"SG", tags:["解锁"]},
+  {id:8, name:"洛杉矶 01", region:"US", tags:["解锁"]},
+];
+const TAGS = ["解锁","IPLC"];
+
+/* 分类：中文名 + 规则库原名 + 测试用的示例域名/IP（真实实现里客户端下载完整列表） */
+const CATS = {
+  ads:      {zh:"广告与跟踪", raw:"geosite:category-ads-all", alias:["广告","去广告","ads","跟踪"], d:["doubleclick.net","googlesyndication.com","adservice.google.com","ads.tiktok.com","umeng.com"]},
+  private:  {zh:"局域网 / 路由器", raw:"geosite:private + geoip:private", alias:["局域网","内网","路由器","lan","private"], d:["localhost","router.local"], ip:["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16","127.0.0.0/8"]},
+  cn:       {zh:"中国大陆网站", raw:"geosite:cn", alias:["国内","大陆","中国","cn"], d:["baidu.com","qq.com","taobao.com","bilibili.com","163.com","jd.com","weibo.com","zhihu.com","gov.cn",".cn"]},
+  cnip:     {zh:"中国大陆 IP", raw:"geoip:cn", alias:["国内ip","大陆ip","中国ip","geoip"], ip:["114.114.0.0/16","223.5.0.0/16","119.29.0.0/16","180.101.0.0/16"]},
+  netflix:  {zh:"Netflix", raw:"geosite:netflix", alias:["奈飞","网飞","netflix","nf"], d:["netflix.com","nflxvideo.net","nflximg.net","nflxext.com"]},
+  google:   {zh:"Google", raw:"geosite:google", alias:["谷歌","google"], d:["google.com","googleapis.com","gstatic.com","gmail.com","google.co.jp"]},
+  youtube:  {zh:"YouTube", raw:"geosite:youtube", alias:["油管","youtube","yt"], d:["youtube.com","googlevideo.com","ytimg.com","youtu.be"]},
+  telegram: {zh:"Telegram", raw:"geosite:telegram + geoip:telegram", alias:["电报","tg","telegram"], d:["telegram.org","t.me","telegra.ph"], ip:["91.108.0.0/16","149.154.160.0/20"]},
+  ai:       {zh:"AI 服务（ChatGPT / Claude / Gemini）", raw:"geosite:category-ai-!cn", alias:["ai","chatgpt","openai","claude","gemini","人工智能"], d:["openai.com","chatgpt.com","oaistatic.com","claude.ai","anthropic.com","gemini.google.com"]},
+  disney:   {zh:"Disney+", raw:"geosite:disney", alias:["迪士尼","disney"], d:["disneyplus.com","bamgrid.com","disney-plus.net"]},
+  spotify:  {zh:"Spotify", raw:"geosite:spotify", alias:["spotify","音乐"], d:["spotify.com","scdn.co","spotifycdn.com"]},
+  tiktok:   {zh:"TikTok", raw:"geosite:tiktok", alias:["tiktok","抖音国际"], d:["tiktok.com","tiktokv.com","tiktokcdn.com"]},
+  apple:    {zh:"Apple", raw:"geosite:apple", alias:["苹果","apple","icloud"], d:["apple.com","icloud.com","mzstatic.com"]},
+  microsoft:{zh:"Microsoft", raw:"geosite:microsoft", alias:["微软","microsoft","office","outlook"], d:["microsoft.com","live.com","office.com","outlook.com","bing.com"]},
+  steam:    {zh:"Steam", raw:"geosite:steam", alias:["steam","游戏"], d:["steampowered.com","steamcommunity.com","steamstatic.com"]},
+  github:   {zh:"GitHub", raw:"geosite:github", alias:["github","git"], d:["github.com","githubusercontent.com","github.io"]},
+  twitter:  {zh:"X / Twitter", raw:"geosite:twitter", alias:["推特","twitter","x"], d:["twitter.com","x.com","twimg.com"]},
+};
+const SERVICE_CATALOG = [
+  {key:"netflix",  name:"Netflix",  emoji:"🎬", cats:["netflix"]},
+  {key:"google",   name:"Google",   emoji:"🔍", cats:["google"]},
+  {key:"youtube",  name:"YouTube",  emoji:"📺", cats:["youtube"]},
+  {key:"telegram", name:"Telegram", emoji:"✈️", cats:["telegram"]},
+  {key:"ai",       name:"AI 服务",  emoji:"🤖", cats:["ai"]},
+  {key:"disney",   name:"Disney+",  emoji:"🏰", cats:["disney"]},
+  {key:"spotify",  name:"Spotify",  emoji:"🎵", cats:["spotify"]},
+  {key:"tiktok",   name:"TikTok",   emoji:"🎵", cats:["tiktok"]},
+  {key:"apple",    name:"Apple",    emoji:"🍎", cats:["apple"]},
+  {key:"microsoft",name:"Microsoft",emoji:"🪟", cats:["microsoft"]},
+  {key:"steam",    name:"Steam",    emoji:"🎮", cats:["steam"]},
+  {key:"github",   name:"GitHub",   emoji:"🐙", cats:["github"]},
+  {key:"twitter",  name:"X / Twitter", emoji:"🐦", cats:["twitter"]},
+];
+
+/* ───── 状态 ───── */
+const cat = id => ({k:"cat", id});
+function recommended(){
+  return {
+    mode:"rules",
+    block:[cat("ads")],
+    direct:[cat("private"), cat("cn"), cat("cnip")],
+    services:[
+      svc("netflix", "e:3", ["e:4","r:JP"]),
+      svc("google",  "e:5", ["r:KR"]),
+      svc("youtube", "e:1", ["r:HK"]),
+      svc("telegram","e:7", ["r:SG"]),
+      svc("ai",      "e:8", ["r:US"]),
+    ],
+    rest:"r:HK",
+    tagGroups:["解锁"],
+    clashUrl:"https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/{kind}/{name}.list",
+    singUrl:"https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/{kind}/{name}.srs",
+    dns:{mode:"recommended", fakeip:true, cn:["https://223.5.5.5/dns-query","https://doh.pub/dns-query"], intl:["https://1.1.1.1/dns-query","https://8.8.8.8/dns-query"]},
+  };
+}
+function svc(key, primary, backups){
+  const c = SERVICE_CATALOG.find(s=>s.key===key);
+  return {key, name:c.name, emoji:c.emoji, items:c.cats.map(cat), primary, backups, open:false};
+}
+const KEY="akari-routing-mock-v1";
+let saved = load() || recommended();
+if(!saved.dns) saved.dns=recommended().dns;
+let state = clone(saved);
+function clone(x){return JSON.parse(JSON.stringify(x))}
+function load(){try{const s=localStorage.getItem(KEY);return s?JSON.parse(s):null}catch{return null}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(saved))}catch{}}
+const strip = s => JSON.stringify({...s, services:s.services.map(v=>({...v,open:false}))});
+const dirty = () => strip(state)!==strip(saved);
+
+/* ───── 名称与引用 ───── */
+const esc = s => String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function refName(r){
+  if(!r) return "（未选）";
+  const [t,v]=r.split(":");
+  if(t==="e"){const e=ENTRANCES.find(x=>x.id==v);return e?e.name:"（已删除的线路）";}
+  if(t==="r") return REGIONS[v]||v;
+  if(t==="t") return "🏷 "+v;
+  if(t==="all") return "全部节点（自动）";
+  return r;
+}
+const refOptions = (withEntr=true) => {
+  let h="";
+  if(withEntr){
+    for(const [code,lab] of Object.entries(REGIONS)){
+      const es=ENTRANCES.filter(e=>e.region===code);
+      if(!es.length) continue;
+      h+=`<optgroup label="${esc(lab)} 的线路">`+es.map(e=>`<option value="e:${e.id}">${esc(e.name)}${e.tags.length?" · "+esc(e.tags.join("/")):""}</option>`).join("")+`</optgroup>`;
+    }
+  }
+  h+=`<optgroup label="地区组（自动选最快）">`+Object.entries(REGIONS).map(([c,l])=>`<option value="r:${c}">${esc(l)}</option>`).join("")+`</optgroup>`;
+  if(state.tagGroups.length) h+=`<optgroup label="标签组">`+state.tagGroups.map(t=>`<option value="t:${esc(t)}">🏷 ${esc(t)}</option>`).join("")+`</optgroup>`;
+  h+=`<option value="all">全部节点（自动）</option>`;
+  return h;
+};
+function itemLabel(it){
+  if(it.k==="url"){
+    const st=it.err?`下载失败：${it.err}`:it.rules?`${it.rules.length} 条规则`+(it.unsupported?`，${it.unsupported} 条 sing-box 不支持`:""):"下载中…";
+    return {name:`${it.name}（${st}）`, raw:it.v, kind:"远程规则集"};
+  }
+  if(it.k==="cat") return {name:CATS[it.id].zh, raw:CATS[it.id].raw, kind:"分类"};
+  if(it.k==="ip") return {name:it.v, raw:"IP-CIDR", kind:"IP 段"};
+  const m={suffix:["及子域名","域名后缀"],exact:["（仅此域名）","精确域名"],keyword:["包含关键词","关键词"]}[it.m];
+  return it.m==="keyword" ? {name:`网址包含「${it.v}」`, raw:"DOMAIN-KEYWORD", kind:m[1]} : {name:it.v+" "+m[0], raw:it.m==="suffix"?"DOMAIN-SUFFIX":"DOMAIN", kind:m[1]};
+}
+const itemKey = it => it.k==="url"?"u:"+it.v : it.k==="cat"?"c:"+it.id : it.k==="ip"?"i:"+it.v : "d:"+it.m+":"+it.v;
+
+/* 所有分区按优先级 */
+function sections(){
+  const out=[{id:"block", title:"拦截", desc:"直接拒绝连接", tile:"t-block", icon:"🚫", items:state.block}];
+  out.push({id:"direct", title:"直连（不走代理）", desc:"局域网、国内网站等", tile:"t-direct", icon:"🏠", items:state.direct});
+  state.services.forEach((s,i)=>out.push({id:"svc"+i, svc:s, idx:i, title:s.emoji+" "+s.name, tile:"t-svc", icon:s.emoji, items:s.items}));
+  return out;
+}
+/* 冲突：同一条目出现在多个分区，后面的不生效 */
+function conflicts(){
+  const seen=new Map(), dup=new Map();
+  for(const sec of sections()) for(const it of sec.items){
+    const k=itemKey(it);
+    if(seen.has(k)) dup.set(sec.id+"|"+k, seen.get(k)); else seen.set(k, sec.title);
+  }
+  return dup;
+}
+
+/* ───── 渲染：编辑区 ───── */
+const $ = s => document.querySelector(s);
+function render(){
+  document.querySelectorAll("#mode button").forEach(b=>b.setAttribute("aria-pressed", String(b.dataset.mode===state.mode)));
+  const dup=conflicts(), global=state.mode==="global";
+  let h="";
+  if(global) h+=`<div class="global-note">全局代理：除局域网外，全部流量走「默认代理」。下面的分流设置保留但暂不生效。</div>`;
+  h+=`<div class="${global?"dim":""}">`;
+  for(const sec of sections()){
+    h+=`<div class="sec" data-sec="${sec.id}"><div class="sec-h"><div class="tile ${sec.tile}">${sec.icon}</div><div class="grow">`;
+    if(sec.svc){
+      const s=sec.svc;
+      h+=`<div class="sec-title">${esc(s.name)}</div><div class="route">走 `+routeChips(s)+`</div></div>`;
+      h+=`<div class="order"><button data-act="up" data-i="${sec.idx}" title="上移（优先）">↑</button><button data-act="down" data-i="${sec.idx}" title="下移">↓</button></div>`;
+      h+=`<button class="btn sm" data-act="lines" data-i="${sec.idx}">${s.open?"收起":"选择线路"}</button>`;
+      h+=`<button class="btn sm icon" data-act="delsvc" data-i="${sec.idx}" title="删除这个服务分流">✕</button></div>`;
+      if(s.open) h+=linesEditor(s, sec.idx);
+    }else{
+      h+=`<div class="sec-title">${sec.title}</div><div class="sec-desc">${sec.desc}</div></div></div>`;
+    }
+    h+=`<div class="items">`;
+    sec.items.forEach((it,j)=>{
+      const L=itemLabel(it), d=dup.get(sec.id+"|"+itemKey(it));
+      const kindBtn = it.k==="d" ? `<button class="kind" data-act="kind" data-sec="${sec.id}" data-j="${j}" title="点击切换：后缀 / 精确 / 关键词">${L.kind} ⇄</button>` : `<span class="kind" style="cursor:default">${L.kind}</span>`;
+      h+=`<div class="item${d?" conflict":""}"><span class="name">${esc(L.name)}</span>${kindBtn}<span class="raw">${esc(L.raw)}</span>`+
+         (d?`<span class="chip warn">已在「${esc(d)}」里，这里不生效</span>`:"")+
+         `<button class="x" data-act="del" data-sec="${sec.id}" data-j="${j}" aria-label="删除">✕</button></div>`;
+    });
+    if(!sec.items.length) h+=`<div class="muted" style="padding:4px 8px;font-size:12.5px">还没有内容</div>`;
+    h+=`</div><div class="adder"><input data-add="${sec.id}" placeholder="+ 添加网站、IP 段、分类或规则集链接（如 example.com、奈飞、https://…/Claude.yaml）" autocomplete="off"><div class="sugg"></div></div></div>`;
+  }
+  h+=`</div>`;
+  // 添加服务
+  const unused=SERVICE_CATALOG.filter(c=>!state.services.some(s=>s.key===c.key));
+  h+=`<div class="addsvc ${global?"dim":""}"><span class="muted">添加服务分流：</span>`+
+     unused.map(c=>`<button class="btn sm" data-act="addsvc" data-key="${c.key}">${c.emoji} ${esc(c.name)}</button>`).join("")+
+     `<button class="btn sm ghost" data-act="customsvc">+ 自定义服务</button></div>`;
+  // 其余
+  h+=`<div class="sec"><div class="sec-h"><div class="tile t-rest">🌐</div><div class="grow"><div class="sec-title">其余全部 → 默认代理</div><div class="sec-desc">上面都没命中的流量；用户在客户端里也能切换</div></div>`+
+     `<select data-act="rest">${refOptions()}</select></div></div>`;
+  $("#editor").innerHTML=h;
+  const rs=$("#editor select[data-act=rest]"); if(rs) rs.value=state.rest;
+  $("#editor").querySelectorAll("select[data-act=primary]").forEach(sel=>sel.value=state.services[sel.dataset.i].primary||"");
+  renderDns(); renderAdvanced(); renderTab(); renderSummary(); runTest(); renderSave();
+}
+function routeChips(s){
+  const chain=[s.primary,...s.backups].filter(Boolean);
+  if(!chain.length) return `<span class="chip warn">未选线路 → 走默认代理</span>`;
+  return chain.map((r,i)=>`<span class="chip ${i===0?"primary":""}">${esc(refName(r))}</span>`).join(`<span class="arrow">→</span>`)+
+    (chain.length>1?`<span class="muted">（挂了按顺序切换）</span>`:"");
+}
+function linesEditor(s,i){
+  let h=`<div class="lines"><div class="row"><label>首选</label><select data-act="primary" data-i="${i}"><option value="">（不指定，走默认代理）</option>${refOptions()}</select></div>`;
+  h+=`<div class="row" style="align-items:flex-start"><label style="padding-top:5px">备用</label><div style="display:flex;flex-direction:column;gap:6px;flex:1">`;
+  s.backups.forEach((b,j)=>{
+    h+=`<div class="bk"><span class="n">${j+1}</span><span style="flex:1">${esc(refName(b))}</span>`+
+       `<button data-act="bkup" data-i="${i}" data-j="${j}" title="上移">↑</button><button data-act="bkdown" data-i="${i}" data-j="${j}" title="下移">↓</button><button data-act="bkdel" data-i="${i}" data-j="${j}" title="移除">✕</button></div>`;
+  });
+  h+=`<div style="display:flex;gap:6px;flex-wrap:wrap"><select data-act="bknew" data-i="${i}"><option value="">+ 添加备用线路或地区组…</option>${refOptions()}</select></div></div></div>`;
+  h+=`<div class="help">客户端里默认用「推荐（自动容灾）」：首选正常就用首选，挂了按备用顺序切换，恢复后切回。建议最后放一个地区组兜底。</div></div>`;
+  return h;
+}
+function sectionItems(id){
+  if(id==="block") return state.block;
+  if(id==="direct") return state.direct;
+  return state.services[+id.slice(3)].items;
+}
+
+/* ───── 输入自动识别 ───── */
+function parseInput(raw){
+  let t=raw.trim(); if(!t) return [];
+  const out=[];
+  if(/^https:\/\/\S+$/i.test(t)){
+    const file=decodeURIComponent(t.split(/[?#]/)[0].split("/").pop()||"规则集");
+    return [{group:"远程规则集", label:`导入 ${file}`, hint:"下载并校验", item:{k:"url", v:t, name:file.replace(/\.(ya?ml|list|txt)$/i,"")}}];
+  }
+  if(/^http:\/\//i.test(t)) return [{group:"远程规则集", label:"只支持 https 链接", hint:"", item:null}];
+  if(/^[a-z]+:\/\//i.test(t)){try{t=new URL(t).hostname}catch{}}
+  t=t.replace(/\/.*$/,"").replace(/^\*\./,"");
+  const ip=t.match(/^(\d{1,3}(?:\.\d{1,3}){3})(\/\d{1,2})?$/);
+  if(ip) out.push({label:`IP 段 ${ip[1]}${ip[2]||"/32"}`, hint:"IP-CIDR", item:{k:"ip", v:ip[1]+(ip[2]||"/32")}});
+  else if(/^[a-z0-9-]+(\.[a-z0-9-]+)+$/i.test(t)){
+    const d=t.toLowerCase().replace(/^www\./,"");
+    out.push({label:`${d} 及子域名`, hint:"域名后缀", item:{k:"d", m:"suffix", v:d}});
+    out.push({label:`仅 ${t.toLowerCase()}`, hint:"精确域名", item:{k:"d", m:"exact", v:t.toLowerCase()}});
+  }
+  const q=raw.trim().toLowerCase();
+  const hits=Object.entries(CATS).filter(([id,c])=>c.zh.toLowerCase().includes(q)||c.raw.includes(q)||c.alias.some(a=>a.includes(q)||q.includes(a)&&a.length>1));
+  hits.slice(0,6).forEach(([id,c])=>out.push({group:"分类", label:c.zh, hint:c.raw, item:cat(id)}));
+  if(!ip && /^[a-z0-9-]{2,}$/i.test(q) && !q.includes(".")) out.push({label:`网址包含「${q}」`, hint:"关键词", item:{k:"d", m:"keyword", v:q}});
+  return out;
+}
+let sugg={el:null, opts:[], sel:0, sec:null};
+function showSugg(input){
+  const box=input.nextElementSibling, opts=parseInput(input.value);
+  sugg={el:box, opts, sel:0, sec:input.dataset.add};
+  if(!opts.length){box.classList.remove("open");return;}
+  let h="", lastG=null;
+  opts.forEach((o,i)=>{
+    const g=o.group||"识别为";
+    if(g!==lastG){h+=`<div class="lab">${g}</div>`;lastG=g;}
+    h+=`<button data-pick="${i}" aria-selected="${i===0}">${esc(o.label)}<span class="hint">${esc(o.hint)}</span></button>`;
+  });
+  box.innerHTML=h; box.classList.add("open");
+}
+function pick(i){
+  const o=sugg.opts[i]; if(!o||!o.item) return;
+  const list=sectionItems(sugg.sec);
+  if(!list.some(x=>itemKey(x)===itemKey(o.item))){ const it={...o.item}; list.push(it); if(it.k==="url") fetchRuleSet(it); }
+  render();
+  const inp=document.querySelector(`input[data-add="${sugg.sec}"]`); if(inp) inp.focus();
+}
+
+/* ───── 远程规则集：下载、解析（样稿在浏览器里下载；真实实现由面板下载、校验并转换给 sing-box） ───── */
+function parseRuleSet(text){
+  const rules=[]; let unsupported=0;
+  for(let line of text.split(/\r?\n/)){
+    line=line.trim();
+    if(!line||line.startsWith("#")||line.startsWith("//")||/^payload\s*:/.test(line)) continue;
+    line=line.replace(/^-\s*/,"").replace(/^['"]|['"]$/g,"").trim();
+    if(!line) continue;
+    const parts=line.split(",").map(x=>x.trim());
+    if(parts.length===1){
+      const v=parts[0];
+      if(/^\d{1,3}(\.\d{1,3}){3}\/\d+$/.test(v)) rules.push({t:"ip",v});
+      else if(v.startsWith("+.")||v.startsWith(".")) rules.push({t:"suffix",v:v.replace(/^\+?\./,"")});
+      else if(v.includes(":")) unsupported++;
+      else rules.push({t:"exact",v});
+      continue;
+    }
+    const [type,v]=parts, T=type.toUpperCase();
+    if(T==="DOMAIN") rules.push({t:"exact",v:v.toLowerCase()});
+    else if(T==="DOMAIN-SUFFIX") rules.push({t:"suffix",v:v.toLowerCase()});
+    else if(T==="DOMAIN-KEYWORD") rules.push({t:"keyword",v:v.toLowerCase()});
+    else if(T==="IP-CIDR") rules.push({t:"ip",v});
+    else if(T==="IP-CIDR6"||T==="IP-ASN") rules.push({t:"other",v:line});
+    else { rules.push({t:"other",v:line}); unsupported++; }
+  }
+  return {rules, unsupported};
+}
+async function fetchRuleSet(it){
+  try{
+    const ctl=new AbortController(), tm=setTimeout(()=>ctl.abort(),15000);
+    const r=await fetch(it.v,{signal:ctl.signal}); clearTimeout(tm);
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    const text=await r.text();
+    if(text.length>5e6) throw new Error("文件超过 5 MB");
+    const {rules,unsupported}=parseRuleSet(text);
+    if(!rules.length) throw new Error("没有识别到任何规则");
+    it.rules=rules; it.unsupported=unsupported; it.format=/\.ya?ml(\?|$)/i.test(it.v)?"yaml":"text"; delete it.err;
+    toast(`已导入「${it.name}」：${rules.length} 条规则`);
+  }catch(e){ it.err=e.name==="AbortError"?"超时":e.message; }
+  render();
+}
+
+/* ───── 测试 ───── */
+function inCidr(ip,cidr){
+  const [b,bits]=cidr.split("/"), n=s=>s.split(".").reduce((a,x)=>(a<<8)+(+x),0)>>>0;
+  const m=bits==0?0:(~0<<(32-bits))>>>0; return (n(ip)&m)===(n(b)&m);
+}
+function matchItem(it,host,isIp){
+  if(it.k==="url"){
+    for(const r of it.rules||[]){
+      if(r.t==="ip"&&isIp&&inCidr(host,r.v)) return `规则集「${it.name}」的 ${r.v}`;
+      if(isIp||r.t==="ip"||r.t==="other") continue;
+      if(r.t==="exact"&&host===r.v) return `规则集「${it.name}」的 ${r.v}`;
+      if(r.t==="suffix"&&(host===r.v||host.endsWith("."+r.v))) return `规则集「${it.name}」的 ${r.v}`;
+      if(r.t==="keyword"&&host.includes(r.v)) return `规则集「${it.name}」的关键词 ${r.v}`;
+    }
+    return null;
+  }
+  if(it.k==="ip") return isIp&&inCidr(host,it.v)?`IP 段 ${it.v}`:null;
+  if(it.k==="d"){
+    if(isIp) return null;
+    if(it.m==="exact") return host===it.v?`域名 ${it.v}`:null;
+    if(it.m==="suffix") return (host===it.v||host.endsWith("."+it.v))?`${it.v} 及子域名`:null;
+    return host.includes(it.v)?`包含「${it.v}」`:null;
+  }
+  const c=CATS[it.id];
+  if(isIp) return (c.ip||[]).some(r=>inCidr(host,r))?`分类「${c.zh}」`:null;
+  return (c.d||[]).some(d=>d.startsWith(".")?host.endsWith(d):(host===d||host.endsWith("."+d)))?`分类「${c.zh}」`:null;
+}
+function resolve(q){
+  let host=q.trim().toLowerCase(); if(!host) return null;
+  if(/^[a-z]+:\/\//.test(host)){try{host=new URL(host).hostname}catch{}}
+  host=host.replace(/\/.*$/,"").replace(/:\d+$/,"");
+  const isIp=/^\d{1,3}(\.\d{1,3}){3}$/.test(host);
+  if(state.mode==="global"){
+    const p=CATS.private; const lan=isIp?(p.ip.some(r=>inCidr(host,r))):p.d.includes(host);
+    return lan?{to:"直连",tone:"green",why:"全局代理模式：局域网直连"}:{to:"默认代理",chain:[state.rest],why:"全局代理模式：其余全部走默认代理"};
+  }
+  for(const sec of sections()) for(const it of sec.items){
+    const m=matchItem(it,host,isIp); if(!m) continue;
+    if(sec.id==="block") return {to:"拦截",tone:"red",why:`命中「拦截」里的 ${m}`};
+    if(sec.id==="direct") return {to:"直连",tone:"green",why:`命中「直连」里的 ${m}`};
+    const s=sec.svc, chain=[s.primary,...s.backups].filter(Boolean);
+    return {to:s.emoji+" "+s.name, chain:chain.length?chain:[state.rest], fallback:!chain.length, why:`命中「${s.name}」里的 ${m}`};
+  }
+  return {to:"默认代理", chain:[state.rest], why:"上面都没命中 → 其余全部"};
+}
+function runTest(){
+  const r=resolve($("#testq").value), box=$("#result");
+  if(!r){box.innerHTML=`<div class="muted" style="font-size:12.5px">输入后立即显示结果</div>`;return;}
+  const color=r.tone==="red"?"var(--red)":r.tone==="green"?"var(--green)":"var(--brand)";
+  let h=`<div class="big" style="color:${color}">${esc(r.to)}</div>`;
+  if(r.chain){
+    h+=`<div class="route" style="margin-top:6px">实际线路：`+r.chain.map((c,i)=>`<span class="chip ${i===0?"primary":""}">${esc(refName(c))}</span>`).join(`<span class="arrow">→</span>`)+`</div>`;
+    if(r.fallback) h+=`<div class="why">这个服务没选线路，走默认代理</div>`;
+  }
+  h+=`<div class="why">${esc(r.why)}</div>`;
+  box.innerHTML=h;
+}
+const EXAMPLES=["claude.ai","www.netflix.com","youtube.com","chat.openai.com","www.baidu.com","doubleclick.net","t.me","192.168.1.1","github.com","114.114.114.114"];
+$("#examples").innerHTML=EXAMPLES.map(e=>`<button data-ex="${e}">${e}</button>`).join("");
+
+/* ───── 一句话 ───── */
+function renderSummary(){
+  if(state.mode==="global"){ $("#summary").innerHTML=`<b>全局代理</b>：局域网直连，其余全部走 <b>${esc(refName(state.rest))}</b>。`; return; }
+  const parts=[];
+  if(state.block.length) parts.push(`拦截 <b>${state.block.map(i=>esc(itemLabel(i).name)).join("、")}</b>`);
+  if(state.direct.length) parts.push(`<b>${state.direct.map(i=>esc(itemLabel(i).name)).join("、")}</b> 直连`);
+  state.services.forEach(s=>{
+    const chain=[s.primary,...s.backups].filter(Boolean);
+    parts.push(chain.length?`${esc(s.name)} 走 <b>${esc(refName(chain[0]))}</b>${chain.length>1?`（备用 ${chain.length-1}）`:""}`:`${esc(s.name)} 走默认代理`);
+  });
+  parts.push(`其余走 <b>${esc(refName(state.rest))}</b>`);
+  parts.push(state.dns.mode==="client"?"DNS 用客户端自己的设置":`DNS：国内网站与节点地址用国内 DNS，其余经代理用国外 DNS${state.dns.fakeip?"（Fake-IP）":""}`);
+  $("#summary").innerHTML=parts.join("；")+"。";
+}
+
+/* ───── DNS ───── */
+const DNS_MODES={recommended:"推荐（下发）", client:"不下发（用客户端自己的）", custom:"自定义"};
+function renderDns(){
+  const d=state.dns, ro=d.mode==="recommended";
+  let h=`<div class="sec"><div class="sec-h"><div class="tile t-rest">🧭</div><div class="grow"><div class="sec-title">DNS（域名解析）</div>`+
+    `<div class="sec-desc">决定客户端用哪个 DNS 查网址。国内网站用国内 DNS 更快，国外网站经代理查询防污染。</div></div>`+
+    `<div class="seg">${Object.entries(DNS_MODES).map(([k,v])=>`<button data-dns="${k}" aria-pressed="${d.mode===k}">${v}</button>`).join("")}</div></div>`;
+  if(d.mode==="client"){
+    h+=`<div class="help" style="margin-left:40px">订阅里不带 DNS 设置，由用户客户端自己的 DNS 设置决定（如 Clash Verge 的「DNS 覆写」）。分流规则照常生效，但国外网站可能被 DNS 污染。</div></div>`;
+    $("#dns").innerHTML=h; return;
+  }
+  const area=(key,title,desc,maps)=>`<div style="margin:10px 0 0 40px"><div style="font-weight:550">${title}</div><div class="muted" style="font-size:12px">${desc}</div>`+
+    `<div class="muted" style="font-size:11.5px;font-family:ui-monospace,Menlo,monospace;margin:2px 0 4px">${maps}</div>`+
+    `<textarea data-dnslist="${key}" rows="2" ${ro?"readonly":""} style="width:100%;max-width:520px;border:1px solid var(--line-2);background:${ro?"var(--panel-2)":"var(--panel)"};border-radius:8px;padding:6px 9px;font:12px ui-monospace,Menlo,monospace;color:var(--text)">${esc(d[key].join("\n"))}</textarea></div>`;
+  h+=area("cn","国内 DNS","解析国内网站，以及解析线路（节点）本身的地址——必须不经代理也能用，否则连不上节点。","proxy-server-nameserver · nameserver-policy(国内/局域网) · default-nameserver");
+  h+=area("intl","国外 DNS","解析其余网站，经代理查询（按分流规则走），避免被污染。","nameserver · respect-rules: true");
+  h+=`<label style="display:flex;gap:8px;align-items:center;margin:10px 0 0 40px"><input type="checkbox" data-dnsfake ${d.fakeip?"checked":""} ${ro?"disabled":""}> 使用 Fake-IP（推荐：打开网页更快；少数局域网 / 游戏场景可关闭）</label>`;
+  if(ro) h+=`<div class="help" style="margin-left:40px">推荐设置不可编辑；要改请切到「自定义」。</div>`;
+  h+=`</div>`;
+  $("#dns").innerHTML=h;
+}
+function dnsYaml(){
+  const d=state.dns; if(d.mode==="client") return ["# dns：不下发，用客户端自己的设置"];
+  const q=s=>JSON.stringify(s), ips=d.cn.map(u=>{const m=u.match(/^(?:https?:\/\/|tls:\/\/)?(\d{1,3}(?:\.\d{1,3}){3})/);return m?m[1]:null}).filter(Boolean);
+  const L=["dns:","  enable: true","  ipv6: false",
+    `  enhanced-mode: ${d.fakeip?"fake-ip":"redir-host"}`];
+  if(d.fakeip) L.push("  fake-ip-range: 198.18.0.1/16",`  fake-ip-filter: ["+.lan", "+.local", "rule-set:geosite-private", "+.msftconnecttest.com", "time.*.com"]`);
+  L.push(`  default-nameserver: [${(ips.length?ips:["223.5.5.5","119.29.29.29"]).map(q).join(", ")}]`,
+    `  proxy-server-nameserver: [${d.cn.map(q).join(", ")}]`,
+    `  nameserver-policy:`,`    "rule-set:geosite-cn,geosite-private": [${d.cn.map(q).join(", ")}]`,
+    `  nameserver: [${d.intl.map(q).join(", ")}]`,`  respect-rules: true`);
+  return L;
+}
+
+/* ───── 高级 ───── */
+function renderAdvanced(){
+  const regionRows=Object.entries(REGIONS).map(([c,l])=>`<span class="chip">${esc(l)}：${ENTRANCES.filter(e=>e.region===c).map(e=>esc(e.name)).join("、")}</span>`).join(" ");
+  $("#advanced").innerHTML=
+    `<div style="font-weight:600;margin-bottom:6px">线路分组</div>`+
+    `<div class="muted" style="font-size:12.5px">地区组按入口的地区自动生成（组内自动选延迟最低的）：</div><div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 12px">${regionRows}</div>`+
+    `<div class="muted" style="font-size:12.5px">按标签再生成分组（如「解锁」= 能看 Netflix 的线路）：</div><div style="display:flex;gap:14px;margin:8px 0 14px">`+
+    TAGS.map(t=>`<label style="display:flex;gap:6px;align-items:center"><input type="checkbox" data-act="tag" value="${esc(t)}" ${state.tagGroups.includes(t)?"checked":""}> 🏷 ${esc(t)}（${ENTRANCES.filter(e=>e.tags.includes(t)).map(e=>esc(e.name)).join("、")}）</label>`).join("")+`</div>`+
+    `<div style="font-weight:600;margin:4px 0 2px">规则库下载地址</div><div class="muted" style="font-size:12.5px">分类清单由用户的客户端自己下载。国内访问 jsDelivr 不稳时可换镜像；须含 {name}，可含 {kind}。</div>`+
+    `<div class="row"><label>Clash（文本列表）</label><input type="text" data-act="clashUrl" value="${esc(state.clashUrl)}"></div>`+
+    `<div class="row"><label>sing-box（.srs）</label><input type="text" data-act="singUrl" value="${esc(state.singUrl)}"></div>`;
+}
+
+/* ───── 客户端预览 / YAML ───── */
+let tab="client";
+function availableRegions(){return Object.keys(REGIONS).filter(c=>ENTRANCES.some(e=>e.region===c));}
+function groupsModel(){
+  const regs=availableRegions().map(c=>({name:REGIONS[c], type:"自动选最快", members:ENTRANCES.filter(e=>e.region===c).map(e=>e.name)}));
+  const tags=state.tagGroups.map(t=>({name:"🏷 "+t, type:"自动选最快", members:ENTRANCES.filter(e=>e.tags.includes(t)).map(e=>e.name)}));
+  const allNames=[...regs,...tags].map(g=>g.name);
+  const out=[{name:"🚀 默认代理", type:"手动选择", cur:refName(state.rest), members:[refName(state.rest),...allNames.filter(n=>n!==refName(state.rest)),"全部节点（自动）"]}];
+  if(state.mode==="rules") state.services.forEach(s=>{
+    const chain=[s.primary,...s.backups].filter(Boolean).map(refName);
+    const opts=chain.length?["推荐（自动容灾）",...chain]:["🚀 默认代理"];
+    out.push({name:s.emoji+" "+s.name, type:"手动选择", cur:opts[0], members:[...opts,...allNames.filter(n=>!chain.includes(n)),"全部节点（自动）","直连"], note:chain.length?`推荐 = ${chain.join(" → ")}（按顺序容灾）`:null});
+  });
+  return [...out,...regs,...tags];
+}
+function renderTab(){
+  document.querySelectorAll(".tabs button").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.tab===tab)));
+  if(tab==="client"){
+    $("#tabbody").innerHTML=`<div class="muted" style="font-size:12.5px;margin-bottom:8px">Clash Verge 的「代理」页大致如此：每个组都能点开切换，客户端会记住用户的选择。</div><div class="clientgrid">`+
+      groupsModel().map(g=>`<div class="cg"><div class="h"><span class="t">${esc(g.name)}</span><span class="ty">${g.type}</span></div>`+
+        (g.cur?`<div class="cur">当前：${esc(g.cur)}</div>`:"")+(g.note?`<div class="muted" style="font-size:12px">${esc(g.note)}</div>`:"")+
+        `<ul>${g.members.map(m=>`<li class="${m===g.cur?"on":""}">${esc(m)}</li>`).join("")}</ul></div>`).join("")+`</div>`;
+  }else{
+    $("#tabbody").innerHTML=`<pre class="yaml">${esc(yaml())}</pre>`;
+  }
+}
+function yaml(){
+  const L=[], ruleNames=new Set(), q=s=>JSON.stringify(s);
+  L.push("proxy-groups:");
+  const rs=refName(state.rest), regs=availableRegions().map(c=>REGIONS[c]), tags=state.tagGroups.map(t=>"🏷 "+t);
+  L.push(`  - {name: "🚀 默认代理", type: select, proxies: [${[rs,...regs.filter(n=>n!==rs),...tags,"♻️ 全部节点"].map(q).join(", ")}]}`);
+  if(state.mode==="rules") state.services.forEach(s=>{
+    const chain=[s.primary,...s.backups].filter(Boolean).map(refName);
+    if(chain.length){
+      L.push(`  - {name: ${q(s.emoji+" "+s.name)}, type: select, proxies: [${[`♻️ ${s.name} 推荐`,...chain,...regs.filter(n=>!chain.includes(n)),"♻️ 全部节点","DIRECT"].map(q).join(", ")}]}`);
+      L.push(`  - {name: ${q("♻️ "+s.name+" 推荐")}, type: fallback, proxies: [${chain.map(q).join(", ")}], url: "https://www.gstatic.com/generate_204", interval: 300}`);
+    }else L.push(`  - {name: ${q(s.emoji+" "+s.name)}, type: select, proxies: ["🚀 默认代理", ${regs.map(q).join(", ")}, "DIRECT"]}`);
+  });
+  availableRegions().forEach(c=>L.push(`  - {name: ${q(REGIONS[c])}, type: url-test, proxies: [${ENTRANCES.filter(e=>e.region===c).map(e=>q(e.name)).join(", ")}], url: "https://www.gstatic.com/generate_204", interval: 300}`));
+  state.tagGroups.forEach(t=>L.push(`  - {name: ${q("🏷 "+t)}, type: url-test, proxies: [${ENTRANCES.filter(e=>e.tags.includes(t)).map(e=>q(e.name)).join(", ")}]}`));
+  L.push(`  - {name: "♻️ 全部节点", type: url-test, proxies: [${ENTRANCES.map(e=>q(e.name)).join(", ")}]}`);
+  L.push("rules:");
+  const remotes=[];
+  const emit=(it,target)=>{
+    if(it.k==="url"){ const n="remote-"+it.name.toLowerCase().replace(/[^a-z0-9]+/g,"-"); remotes.push({n,it}); return L.push(`  - RULE-SET,${n},${target}`); }
+    if(it.k==="ip") return L.push(`  - IP-CIDR,${it.v},${target},no-resolve`);
+    if(it.k==="d") return L.push(`  - ${{suffix:"DOMAIN-SUFFIX",exact:"DOMAIN",keyword:"DOMAIN-KEYWORD"}[it.m]},${it.v},${target}`);
+    CATS[it.id].raw.split(" + ").forEach(r=>{const n=r.replace(":","-");ruleNames.add(r);L.push(`  - RULE-SET,${n},${target}`+(r.startsWith("geoip")?",no-resolve":""));});
+  };
+  if(state.mode==="global"){ L.push("  - RULE-SET,geosite-private,DIRECT","  - RULE-SET,geoip-private,DIRECT,no-resolve"); ruleNames.add("geosite:private"); ruleNames.add("geoip:private"); }
+  else{
+    state.block.forEach(i=>emit(i,"REJECT"));
+    state.direct.forEach(i=>emit(i,"DIRECT"));
+    state.services.forEach(s=>s.items.forEach(i=>emit(i,s.emoji+" "+s.name)));
+  }
+  L.push(`  - MATCH,🚀 默认代理`);
+  const P=["rule-providers:"];
+  [...ruleNames].forEach(r=>{const [k,n]=r.split(":");P.push(`  ${k}-${n}: {type: http, behavior: ${k==="geoip"?"ipcidr":"domain"}, format: text, url: "${state.clashUrl.replace("{kind}",k).replace("{name}",n)}", interval: 86400}`);});
+  remotes.forEach(({n,it})=>P.push(`  ${n}: {type: http, behavior: classical, format: ${it.format||"yaml"}, url: "${it.v}", interval: 86400}`));
+  return "# 节选：proxies 段（每条线路一项）省略\n"+dnsYaml().join("\n")+"\n"+L.join("\n")+"\n"+P.join("\n");
+}
+
+/* ───── 保存栏 ───── */
+function renderSave(){
+  const d=dirty(), bar=$("#savebar");
+  bar.classList.toggle("clean",!d);
+  $("#savemsg").textContent=d?"有未保存的修改 · 保存后，用户下次刷新订阅生效":"已保存";
+  $("#save").disabled=!d; $("#discard").disabled=!d;
+}
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove("show"),1800);}
+
+/* ───── 事件 ───── */
+document.addEventListener("click",e=>{
+  const b=e.target.closest("button,[data-ex]"); if(!b) return;
+  if(b.dataset.ex){ $("#testq").value=b.dataset.ex; runTest(); return; }
+  if(b.dataset.pick!==undefined){ pick(+b.dataset.pick); return; }
+  if(b.dataset.mode){ state.mode=b.dataset.mode; render(); return; }
+  if(b.dataset.dns){ if(b.dataset.dns==="recommended") state.dns={...recommended().dns}; else state.dns.mode=b.dataset.dns; render(); return; }
+  if(b.dataset.tab){ tab=b.dataset.tab; renderTab(); return; }
+  const a=b.dataset.act, i=+b.dataset.i, j=+b.dataset.j;
+  if(a==="del"){ sectionItems(b.dataset.sec).splice(j,1); render(); }
+  else if(a==="kind"){ const it=sectionItems(b.dataset.sec)[j]; it.m={suffix:"exact",exact:"keyword",keyword:"suffix"}[it.m]; if(it.m==="keyword") it.v=it.v.split(".").slice(-2,-1)[0]||it.v; render(); }
+  else if(a==="lines"){ state.services[i].open=!state.services[i].open; render(); }
+  else if(a==="up"&&i>0){ const s=state.services; [s[i-1],s[i]]=[s[i],s[i-1]]; render(); }
+  else if(a==="down"&&i<state.services.length-1){ const s=state.services; [s[i+1],s[i]]=[s[i],s[i+1]]; render(); }
+  else if(a==="delsvc"){ if(confirm(`删除「${state.services[i].name}」分流？它的网站会改走默认代理。`)){ state.services.splice(i,1); render(); } }
+  else if(a==="addsvc"){ const s=svc(b.dataset.key,"",[]); s.open=true; state.services.push(s); render(); }
+  else if(a==="customsvc"){ const n=prompt("服务名称（客户端里显示，例如：游戏加速）"); if(n&&n.trim()){ state.services.push({key:"c"+Date.now(),name:n.trim(),emoji:"⭐",items:[],primary:"",backups:[],open:true}); render(); } }
+  else if(a==="bkup"&&j>0){ const k=state.services[i].backups; [k[j-1],k[j]]=[k[j],k[j-1]]; render(); }
+  else if(a==="bkdown"){ const k=state.services[i].backups; if(j<k.length-1){[k[j+1],k[j]]=[k[j],k[j+1]]; render();} }
+  else if(a==="bkdel"){ state.services[i].backups.splice(j,1); render(); }
+});
+document.addEventListener("change",e=>{
+  const t=e.target, a=t.dataset.act, i=+t.dataset.i;
+  if(a==="rest"){ state.rest=t.value; render(); }
+  else if(a==="primary"){ state.services[i].primary=t.value; render(); }
+  else if(a==="bknew"&&t.value){ const s=state.services[i]; if(!s.backups.includes(t.value)&&s.primary!==t.value) s.backups.push(t.value); render(); }
+  else if(t.dataset.dnsfake!==undefined){ state.dns.fakeip=t.checked; render(); }
+  else if(t.dataset.dnslist){ state.dns[t.dataset.dnslist]=t.value.split(/\s*\n\s*/).map(x=>x.trim()).filter(Boolean); render(); }
+  else if(a==="tag"){ state.tagGroups=[...document.querySelectorAll("input[data-act=tag]:checked")].map(x=>x.value); render(); }
+});
+document.addEventListener("input",e=>{
+  const t=e.target;
+  if(t.dataset.add!==undefined) showSugg(t);
+  else if(t.id==="testq") runTest();
+  else if(t.dataset.act==="clashUrl"){ state.clashUrl=t.value; renderSave(); if(tab==="yaml") renderTab(); }
+  else if(t.dataset.act==="singUrl"){ state.singUrl=t.value; renderSave(); }
+});
+document.addEventListener("keydown",e=>{
+  const t=e.target; if(t.dataset.add===undefined||!sugg.el||!sugg.el.classList.contains("open")) return;
+  const btns=[...sugg.el.querySelectorAll("button")];
+  if(e.key==="ArrowDown"||e.key==="ArrowUp"){ e.preventDefault(); sugg.sel=(sugg.sel+(e.key==="ArrowDown"?1:-1)+btns.length)%btns.length; btns.forEach((b,k)=>b.setAttribute("aria-selected",String(k===sugg.sel))); }
+  else if(e.key==="Enter"){ e.preventDefault(); pick(sugg.sel); }
+  else if(e.key==="Escape"){ sugg.el.classList.remove("open"); }
+});
+document.addEventListener("focusout",e=>{ if(e.target.dataset&&e.target.dataset.add!==undefined) setTimeout(()=>{ if(sugg.el&&!sugg.el.contains(document.activeElement)) sugg.el.classList.remove("open"); },150); });
+$("#save").onclick=()=>{ saved=clone(state); saved.services.forEach(s=>s.open=false); persist(); renderSave(); toast("已保存（样稿：只存在本浏览器）"); };
+$("#discard").onclick=()=>{ state=clone(saved); render(); toast("已放弃修改"); };
+$("#reset").onclick=()=>{ if(confirm("恢复推荐设置？当前修改会被替换（保存后才生效）。")){ state=recommended(); render(); } };
+$("#theme").onclick=()=>{ const r=document.documentElement, dark=r.dataset.theme?r.dataset.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches; r.dataset.theme=dark?"light":"dark"; };
+window.addEventListener("beforeunload",e=>{ if(dirty()){ e.preventDefault(); e.returnValue=""; } });
+$("#testq").value="www.netflix.com";
+render();
+</script>
+</body>
+</html>
