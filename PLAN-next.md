@@ -137,3 +137,12 @@
 - 本地库测试有 3 个在原始 main 上也失败的用例（`w21_tests::site_name_setting`、`site_timezone_setting`、`mail::overrides::tests::edited_template_is_used_by_enqueue`，本地环境相关，`settings::init` 之后 `PUT /settings/site` 500），CI 上应通过；若 CI 也红则需排查。
 - 待绑定账户的占位地址未被 `email::parse` 拒绝（测试夹具大量用 `@test.invalid`）；风险极低（未验证、不收邮件、需猜中 UUID）。
 - 中心域名建议取稳定业务注册域的子域名（如 `passkey.akari.cc`），放 CDN 后面，不要轮换。
+
+## 订阅分流：服务分流 + 指定线路 + 容灾（2026-10-13 用户需求，取代 W30 的单一 PROXY 模板）
+- **服务组**：内置常用服务清单（Netflix、Google、YouTube、Telegram、OpenAI/AI、Disney+、Spotify、TikTok、Apple、Microsoft、Steam…，各自绑定 meta-rules-dat 的 geosite/geoip 名），运营者勾选启用；去广告、局域网/国内直连仍在最前，其余走「默认代理」。
+- **每个服务**：首选 = 一条具体入口；备用 = 有序列表（具体入口或地区组）→ Clash `fallback` 组「推荐（自动容灾）」（健康检查，首选恢复后切回）；sing-box 无 fallback，退化为同一组线路的 `urltest`（PR 里写明）；纯链接格式不受影响。
+- **客户端里**：服务组是 selector，默认「推荐（自动容灾）」，备选 = 首选/备用线路、全部地区组、全部节点、直连；用户只在客户端切换（客户端按组名记住，组名必须稳定），门户不做设置（用户裁决）。
+- **地区组**：按入口地区自动生成（`url-test`），另可按入口标签生成（如「解锁」「IPLC」），后台勾选。
+- **按用户生成**：只含该用户套餐可用的入口；首选/备用不可用则跳过，全空则回落默认代理；入口按 id 记录，改名自动跟随。
+- 后台「分流规则」页重做：先选模式（推荐 / 全局代理 / 自定义），服务列表配首选与备用，常用清单显示中文名，效果一句话预览 + 输入域名看命中哪条；规则集镜像地址收进「高级」。
+- 验证：mihomo `-t` 与 sing-box check 实际加载，黄金文件锁定输出。排期：#118 合并后单独 PR，随本次门户 + 后台一起发版。
