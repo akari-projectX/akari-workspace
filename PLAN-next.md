@@ -146,4 +146,5 @@
 - **按用户生成**：只含该用户套餐可用的入口；首选/备用不可用则跳过，全空则回落默认代理；入口按 id 记录，改名自动跟随。
 - 后台「分流规则」页重做：先选模式（推荐 / 全局代理 / 自定义），服务列表配首选与备用，常用清单显示中文名，效果一句话预览 + 输入域名看命中哪条；规则集镜像地址收进「高级」。
 - **远程规则集**（用户 2026-10-13）：任一分区可粘贴 https 规则集链接（Clash `.yaml`（payload）/`.list`/`.txt`，如 blackmatrix7、ACL4SSR）。Clash 订阅原样作 rule-provider（behavior classical）；sing-box 由面板下载、转换为 source/.srs、在订阅域名下托管、每日刷新（不支持的规则类型跳过并在后台标出条数）；保存时面板下载校验（https only、大小与超时上限、仅管理员），显示条数与样例，测试框按真实内容匹配。交互样稿：`design/routing-mock/index.html`。
+- **DNS**（用户 2026-10-13）：现状——Clash 订阅不带 `dns`（全靠客户端），sing-box 写死 远程 1.1.1.1（经代理）+ 本地 223.5.5.5（cn 直连清单）。改为后台「DNS」三档：推荐（下发，默认）/ 不下发 / 自定义。Clash：`enhanced-mode` fake-ip（可关）+ `fake-ip-filter`、`default-nameserver`（国内 IP 字面量，用于解析 DoH 主机名）、**`proxy-server-nameserver` = 国内 DNS（解析节点/入口自身的域名，不经代理）**、`nameserver-policy` 国内/局域网清单 → 国内 DNS、**`nameserver` = 国外 DoH** + `respect-rules: true`（经代理按分流规则查询）；nameserver-policy 只引用实际存在的 rule-provider。sing-box 对应：local/remote 服务器、`route.default_domain_resolver` = local（等同 proxy-server-nameserver）、dns.rules 国内清单 → local、可选 fakeip。样稿已加 DNS 卡片。
 - 验证：mihomo `-t` 与 sing-box check 实际加载，黄金文件锁定输出。排期：#118 合并后单独 PR，随本次门户 + 后台一起发版。
