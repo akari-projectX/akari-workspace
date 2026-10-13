@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>商店套餐卡片 · 样稿</title>
+<style>
+/* 令牌取自门户 spa/src/index.css（2026-10-13 与后台对齐后的数值） */
+:root{
+  --bg:#f7f8fa; --card:#fff; --fg:#12151c; --body:#3a404c; --muted:#5c6473; --faint:#737b8a;
+  --line:rgba(17,24,39,.08); --line2:rgba(17,24,39,.14); --secondary:#e9ebf0;
+  --brand:#2563eb; --brand-soft:rgba(37,99,235,.08); --ok:#15803d; --ok-soft:rgba(21,128,61,.09);
+  --warn:#b45309; --warn-soft:rgba(180,83,9,.09); --danger:#dc2626;
+  --r:12px; --r-lg:16px; --shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#141518; --card:#1c1d21; --fg:#eceef2; --body:#c9cdd5; --muted:#9aa1ad; --faint:#7b828e;
+  --line:rgba(255,255,255,.07); --line2:rgba(255,255,255,.13); --secondary:#26282d;
+  --brand:#4a9dff; --brand-soft:rgba(74,157,255,.12); --ok:#4ade80; --ok-soft:rgba(74,222,128,.12);
+  --warn:#fbbf24; --warn-soft:rgba(251,191,36,.12); --shadow:0 1px 2px rgba(0,0,0,.3);
+}}
+:root[data-theme=dark]{
+  --bg:#141518; --card:#1c1d21; --fg:#eceef2; --body:#c9cdd5; --muted:#9aa1ad; --faint:#7b828e;
+  --line:rgba(255,255,255,.07); --line2:rgba(255,255,255,.13); --secondary:#26282d;
+  --brand:#4a9dff; --brand-soft:rgba(74,157,255,.12); --ok:#4ade80; --ok-soft:rgba(74,222,128,.12);
+  --warn:#fbbf24; --warn-soft:rgba(251,191,36,.12); --shadow:0 1px 2px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.6 Inter,"Noto Sans SC",-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+.wrap{max-width:1128px;margin:0 auto;padding:0 20px}
+/* 页头（只示意，门户实际页头不变） */
+header{background:var(--card);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;align-items:center;gap:28px;height:60px}
+.logo{display:flex;font-weight:600;letter-spacing:.06em}
+.logo b{background:#12151c;color:#fff;padding:3px 10px;border-radius:4px 0 0 4px;font-weight:500}
+.logo i{background:#d4a02a;color:#12151c;padding:3px 8px;border-radius:0 4px 4px 0;font-style:normal}
+nav{display:flex;gap:22px;color:var(--muted);font-size:14px}
+nav a.on{color:var(--brand);font-weight:500}
+.tools{margin-left:auto;display:flex;gap:8px}
+.chip{border:1px solid var(--line2);background:var(--card);border-radius:8px;padding:4px 10px;font-size:12.5px;color:var(--muted);cursor:pointer}
+.chip[aria-pressed=true]{color:var(--fg);border-color:var(--fg)}
+/* 页面 */
+h1{font-size:26px;font-weight:600;margin:40px 0 4px;letter-spacing:-.01em}
+.sub{color:var(--muted);margin:0 0 28px}
+.cur{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:14px 18px;margin-bottom:32px;box-shadow:var(--shadow)}
+.cur .k{color:var(--muted);font-size:12.5px}
+.cur .v{font-weight:600}
+.meter{flex:1;min-width:180px}
+.bar{height:6px;border-radius:99px;background:var(--secondary);overflow:hidden;margin-top:6px}
+.bar span{display:block;height:100%;background:var(--brand);border-radius:99px}
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 14px}
+.sec-h h2{font-size:16px;font-weight:600;margin:0}
+.sec-h p{margin:0;color:var(--muted);font-size:13px}
+/* 卡片 */
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.grid.n1{grid-template-columns:minmax(260px,420px)}
+.grid.n2{grid-template-columns:repeat(2,minmax(260px,1fr))}
+@media (max-width:640px){.grid,.grid.n1,.grid.n2{grid-template-columns:1fr}}
+@media (max-width:640px){nav{display:none}.chip{white-space:nowrap}.pack{flex-wrap:wrap}.pack .p{margin-left:0}}
+.pack .cta,.chip{white-space:nowrap}
+.card{position:relative;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px 22px 20px;box-shadow:var(--shadow);transition:border-color var(--d,.16s)}
+.card:hover{border-color:var(--line2)}
+.card.current{border-color:var(--brand);box-shadow:0 0 0 1px var(--brand) inset,var(--shadow)}
+.card.off{opacity:.62}
+.top{display:flex;align-items:center;gap:8px;min-height:22px}
+.name{font-size:16px;font-weight:600}
+.tag{font-size:12px;line-height:20px;padding:0 8px;border-radius:6px;white-space:nowrap}
+.tag.now{background:var(--brand-soft);color:var(--brand)}
+.tag.rec{background:var(--secondary);color:var(--body)}
+.tag.warn{background:var(--warn-soft);color:var(--warn)}
+.desc{color:var(--muted);font-size:13px;margin:4px 0 0;min-height:21px}
+.price{margin:18px 0 2px;display:flex;align-items:baseline;gap:4px}
+.price .cny{font-size:15px;font-weight:600;align-self:flex-start;margin-top:6px}
+.price .num{font-size:34px;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.price .unit{color:var(--muted);font-size:13px}
+.periods{color:var(--muted);font-size:12.5px;min-height:20px}
+.periods b{color:var(--ok);font-weight:500;white-space:nowrap}
+.specs{display:grid;grid-template-columns:repeat(3,1fr);margin:18px 0 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.specs>div{padding:12px 4px;text-align:center}
+.specs>div+div{border-left:1px solid var(--line)}
+.specs .v{font-weight:600;font-size:15px}
+.specs .k{color:var(--faint);font-size:12px}
+ul.feat{list-style:none;margin:16px 0 0;padding:0;display:grid;gap:7px;color:var(--body);font-size:13.5px}
+ul.feat li{display:flex;gap:8px;align-items:flex-start}
+ul.feat li:before{content:"";flex:none;width:14px;height:14px;margin-top:4px;background:var(--ok);-webkit-mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>') center/contain no-repeat;mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M3 8.5l3 3 7-7" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>') center/contain no-repeat}
+.spacer{flex:1;min-height:18px}
+.cta{display:block;width:100%;height:42px;border-radius:10px;border:1px solid var(--line2);background:var(--card);font-weight:500;cursor:pointer;transition:background .16s,transform .1s}
+.cta:hover{background:var(--secondary)}
+.cta:active{transform:scale(.985)}
+.cta.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+.cta.primary:hover{filter:brightness(1.06)}
+.cta[disabled]{cursor:not-allowed;background:var(--secondary);color:var(--faint);border-color:transparent}
+.note{color:var(--faint);font-size:12px;text-align:center;margin-top:8px;min-height:18px}
+/* 重置包 */
+.pack{display:flex;align-items:center;gap:16px;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:16px 20px;margin:28px 0 60px;box-shadow:var(--shadow)}
+.pack .t{font-weight:600}
+.pack .d{color:var(--muted);font-size:13px}
+.pack .p{margin-left:auto;font-weight:600;font-size:16px;white-space:nowrap}
+.pack .cta{width:auto;padding:0 16px;height:36px}
+/* 确认订单弹窗（示意：周期只在这里选） */
+.mask{position:fixed;inset:0;background:rgba(10,12,16,.38);display:none;align-items:center;justify-content:center;padding:12px;z-index:9}
+.mask.open{display:flex}
+.dlg{width:min(460px,100%);max-height:calc(100vh - 24px);overflow:auto;background:var(--card);border-radius:18px;box-shadow:0 20px 50px rgba(0,0,0,.25);padding:22px}
+.dlg h3{margin:0;font-size:17px}
+.dlg .dsub{color:var(--muted);font-size:13px;margin:2px 0 16px}
+.opt{display:flex;align-items:center;gap:12px;border:1px solid var(--line2);border-radius:12px;padding:11px 14px;margin-bottom:8px;cursor:pointer}
+.opt input{accent-color:var(--brand)}
+.opt .pn{font-weight:500}
+.opt .pm{color:var(--muted);font-size:12.5px}
+.opt .pp{margin-left:auto;text-align:right;font-weight:600}
+.opt .save{color:var(--ok);font-size:12px;font-weight:500;display:block}
+.opt:has(input:checked){border-color:var(--brand);background:var(--brand-soft)}
+.sum{display:flex;justify-content:space-between;border-top:1px solid var(--line);margin-top:14px;padding-top:14px;font-weight:600}
+.row2{display:flex;gap:8px;margin-top:16px}
+.row2 .cta{flex:1}
+.hint{max-width:1128px;margin:0 auto;padding:0 20px 8px;color:var(--faint);font-size:12px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="logo"><b>AKARI</b><i>灯塔</i></div>
+  <nav><a>仪表盘</a><a class="on">商店</a><a>文档</a><a>邀请</a><a>工单</a><a>更多</a></nav>
+  <div class="tools">
+    <span class="chip" id="cnt">套餐数：3</span>
+    <span class="chip" id="theme">明 / 暗</span>
+  </div>
+</div></header>
+
+<div class="wrap">
+  <h1>商店</h1>
+  <p class="sub">续费、换套餐或购买流量重置包。付款周期在确认订单时选择。</p>
+
+  <div class="cur">
+    <div><div class="k">当前套餐</div><div class="v">标准版 · 2026-11-13 到期</div></div>
+    <div class="meter"><div class="k" style="display:flex;justify-content:space-between"><span>本期流量</span><span>36.2 / 100 GB</span></div><div class="bar"><span style="width:36%"></span></div></div>
+  </div>
+
+  <div class="sec-h"><h2>选择套餐</h2><p>价格为按月折算后的最低价</p></div>
+  <div class="grid" id="grid"></div>
+
+  <div class="pack">
+    <div><div class="t">流量重置包 · 标准版</div><div class="d">不改套餐与到期时间，付款后立即清零本期已用流量</div></div>
+    <div class="p">¥5</div>
+    <button class="cta">购买</button>
+  </div>
+</div>
+<p class="hint">样稿：数据为示例。点击卡片按钮查看确认订单弹窗（周期只在那里选择）。右上角可切换套餐数量与明暗。</p>
+
+<div class="mask" id="mask"><div class="dlg" role="dialog" aria-modal="true">
+  <h3 id="dt">确认订单</h3>
+  <p class="dsub" id="ds"></p>
+  <div id="opts"></div>
+  <div class="sum"><span>应付</span><span id="due"></span></div>
+  <div class="row2"><button class="cta" id="close">取消</button><button class="cta primary">去付款</button></div>
+  <p class="note">优惠码、余额抵扣、支付方式沿用现在的确认订单弹窗，这里只示意周期选择</p>
+</div></div>
+
+<script>
+const PLANS = [
+  {name:"轻量版", desc:"日常浏览与社交", traffic:"50 GB", reset:"每月", speed:"100 Mbps",
+   prices:{月付:3,季付:8,半年付:15,年付:28}, feat:["全部地区节点","适合单台设备"]},
+  {name:"标准版", desc:"高清视频与多设备", traffic:"100 GB", reset:"每月", speed:"不限速",
+   prices:{月付:7,季付:19,半年付:36,年付:68}, feat:["全部地区节点","含流媒体解锁线路","4K 视频流畅"], current:true},
+  {name:"专业版", desc:"重度使用与游戏", traffic:"500 GB", reset:"每月", speed:"不限速",
+   prices:{月付:15,季付:42,年付:150}, feat:["全部节点含 IPLC 专线","低延迟游戏线路","优先客服"], rec:true},
+  {name:"不限时流量包", desc:"一次购买，用完为止", traffic:"200 GB", reset:"不重置", speed:"不限速",
+   prices:{一次性:20}, feat:["流量不过期","可与套餐叠加"]},
+  {name:"企业版", desc:"团队共享", traffic:"2 TB", reset:"每月", speed:"不限速",
+   prices:{月付:60,年付:600}, feat:["全部节点","专属客服"], soldout:true},
+  {name:"旧版 Pro", desc:"已下架，现有用户可续费", traffic:"300 GB", reset:"每月", speed:"不限速",
+   prices:{月付:12}, feat:["仅限现有订阅续费"], renewalOnly:true},
+];
+const MONTHS = {月付:1,季付:3,半年付:6,年付:12};
+let n = 3;
+const $ = s => document.querySelector(s);
+function monthly(p){ // 最低的按月折算价（一次性的不折算）
+  const ks = Object.keys(p.prices).filter(k => MONTHS[k]);
+  if(!ks.length) return {num:Object.values(p.prices)[0], unit:"一次性", from:false};
+  const v = ks.map(k => p.prices[k]/MONTHS[k]); const min = Math.min(...v);
+  return {num: Number.isInteger(min)?min:min.toFixed(1), unit:"/月", from: ks.length>1};
+}
+function save(p){
+  if(!p.prices.月付) return "";
+  const best = Object.keys(p.prices).filter(k => MONTHS[k]>1).map(k => [k, 1 - p.prices[k]/(p.prices.月付*MONTHS[k])]).sort((a,b)=>b[1]-a[1])[0];
+  return best && best[1] > .04 ? `${best[0]}省 ${Math.round(best[1]*100)}%` : "";
+}
+function render(){
+  const list = PLANS.slice(0, n);
+  $("#grid").className = "grid" + (n===1?" n1":n===2?" n2":"");
+  $("#grid").innerHTML = list.map((p,i) => {
+    const m = monthly(p), s = save(p), periods = Object.keys(p.prices);
+    let tag = p.current ? '<span class="tag now">当前套餐</span>' : p.rec ? '<span class="tag rec">推荐</span>'
+      : p.soldout ? '<span class="tag warn">已售罄</span>' : p.renewalOnly ? '<span class="tag warn">仅续费</span>' : "";
+    const cta = p.soldout ? '<button class="cta" disabled>已售罄</button>'
+      : p.current ? `<button class="cta primary" data-i="${i}">续费</button>`
+      : p.renewalOnly ? '<button class="cta" disabled>仅限现有用户续费</button>'
+      : `<button class="cta${p.rec?' primary':''}" data-i="${i}">${PLANS.some(q=>q.current)?'换到此套餐':'立即订阅'}</button>`;
+    const note = p.current ? "从到期日顺延" : (!p.soldout && !p.renewalOnly && PLANS.some(q=>q.current)) ? "旧套餐剩余价值自动抵扣" : "";
+    return `<article class="card${p.current?' current':''}${p.soldout||p.renewalOnly?' off':''}">
+      <div class="top"><span class="name">${p.name}</span>${tag}</div>
+      <p class="desc">${p.desc}</p>
+      <div class="price"><span class="cny">¥</span><span class="num">${m.num}</span><span class="unit">${m.unit}${m.from?" 起":""}</span></div>
+      <div class="periods">${periods.length>1 ? `${periods.length} 种周期可选` : periods[0]}${s?` · <b>${s}</b>`:""}</div>
+      <div class="specs">
+        <div><div class="v">${p.traffic}</div><div class="k">流量</div></div>
+        <div><div class="v">${p.reset}</div><div class="k">重置</div></div>
+        <div><div class="v">${p.speed}</div><div class="k">速率</div></div>
+      </div>
+      <ul class="feat">${p.feat.map(f=>`<li>${f}</li>`).join("")}</ul>
+      <div class="spacer"></div>
+      ${cta}<div class="note">${note}</div>
+    </article>`;
+  }).join("");
+  $("#cnt").textContent = "套餐数：" + n;
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("button[data-i]");
+  if(b){ open(PLANS[+b.dataset.i]); return; }
+  if(e.target.id==="close" || e.target.id==="mask") $("#mask").classList.remove("open");
+});
+function open(p){
+  $("#dt").textContent = (p.current?"续费 · ":"确认订单 · ") + p.name;
+  $("#ds").textContent = `${p.traffic} · ${p.reset}重置 · ${p.speed}`;
+  const ks = Object.keys(p.prices);
+  $("#opts").innerHTML = ks.map((k,j) => {
+    const mo = MONTHS[k] ? `合 ¥${(p.prices[k]/MONTHS[k]).toFixed(1)}/月` : "一次性付款";
+    const sv = MONTHS[k]>1 && p.prices.月付 ? Math.round((1-p.prices[k]/(p.prices.月付*MONTHS[k]))*100) : 0;
+    return `<label class="opt"><input type="radio" name="per" value="${k}" ${j===0?"checked":""}>
+      <span><span class="pn">${k}</span><br><span class="pm">${mo}</span></span>
+      <span class="pp">¥${p.prices[k]}${sv>4?`<span class="save">省 ${sv}%</span>`:""}</span></label>`;
+  }).join("");
+  const upd = () => { const k = document.querySelector("input[name=per]:checked").value; $("#due").textContent = "¥" + p.prices[k]; };
+  $("#opts").onchange = upd; upd();
+  $("#mask").classList.add("open");
+}
+$("#cnt").onclick = () => { n = n>=6 ? 1 : n+1; render(); };
+$("#theme").onclick = () => { const r=document.documentElement, d = r.dataset.theme ? r.dataset.theme==="dark" : matchMedia("(prefers-color-scheme: dark)").matches; r.dataset.theme = d?"light":"dark"; };
+render();
+</script>
+</body>
+</html>
