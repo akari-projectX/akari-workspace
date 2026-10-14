@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>公告标签 · 样稿</title>
+<style>
+/* 令牌取自门户 spa/src/index.css（与 design/shop-cards-2026-10 同一套） */
+:root{
+  --bg:#f7f8fa; --card:#fff; --fg:#12151c; --body:#3a404c; --muted:#5c6473; --faint:#737b8a;
+  --line:rgba(17,24,39,.08); --line2:rgba(17,24,39,.14); --secondary:#e9ebf0;
+  --brand:#2563eb; --brand-soft:rgba(37,99,235,.08);
+  --r-lg:16px; --shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.06);
+  /* 标签预设色（浅色：文字用 700 档，底色由它按比例混出） */
+  --t-red:#dc2626; --t-orange:#c2410c; --t-amber:#b45309; --t-green:#15803d; --t-teal:#0f766e;
+  --t-cyan:#0e7490; --t-blue:#1d4ed8; --t-indigo:#4338ca; --t-violet:#7c3aed; --t-pink:#be185d; --t-slate:#475569;
+  --soft:10%; --soft-bd:22%; --on-solid:#fff;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --bg:#141518; --card:#1c1d21; --fg:#eceef2; --body:#c9cdd5; --muted:#9aa1ad; --faint:#7b828e;
+  --line:rgba(255,255,255,.07); --line2:rgba(255,255,255,.13); --secondary:#26282d;
+  --brand:#4a9dff; --brand-soft:rgba(74,157,255,.12); --shadow:0 1px 2px rgba(0,0,0,.3);
+  --t-red:#f87171; --t-orange:#fb923c; --t-amber:#fbbf24; --t-green:#4ade80; --t-teal:#2dd4bf;
+  --t-cyan:#22d3ee; --t-blue:#60a5fa; --t-indigo:#818cf8; --t-violet:#a78bfa; --t-pink:#f472b6; --t-slate:#94a3b8;
+  --soft:14%; --soft-bd:28%; --on-solid:#111317;
+}}
+:root[data-theme=dark]{
+  --bg:#141518; --card:#1c1d21; --fg:#eceef2; --body:#c9cdd5; --muted:#9aa1ad; --faint:#7b828e;
+  --line:rgba(255,255,255,.07); --line2:rgba(255,255,255,.13); --secondary:#26282d;
+  --brand:#4a9dff; --brand-soft:rgba(74,157,255,.12); --shadow:0 1px 2px rgba(0,0,0,.3);
+  --t-red:#f87171; --t-orange:#fb923c; --t-amber:#fbbf24; --t-green:#4ade80; --t-teal:#2dd4bf;
+  --t-cyan:#22d3ee; --t-blue:#60a5fa; --t-indigo:#818cf8; --t-violet:#a78bfa; --t-pink:#f472b6; --t-slate:#94a3b8;
+  --soft:14%; --soft-bd:28%; --on-solid:#111317;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.6 Inter,"Noto Sans SC",-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
+.wrap{max-width:1128px;margin:0 auto;padding:0 16px}
+
+/* ===== 标签本体：三种风格，顶部切换 ===== */
+.tg{--c:var(--t-slate);display:inline-flex;align-items:center;gap:5px;flex:none;white-space:nowrap;
+  font-size:12px;line-height:20px;font-weight:500;padding:0 8px;border-radius:6px;vertical-align:1px}
+/* A 淡底胶囊（推荐）：淡底 + 同色字 + 极细同色描边 */
+body[data-style=soft] .tg,.card[data-style=soft] .tg{color:var(--c);background:color-mix(in srgb,var(--c) var(--soft),transparent);
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--c) var(--soft-bd),transparent)}
+/* B 圆点：中性底 + 彩色圆点，最克制 */
+body[data-style=dot] .tg,.card[data-style=dot] .tg{color:var(--body);background:var(--secondary)}
+body[data-style=dot] .tg:before,.card[data-style=dot] .tg:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--c)}
+/* C 实底：最醒目 */
+body[data-style=solid] .tg,.card[data-style=solid] .tg{color:var(--on-solid);background:var(--c)}
+.card[data-style=soft] .tg:before,.card[data-style=solid] .tg:before{display:none}
+/* 顶部提示条里的标签：任何风格下都用实底，稍醒目 */
+.banner .tg{color:var(--on-solid)!important;background:var(--c)!important;box-shadow:none!important}
+.banner .tg:before{display:none}
+.tg.big{font-size:13px;line-height:24px;padding:0 10px;border-radius:7px}
+
+.c-red{--c:var(--t-red)}.c-orange{--c:var(--t-orange)}.c-amber{--c:var(--t-amber)}.c-green{--c:var(--t-green)}
+.c-teal{--c:var(--t-teal)}.c-cyan{--c:var(--t-cyan)}.c-blue{--c:var(--t-blue)}.c-indigo{--c:var(--t-indigo)}
+.c-violet{--c:var(--t-violet)}.c-pink{--c:var(--t-pink)}.c-slate{--c:var(--t-slate)}
+
+/* ===== 样稿外壳 ===== */
+.bar{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;gap:10px;flex-wrap:wrap;min-height:56px;padding-top:8px;padding-bottom:8px}
+.bar b{font-weight:600;margin-right:auto}
+.seg{display:inline-flex;background:var(--secondary);border-radius:9px;padding:2px}
+.seg button{border:0;background:none;padding:3px 10px;border-radius:7px;font-size:12.5px;color:var(--muted);cursor:pointer;white-space:nowrap}
+.seg button[aria-pressed=true]{background:var(--card);color:var(--fg);box-shadow:var(--shadow)}
+section{margin:36px 0}
+.sh{font-size:12.5px;color:var(--faint);letter-spacing:.04em;margin:0 0 4px}
+h2{font-size:18px;font-weight:600;margin:0 0 4px}
+.lead{color:var(--muted);margin:0 0 16px;font-size:13.5px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow)}
+.note{color:var(--faint);font-size:12.5px;margin-top:10px}
+
+/* 色板 */
+.pal{display:flex;flex-wrap:wrap;gap:10px;padding:18px}
+.compare{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.compare .card{padding:16px}
+.compare h3{margin:0 0 10px;font-size:13.5px;font-weight:600}
+.compare .rows{display:flex;flex-wrap:wrap;gap:8px}
+@media (max-width:760px){.compare{grid-template-columns:1fr}}
+
+/* 1 顶部提示条（仪表盘） */
+.banner{display:flex;align-items:center;gap:14px;padding:14px 18px}
+.banner .ic{flex:none;color:var(--brand)}
+.banner .tx{min-width:0;flex:1}
+.banner .tt{display:flex;align-items:center;gap:8px;font-weight:600;min-width:0}
+.banner .tt span.t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.banner .sm{color:var(--muted);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.btn{border:1px solid var(--line2);background:var(--card);border-radius:8px;padding:4px 12px;font-size:12.5px;font-weight:500;cursor:pointer;white-space:nowrap}
+.btn.pri{background:var(--brand);border-color:var(--brand);color:#fff}
+/* 带色边的提示条变体：左侧 3px 标签色 */
+.banner.edge{position:relative;overflow:hidden}
+.banner.edge:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--c)}
+
+/* 2 公告与动态列表 */
+.feed{padding:4px 20px}
+.it{display:flex;align-items:center;gap:16px;padding:14px 0;border-top:1px solid var(--line);cursor:pointer}
+.it:first-child{border-top:0}
+.it .main{min-width:0;flex:1}
+.it .tt{display:flex;align-items:center;gap:8px;font-weight:600;min-width:0}
+.it .tt .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.it .sm{color:var(--muted);font-size:13px;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.it .time{color:var(--faint);font-size:12.5px;white-space:nowrap}
+.it.unread .tt .t:after{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--brand);margin-left:6px;vertical-align:2px}
+.pin{display:inline-flex;align-items:center;gap:3px;font-size:12px;line-height:20px;padding:0 7px;border-radius:6px;background:var(--brand-soft);color:var(--brand);white-space:nowrap;flex:none}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+@media (max-width:860px){.split{grid-template-columns:1fr}}
+
+/* 3 公告页筛选 */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+.fchip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line2);background:var(--card);border-radius:999px;padding:4px 12px;font-size:13px;cursor:pointer;color:var(--body)}
+.fchip i{width:7px;height:7px;border-radius:50%;background:var(--c)}
+.fchip .n{color:var(--faint);font-size:12px}
+.fchip[aria-pressed=true]{border-color:var(--fg);color:var(--fg);font-weight:500}
+.empty{padding:28px;text-align:center;color:var(--faint)}
+
+/* 4 详情弹窗（示意） */
+.dlg{max-width:520px;padding:22px}
+.dlg .tt{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.dlg h3{margin:0;font-size:18px}
+.dlg .meta{color:var(--faint);font-size:12.5px;margin:6px 0 14px}
+.dlg p{margin:0 0 10px;color:var(--body)}
+
+/* 5 后台：标签管理 + 编辑预览 */
+.adm{display:grid;grid-template-columns:1.2fr 1fr;gap:16px}
+@media (max-width:860px){.adm{grid-template-columns:1fr}}
+.adm .card{padding:18px}
+.adm h3{margin:0 0 12px;font-size:14.5px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{color:var(--faint);font-weight:500;font-size:12px;text-align:left;padding:6px 8px;border-bottom:1px solid var(--line)}
+td{padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+td.r{text-align:right;color:var(--faint)}
+.sw{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 14px}
+.sw button{width:26px;height:26px;border-radius:50%;border:0;background:var(--c);cursor:pointer;box-shadow:0 0 0 2px var(--card),0 0 0 3px transparent}
+.sw button[aria-pressed=true]{box-shadow:0 0 0 2px var(--card),0 0 0 4px var(--c)}
+label.f{display:block;font-size:12.5px;color:var(--muted);margin:10px 0 4px}
+input.in,select.in{width:100%;height:36px;border:1px solid var(--line2);border-radius:9px;background:var(--card);padding:0 10px}
+.prev{border:1px dashed var(--line2);border-radius:12px;padding:12px 14px;margin-top:14px}
+.prev .k{font-size:12px;color:var(--faint);margin-bottom:6px}
+.prev .tt{display:flex;align-items:center;gap:8px;font-weight:600}
+.off{opacity:.5}
+footer{color:var(--faint);font-size:12px;padding:20px 0 60px}
+@media (max-width:640px){
+  .banner{flex-wrap:wrap}.banner .btn{margin-left:30px}
+  .it .time{display:none}
+}
+</style>
+</head>
+<body data-style="soft">
+<div class="bar"><div class="wrap">
+  <b>公告标签 · 样稿</b>
+  <span style="font-size:12.5px;color:var(--muted)">风格</span>
+  <div class="seg" id="style">
+    <button data-v="soft" aria-pressed="true">A 淡底胶囊（推荐）</button>
+    <button data-v="dot">B 圆点</button>
+    <button data-v="solid">C 实底</button>
+  </div>
+  <div class="seg" id="theme">
+    <button data-v="" aria-pressed="true">跟随系统</button>
+    <button data-v="light">浅色</button>
+    <button data-v="dark">深色</button>
+  </div>
+</div></div>
+
+<main class="wrap">
+
+<section>
+  <p class="sh">0 · 预设色板</p>
+  <h2>11 个预设色 + 8 个预置标签</h2>
+  <p class="lead">颜色只能从预设里选（浅色用深一档的字，深色用亮一档的字，底色自动按比例混出），保证两种模式下都好看、字够清楚。名称运营者随意改。</p>
+  <div class="card pal" id="palette"></div>
+  <div class="compare" style="margin-top:12px">
+    <div class="card" data-style="soft"><h3>A 淡底胶囊</h3><div class="rows" data-tags></div><p class="note">和后台徽章同一语言；列表里信息多也不吵。</p></div>
+    <div class="card" data-style="dot"><h3>B 圆点</h3><div class="rows" data-tags></div><p class="note">最克制；颜色只占一个点，适合极简。</p></div>
+    <div class="card" data-style="solid"><h3>C 实底</h3><div class="rows" data-tags></div><p class="note">最醒目；整页很多时偏花。</p></div>
+  </div>
+</section>
+
+<section>
+  <p class="sh">1 · 仪表盘顶部提示条</p>
+  <h2>最新公告提示条</h2>
+  <p class="lead">提示条里的标签固定用实底（比列表里醒目一档），并在卡片左边加一道同色细边。下方可切换看不同标签的效果。</p>
+  <div class="filters" id="bannerPick"></div>
+  <div class="card banner edge" id="banner"></div>
+  <p class="note">手机上：标题单行截断，按钮换到下一行。</p>
+</section>
+
+<section>
+  <p class="sh">2 · 仪表盘「公告与动态」</p>
+  <h2>列表：标签在标题前，置顶仍是原来的蓝色「置顶」</h2>
+  <div class="split">
+    <div>
+      <p class="lead" style="margin-bottom:8px">仪表盘右栏（最多 3 条）</p>
+      <div class="card feed" id="feedShort"></div>
+    </div>
+    <div>
+      <p class="lead" style="margin-bottom:8px">公告详情弹窗（点任一条打开的样子）</p>
+      <div class="card dlg" id="dlg"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <p class="sh">3 · 门户「全部公告」页</p>
+  <h2>按标签筛选</h2>
+  <p class="lead">只有用到的标签才出现在筛选里；用到的标签少于 2 个时整行隐藏。</p>
+  <div class="filters" id="filters"></div>
+  <div class="card feed" id="feedAll"></div>
+</section>
+
+<section>
+  <p class="sh">4 · 后台</p>
+  <h2>标签管理 + 公告编辑里选标签</h2>
+  <div class="adm">
+    <div class="card">
+      <h3>公告标签</h3>
+      <table><thead><tr><th>标签</th><th>颜色</th><th>使用中</th><th></th></tr></thead><tbody id="admRows"></tbody></table>
+      <p class="note">拖动排序；正在被公告使用的标签只能停用，不能删除。停用后旧公告仍显示，新公告不可再选。</p>
+    </div>
+    <div class="card">
+      <h3>编辑标签 / 公告标题预览</h3>
+      <label class="f">标签名称（最多 6 个字）</label>
+      <input class="in" id="tagName" value="活动" maxlength="6">
+      <label class="f">颜色</label>
+      <div class="sw" id="sw"></div>
+      <label class="f">公告标题</label>
+      <input class="in" id="annTitle" value="双十一全场八折，年付再送 50 GB">
+      <div class="prev"><div class="k">预览</div><div class="tt" id="prev"></div></div>
+    </div>
+  </div>
+</section>
+
+<footer>样稿只示意标签本身与它出现的位置；仪表盘、列表、弹窗的其余部分保持门户现状。</footer>
+</main>
+
+<script>
+const COLORS=[["red","红"],["orange","橙"],["amber","琥珀"],["green","绿"],["teal","青绿"],["cyan","青"],["blue","蓝"],["indigo","靛"],["violet","紫"],["pink","玫红"],["slate","灰"]];
+const TAGS=[
+  {n:"活动",c:"pink"},{n:"维护",c:"amber"},{n:"调整",c:"blue"},{n:"新功能",c:"violet"},
+  {n:"优惠",c:"green"},{n:"重要",c:"red"},{n:"新线路",c:"teal"},{n:"通知",c:"slate"}];
+const T=Object.fromEntries(TAGS.map(t=>[t.n,t]));
+const ANN=[
+  {tag:"维护",t:"日本节点今晚 02:00–03:00 维护",s:"期间日本线路短暂不可用，其他地区不受影响。",time:"9 分钟前",pin:true,unread:true},
+  {tag:"活动",t:"双十一全场八折，年付再送 50 GB",s:"活动时间 11 月 1 日至 11 月 11 日。",time:"2 小时前",unread:true},
+  {tag:"新线路",t:"新增新加坡 IPLC 线路",s:"已加入所有标准及以上套餐的订阅。",time:"昨天"},
+  {tag:"调整",t:"流量重置日调整为每月 1 日",s:"本月剩余流量照常可用，下月起统一。",time:"3 天前"},
+  {tag:"新功能",t:"支持 USDT 付款（Polygon / Plasma）",s:"在商店确认订单时选择 USDT 即可。",time:"上周"},
+  {tag:"重要",t:"请更新订阅地址",s:"旧域名将于 11 月 30 日停用。",time:"上周"},
+  {tag:null,t:"服务条款更新",s:"第 4 条退款说明措辞调整。",time:"10-01"}];
+const tag=(n,big)=>{if(!n)return"";const x=T[n]||{n,c:"slate"};return`<span class="tg c-${x.c}${big?" big":""}">${x.n}</span>`};
+const esc=s=>s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+palette.innerHTML=COLORS.map(([c,z])=>`<span class="tg c-${c}">${z}</span>`).join("")+
+  `<span style="width:100%;height:0"></span>`+TAGS.map(t=>tag(t.n,true)).join("");
+document.querySelectorAll("[data-tags]").forEach(e=>e.innerHTML=TAGS.map(t=>tag(t.n)).join(""));
+
+const MEGA='<svg class="ic" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+function drawBanner(i){const a=ANN[i];const c=(T[a.tag]||{c:"slate"}).c;
+  banner.className="card banner edge c-"+c;
+  banner.innerHTML=`${MEGA}<div class="tx"><div class="tt">${tag(a.tag)}<span class="t">${a.t}</span></div><div class="sm">${a.s}</div></div><button class="btn">查看详情</button>`;
+  bannerPick.querySelectorAll("button").forEach((b,j)=>b.setAttribute("aria-pressed",j===i));}
+bannerPick.innerHTML=ANN.slice(0,6).map((a,i)=>`<button class="fchip c-${T[a.tag].c}"><i></i>${a.tag}</button>`).join("");
+bannerPick.querySelectorAll("button").forEach((b,i)=>b.onclick=()=>drawBanner(i));drawBanner(0);
+
+const row=a=>`<div class="it${a.unread?" unread":""}"><div class="main"><div class="tt">${a.pin?'<span class="pin">置顶</span>':""}${tag(a.tag)}<span class="t">${a.t}</span></div><div class="sm">${a.s}</div></div><span class="time">${a.time}</span></div>`;
+feedShort.innerHTML=ANN.slice(0,3).map(row).join("");
+feedShort.querySelectorAll(".it").forEach((e,i)=>e.onclick=()=>drawDlg(i));
+function drawDlg(i){const a=ANN[i];dlg.innerHTML=`<div class="tt">${tag(a.tag,true)}<h3>${a.t}</h3></div><div class="meta">${a.time} · 运营团队</div><p>${a.s}</p><p style="color:var(--muted);font-size:13px">（正文 Markdown，样式不变）</p><div style="text-align:right;margin-top:14px"><button class="btn pri">知道了</button></div>`}
+drawDlg(1);
+
+let cur=null;
+function drawAll(){const used=[...new Set(ANN.map(a=>a.tag).filter(Boolean))];
+  filters.innerHTML=`<button class="fchip" data-k="" aria-pressed="${cur===null}">全部 <span class="n">${ANN.length}</span></button>`+
+    used.map(n=>`<button class="fchip c-${T[n].c}" data-k="${n}" aria-pressed="${cur===n}"><i></i>${n} <span class="n">${ANN.filter(a=>a.tag===n).length}</span></button>`).join("");
+  filters.querySelectorAll("button").forEach(b=>b.onclick=()=>{cur=b.dataset.k||null;drawAll()});
+  const list=ANN.filter(a=>cur===null||a.tag===cur);
+  feedAll.innerHTML=list.length?list.map(row).join(""):'<div class="empty">没有这个标签的公告</div>';}
+drawAll();
+
+admRows.innerHTML=TAGS.map((t,i)=>`<tr${i===7?' class="off"':""}><td>${tag(t.n)}${i===7?' <span style="font-size:12px;color:var(--faint)">已停用</span>':""}</td><td><span class="c-${t.c}" style="display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--c);vertical-align:-1px"></span> ${COLORS.find(c=>c[0]===t.c)[1]}</td><td>${[3,5,1,2,1,1,4,0][i]} 条</td><td class="r">编辑 · ${i===7?"启用":"停用"}</td></tr>`).join("");
+
+let pick="pink";
+sw.innerHTML=COLORS.map(([c,z])=>`<button class="c-${c}" title="${z}" data-c="${c}" aria-pressed="${c===pick}"></button>`).join("");
+sw.querySelectorAll("button").forEach(b=>b.onclick=()=>{pick=b.dataset.c;sw.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));drawPrev()});
+function drawPrev(){prev.innerHTML=`<span class="tg c-${pick}">${esc(tagName.value||"标签")}</span><span>${esc(annTitle.value)}</span>`}
+tagName.oninput=annTitle.oninput=drawPrev;drawPrev();
+
+function seg(id,fn){const el=document.getElementById(id);el.querySelectorAll("button").forEach(b=>b.onclick=()=>{el.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b));fn(b.dataset.v)})}
+seg("style",v=>document.body.dataset.style=v);
+seg("theme",v=>{v?document.documentElement.dataset.theme=v:delete document.documentElement.dataset.theme});
+</script>
+</body>
+</html>
