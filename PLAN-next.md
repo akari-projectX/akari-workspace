@@ -31,7 +31,7 @@
 - 补测试：smoke 断言 well-known 的内容与字节同构拒绝；e2e 两个主机名上同一把通行密钥登录（需再加一个主机名和中心域名）；通行密钥注册 → 弹窗绑定邮箱的整条流程（Chromium 虚拟认证器）。
 - 新请求体（`OptionsReq`/`FinishReq`/`BindReq`/`BindCodeReq`/`PasskeyDomainReq`）加进 fuzz `json_bodies` 严格解析清单。
 - 浏览器行为未实测：Chrome 是否把 RP 自己计入 5 个标签上限；新增主域名后 well-known 的浏览器缓存生效延迟；Firefox 稳定性（曾有 140 版 `OpaqueResponseBlocking` 反馈）。
-- 「仅通行密钥」策略在浏览器不支持 ROR / 中心域名不可达时会把账户挡在密码之外（兜底 `akari admin reset-login`）：是否在中心不可达时回退密码，**待用户裁决**。
+- 「仅通行密钥」策略在浏览器不支持 ROR / 中心域名不可达时会把账户挡在密码之外（兜底 `akari admin reset-login`）：**用户裁决（2026-10-15，按 lead 建议）：允许回退**——仅在通行密钥确实不可用（浏览器不支持 ROR / 中心域名不可达）时开放密码登录，每次回退登录记安全日志。**下个周期做**，与「`akari-agent-uninstall --help` 直接卸载」修复同批。
 
 ## 部署
 - **安装器支持多实例（2026-10-13 用户：加入排期，暂不做）**：面板程序本身已支持多实例（共用 PostgreSQL + Valkey + 相同 `data_dir`，HTTPS 反代 + gRPC L4 直通均衡，DEPLOY §4「多个面板实例」），但 `akari-ctl` 只装单机。待做：`akari-ctl join`（第二台机器加入已有面板：安全地取得 `data_dir` 与数据库/Valkey 地址）、数据库与 Valkey 独立部署的选项、负载均衡配置示例或生成、多实例逐台升级、安装器 e2e 覆盖。
