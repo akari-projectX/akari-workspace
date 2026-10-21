@@ -1,0 +1,31 @@
+# Brief: portal v2 — Svelte 5 rewrite with the new design (shared by every portal-v2 PR)
+
+User decisions (2026-10-22, SPRINT): the end-user portal (`akari-panel/spa/`, React 19) is rewritten in **Svelte 5 + Tailwind 4 + shadcn-svelte** for maximum performance AND redesigned. The admin (`admin/`) stays React and is out of scope. When done, we report a before/after performance comparison against the React portal.
+
+## Design source of truth
+- Approved mock: `design/portal-v2-2026-10/` (`index.html`, `dashboard.html`, `shop.html`, `login.html`, `styles.css`, `notes.md`, `screenshots/`). Direction: **克制排版风** (restrained typographic style): hierarchy by typography, whitespace and thin 1px dividers, not stacked cards; one brand blue accent; large tabular numbers; monochrome line icons. Navigation: desktop plain-text top bar `仪表盘 商店 线路 用量 | 公告 文档 工单` (2px underline on the active item, unread dot on 公告), and an email dropdown holding 订单 / 钱包 / 邀请 / 账户设置 / 退出 plus a pending-payment / balance / commission summary. Below 960px: logo + "菜单" opening a full-screen text list (服务 / 账户 / 偏好).
+- Announcement tags: SOLID style, `design/announcement-tags-2026-10/index.html` (the tag data model itself is a separate scheduled backend task; render tags only if the API provides them, otherwise leave the slot).
+- Pages without a mock (orders, order detail, wallet, invite, nodes, traffic, help/docs, announcements, tickets, account, legal, register/forgot/passkey flows, banned/renewal account scopes, empty/error/loading states): design them **in the same language** as the mock. Re-read the mock's `notes.md` first.
+- **Forbidden (the user rejected an earlier redesign as "AI风太重")**: a card around every section, colourful gradient icon tiles or coloured square icon blocks, pill or segmented top navigation, greetings ("下午好"), donut/ring charts, emoji, glassmorphism, gradient text, glow, heavy shadows, marketing heroes, decorative badges, filler copy.
+
+## Functional source of truth
+The React portal: every feature, route, API call, account scope (full / renewal / banned), own-client-only mode (`sub_own_client_only`), payment methods (balance, Alipay, EPay, USDT on-chain with unique amount + countdown), passkeys (incl. ROR), Turnstile, i18n zh/en, auto-reload on new version, read-state, and every rule in `spa/CLAUDE.md` (CSP: no inline script/style/handlers, no data: URLs, all assets under `assets/`; fonts: Inter + Noto Sans SC self-hosted subsets; motion tokens; reduced-motion; accessibility). Nothing may be lost. Where the React portal and the new design disagree on *structure*, the design wins; on *behaviour*, the React portal wins.
+
+## Architecture (PR 1 decides and documents in `portal/CLAUDE.md`)
+- New top-level directory `akari-panel/portal/` alongside `spa/`. Vite + Svelte 5 (runes) + Tailwind 4 + shadcn-svelte (bits-ui) + lucide-svelte. Prefer plain Vite + a tiny client router over SvelteKit unless SvelteKit's static SPA output can meet the strict CSP with no inline script (justify the choice).
+- Reuse the existing API contract; port the typed API client and the i18n dictionary (single source — do not fork the strings by hand if a shared file works).
+- Charts: hand-written SVG (no chart library).
+- The panel serves the React portal by default. Until cutover, the new portal is embedded too and is served **only when an opt-in switch is on** (choose: env var or panel setting; document it); production behaviour is unchanged until the cutover PR.
+- CI: build, type-check and lint `portal/`; the new portal gets its own Playwright suite + screenshot set (desktop 1440 / mobile 390, light / dark) that grows with each PR; the perf spec runs against it as well, so React and Svelte numbers come from the same harness, same runner. Upload the portal perf report (both) as a CI artifact `portal-perf` (JSON + summary.md) — today it is only in the step summary.
+
+## PR sequence (each independently mergeable, green in 1–2 CI runs)
+1. Skeleton: `portal/` scaffold, design tokens from the mock, fonts, theme, i18n, API client, router, boot splash, layout + new navigation (desktop + mobile menu + user dropdown), auth guard and account scopes, auto-reload, CSP dist checks, embedding + opt-in switch, CI jobs, `portal-perf` artifact for the React portal **baseline**, `portal/CLAUDE.md`.
+2. Auth: login, register, forgot/reset password, email verification, passkey sign-in/registration, Turnstile, legal pages.
+3. Dashboard (incl. hand-written chart, access/import section, own-client-only mode, notices, nodes preview, announcements, docs shortcuts).
+4. Shop, confirm order, orders, order detail, payments (balance, Alipay, EPay, USDT).
+5. Wallet, invite, withdrawals; nodes; traffic.
+6. Docs/help + articles, announcements, tickets, account & security settings.
+7. Cutover: the panel serves the Svelte portal by default; React `spa/` and its CI removed; e2e for the portal fully on the new suite (every existing portal e2e scenario covered); docs/CLAUDE.md/INVENTORY updated; **final perf comparison** (React baseline from PR 1 vs Svelte, same harness: FCP, LCP, TTI, content-ready, client-side navigation, first-load JS gzip, total JS) written to `research/portal-v2-perf.md` and the PR body.
+
+## Rules
+Follow `briefs/COMMON.md` and `briefs/DEFECT-CHECKLIST.md`. One agent = one PR; no helper agents; context cap 350k tokens (push, write HANDOFF.md, report "HANDOFF"). Worktree under `.work/<branch>/akari-panel`. Local fast checks only; never `make smoke`; never read `akari-panel/data/` or `~/secrets`. Don't merge, bump versions or tag. Commits end with `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`; PR bodies end with `🤖 Generated with [Claude Code](https://claude.com/claude-code)`. Don't push again while a run is in progress unless something failed; batch fixes. Copy final screenshots to `design/portal-v2-2026-10/impl/<pr-n>/` in the workspace.
