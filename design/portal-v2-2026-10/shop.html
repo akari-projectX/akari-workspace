@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>商店 · Akari</title>
+<link rel="stylesheet" href="styles.css">
+<script>try{var t=localStorage.getItem('akari-theme');if(t&&t!=='system'&&!document.documentElement.dataset.theme)document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<!--TITLE:商店 · Akari-->
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+<symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+<symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8M21 3v5h-5M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16M8 16H3v5"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3ZM12 9v4M12 17h.01"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 17v5M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3L22 7l-3-3"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M12 18h.01"/></symbol>
+<symbol id="i-laptop" viewBox="0 0 24 24"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></symbol>
+<symbol id="i-router" viewBox="0 0 24 24"><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6.01 18H6M10.01 18H10M15 10v4M17.84 7.17a4 4 0 0 0-5.66 0M20.66 4.34a8 8 0 0 0-11.31 0"/></symbol>
+<symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></symbol>
+<symbol id="i-card" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2zM22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="i-wallet" viewBox="0 0 24 24"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="dashboard.html" aria-label="AKARI 首页">AKARI</a>
+    <nav class="nav" aria-label="主导航">
+      <a href="dashboard.html">仪表盘</a>
+      <a href="shop.html" aria-current="page">商店</a>
+      <a href="#">线路</a>
+      <a href="#">用量</a>
+      <span class="sep" aria-hidden="true"></span>
+      <a href="#">公告<i class="dot" aria-label="2 条未读"></i></a>
+      <a href="#">文档</a>
+      <a href="#">工单</a>
+    </nav>
+    <div class="tools">
+      <button class="iconbtn hide-m" data-theme-btn aria-label="切换主题"><svg class="i"><use href="#i-monitor"/></svg></button>
+      <button class="iconbtn hide-m" aria-label="Switch to English">EN</button>
+      <div class="user">
+        <button aria-haspopup="menu" aria-expanded="false">alice@example.com<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="pop" role="menu">
+          <div class="who"><b>alice@example.com</b><span class="num">标准 Pro · 余额 ¥128.50</span></div>
+          <a href="#" role="menuitem">订单<em>1 笔待付款</em></a>
+          <a href="#" role="menuitem">钱包<em class="num">¥128.50</em></a>
+          <a href="#" role="menuitem">邀请<em>返利 10%</em></a>
+          <a href="#" role="menuitem">账户设置</a>
+          <hr>
+          <a href="login.html" role="menuitem">退出登录</a>
+        </div>
+      </div>
+      <button class="iconbtn menu-btn" data-toggle="menu" aria-expanded="false"><svg class="i"><use href="#i-menu"/></svg><span>菜单</span></button>
+    </div>
+  </div>
+</header>
+<div class="sheet" aria-label="菜单">
+  <div class="who"><b>alice@example.com</b><span class="num">标准 Pro · 剩 136.6 GB</span></div>
+  <h4>服务</h4>
+  <a class="it" href="dashboard.html">仪表盘</a>
+  <a class="it" href="shop.html" aria-current="page">商店</a>
+  <a class="it" href="#">线路<em>6 / 8 可用</em></a>
+  <a class="it" href="#">用量</a>
+  <a class="it" href="#">公告<em>2 条未读</em></a>
+  <a class="it" href="#">文档</a>
+  <a class="it" href="#">工单</a>
+  <h4>账户</h4>
+  <a class="it" href="#">订单<em>1 笔待付款</em></a>
+  <a class="it" href="#">钱包<em class="num">¥128.50</em></a>
+  <a class="it" href="#">邀请</a>
+  <a class="it" href="#">账户设置</a>
+  <h4>偏好</h4>
+  <div class="prefs">主题<div><button data-theme-set="light">浅色</button><button data-theme-set="dark">深色</button><button data-theme-set="system">跟随系统</button></div></div>
+  <div class="prefs">语言<div><button aria-pressed="true">中文</button><button>English</button></div></div>
+  <a class="out" href="login.html">退出登录</a>
+</div>
+
+<main class="wrap">
+  <div class="ph">
+    <div>
+      <h1>商店</h1>
+      <p>续费当前套餐或随时更换，剩余价值自动抵扣。</p>
+    </div>
+  </div>
+
+  <section class="cur" aria-label="当前套餐">
+    <div>
+      <div class="lb">当前套餐</div>
+      <h2>标准 Pro <span class="st ok txt">生效中</span></h2>
+      <p class="meta">月付 · <b>2026-11-29</b> 到期，还剩 <b>38</b> 天</p>
+    </div>
+    <div class="tm">
+      <div class="top-l"><span>本周期流量</span><span class="num"><b>63.4</b> / 200 GB</span></div>
+      <div class="meter"><i style="width:31.7%"></i></div>
+      <p class="sub num">剩余 136.6 GB，11-01 重置</p>
+    </div>
+  </section>
+
+  <div class="setting">
+    <div class="tx">
+      <b>用余额抵扣</b>
+      <p class="num">余额 ¥128.50。开启后下单时先扣余额，不足部分再用所选方式支付。</p>
+    </div>
+    <button class="switch" role="switch" aria-checked="false" aria-label="用余额抵扣"></button>
+  </div>
+
+  <section class="sec" aria-labelledby="h-plans">
+    <div class="sh">
+      <div>
+        <h2 id="h-plans">选择套餐</h2>
+        <p>价格按最划算的周期折算到每月；购买时长在确认订单时选。</p>
+      </div>
+    </div>
+    <div class="plans">
+      <article class="plan">
+        <div class="hd"><h3>轻量</h3></div>
+        <p class="desc">日常浏览与社交</p>
+        <div class="price"><span class="y">¥</span><span class="n">15</span><span class="u">/月 起</span></div>
+        <p class="periods">3 种周期可选 · <b>年付省 15%</b></p>
+        <div class="specs"><div><span>流量</span><b>100 GB</b></div><div><span>重置</span><b>每月</b></div><div><span>速率</span><b>200 Mbps</b></div></div>
+        <ul class="feats">
+          <li><svg class="i"><use href="#i-check"/></svg>香港、日本、新加坡线路</li>
+          <li><svg class="i"><use href="#i-check"/></svg>支持全部客户端格式</li>
+        </ul>
+        <div class="cta"><button class="btn block">更换到此套餐</button><p>旧套餐剩余价值自动抵扣</p></div>
+      </article>
+
+      <article class="plan current" aria-label="当前套餐：标准 Pro">
+        <div class="hd"><h3>标准 Pro</h3><span class="mark">当前套餐</span></div>
+        <p class="desc">流媒体与多设备</p>
+        <div class="price"><span class="y">¥</span><span class="n">25</span><span class="u">/月 起</span></div>
+        <p class="periods">4 种周期可选 · <b>年付省 20%</b></p>
+        <div class="specs"><div><span>流量</span><b>200 GB</b></div><div><span>重置</span><b>每月</b></div><div><span>速率</span><b>500 Mbps</b></div></div>
+        <ul class="feats">
+          <li><svg class="i"><use href="#i-check"/></svg>全部 8 条线路</li>
+          <li><svg class="i"><use href="#i-check"/></svg>含香港、新加坡 IPLC 专线</li>
+          <li><svg class="i"><use href="#i-check"/></svg>流媒体解锁</li>
+        </ul>
+        <div class="cta"><button class="btn pri block">续费</button><p>从 2026-11-29 顺延</p></div>
+      </article>
+
+      <article class="plan">
+        <div class="hd"><h3>进阶 Plus</h3><span class="tg c-blue">推荐</span></div>
+        <p class="desc">大流量与高峰稳定</p>
+        <div class="price"><span class="y">¥</span><span class="n">31.2</span><span class="u">/月 起</span></div>
+        <p class="periods">4 种周期可选 · <b>年付省 20%</b></p>
+        <div class="specs"><div><span>流量</span><b>500 GB</b></div><div><span>重置</span><b>每月</b></div><div><span>速率</span><b>不限速</b></div></div>
+        <ul class="feats">
+          <li><svg class="i"><use href="#i-check"/></svg>全部 8 条线路</li>
+          <li><svg class="i"><use href="#i-check"/></svg>含香港、新加坡 IPLC 专线</li>
+          <li><svg class="i"><use href="#i-check"/></svg>流媒体解锁</li>
+          <li><svg class="i"><use href="#i-check"/></svg>工单优先处理</li>
+        </ul>
+        <div class="cta"><button class="btn block" data-toggle="confirm">更换到此套餐</button><p>旧套餐剩余价值自动抵扣</p></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-addon">
+    <div class="sh">
+      <div>
+        <h2 id="h-addon">流量重置包</h2>
+        <p>不改变套餐与到期时间，付款后立即把本周期已用流量清零。</p>
+      </div>
+    </div>
+    <div class="addon">
+      <div class="tx">
+        <b>重置「标准 Pro」的流量</b>
+        <p>恢复到 200 GB，本周期内可购买多次</p>
+      </div>
+      <span class="p">¥5</span>
+      <button class="btn sm">购买</button>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap"><span>© 2026 Akari</span><nav><a href="#">服务条款</a><a href="#">隐私政策</a><a href="#">联系我们</a></nav></div></footer>
+
+
+<div class="dlg-wrap">
+  <div class="dlg" role="dialog" aria-modal="true" aria-labelledby="dlg-t">
+    <header>
+      <div><h2 id="dlg-t">确认订单</h2><p>进阶 Plus · 500 GB/月 · 不限速</p></div>
+      <button class="iconbtn" data-toggle="confirm" aria-label="关闭"><svg class="i"><use href="#i-x"/></svg></button>
+    </header>
+    <div class="bd">
+      <p class="k">购买时长</p>
+      <div class="opts" role="radiogroup" aria-label="购买时长">
+        <label class="opt"><span class="rd"></span><b>月付</b><span class="r num">¥39.00<small>¥39.0 /月</small></span></label>
+        <label class="opt"><span class="rd"></span><b>季付</b><span class="save">省 10%</span><span class="r num">¥105.00<small>¥35.0 /月</small></span></label>
+        <label class="opt"><span class="rd"></span><b>半年付</b><span class="save">省 15%</span><span class="r num">¥199.00<small>¥33.2 /月</small></span></label>
+        <label class="opt on"><span class="rd"></span><b>年付</b><span class="save">省 20%</span><span class="r num">¥374.00<small>¥31.2 /月</small></span></label>
+      </div>
+      <p class="k">支付方式</p>
+      <div class="opts pay" role="radiogroup" aria-label="支付方式">
+        <label class="opt"><span class="rd"></span><span><b>余额</b><br><span class="m num">可用 ¥128.50</span></span></label>
+        <label class="opt on"><span class="rd"></span><span><b>支付宝</b><br><span class="m">扫码或跳转</span></span></label>
+        <label class="opt"><span class="rd"></span><span><b>易支付</b><br><span class="m">微信 / QQ 钱包</span></span></label>
+        <label class="opt"><span class="rd"></span><span><b>USDT</b><br><span class="m">Polygon / Plasma</span></span></label>
+      </div>
+      <div class="sum num">
+        <div><span>进阶 Plus · 年付</span><span>¥374.00</span></div>
+        <div><span>标准 Pro 剩余 38 天抵扣</span><span>−¥31.20</span></div>
+        <div class="total"><span>应付</span><span>¥342.80</span></div>
+      </div>
+    </div>
+    <footer>
+      <button class="btn" data-toggle="confirm">取消</button>
+      <button class="btn pri">提交订单</button>
+    </footer>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

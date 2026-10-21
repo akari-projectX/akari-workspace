@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>仪表盘 · Akari</title>
+<link rel="stylesheet" href="styles.css">
+<script>try{var t=localStorage.getItem('akari-theme');if(t&&t!=='system'&&!document.documentElement.dataset.theme)document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<!--TITLE:仪表盘 · Akari-->
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+<symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+<symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="13" height="13" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8M21 3v5h-5M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16M8 16H3v5"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3ZM12 9v4M12 17h.01"/></symbol>
+<symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 17v5M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-key" viewBox="0 0 24 24"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6M15.5 7.5l3 3L22 7l-3-3"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M12 18h.01"/></symbol>
+<symbol id="i-laptop" viewBox="0 0 24 24"><path d="M20 16V7a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v9m16 0H4m16 0 1.28 2.55a1 1 0 0 1-.9 1.45H3.62a1 1 0 0 1-.9-1.45L4 16"/></symbol>
+<symbol id="i-router" viewBox="0 0 24 24"><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6.01 18H6M10.01 18H10M15 10v4M17.84 7.17a4 4 0 0 0-5.66 0M20.66 4.34a8 8 0 0 0-11.31 0"/></symbol>
+<symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></symbol>
+<symbol id="i-card" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2zM22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="i-wallet" viewBox="0 0 24 24"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="logo" href="dashboard.html" aria-label="AKARI 首页">AKARI</a>
+    <nav class="nav" aria-label="主导航">
+      <a href="dashboard.html" aria-current="page">仪表盘</a>
+      <a href="shop.html">商店</a>
+      <a href="#">线路</a>
+      <a href="#">用量</a>
+      <span class="sep" aria-hidden="true"></span>
+      <a href="#">公告<i class="dot" aria-label="2 条未读"></i></a>
+      <a href="#">文档</a>
+      <a href="#">工单</a>
+    </nav>
+    <div class="tools">
+      <button class="iconbtn hide-m" data-theme-btn aria-label="切换主题"><svg class="i"><use href="#i-monitor"/></svg></button>
+      <button class="iconbtn hide-m" aria-label="Switch to English">EN</button>
+      <div class="user">
+        <button aria-haspopup="menu" aria-expanded="false">alice@example.com<svg class="i"><use href="#i-chev"/></svg></button>
+        <div class="pop" role="menu">
+          <div class="who"><b>alice@example.com</b><span class="num">标准 Pro · 余额 ¥128.50</span></div>
+          <a href="#" role="menuitem">订单<em>1 笔待付款</em></a>
+          <a href="#" role="menuitem">钱包<em class="num">¥128.50</em></a>
+          <a href="#" role="menuitem">邀请<em>返利 10%</em></a>
+          <a href="#" role="menuitem">账户设置</a>
+          <hr>
+          <a href="login.html" role="menuitem">退出登录</a>
+        </div>
+      </div>
+      <button class="iconbtn menu-btn" data-toggle="menu" aria-expanded="false"><svg class="i"><use href="#i-menu"/></svg><span>菜单</span></button>
+    </div>
+  </div>
+</header>
+<div class="sheet" aria-label="菜单">
+  <div class="who"><b>alice@example.com</b><span class="num">标准 Pro · 剩 136.6 GB</span></div>
+  <h4>服务</h4>
+  <a class="it" href="dashboard.html" aria-current="page">仪表盘</a>
+  <a class="it" href="shop.html">商店</a>
+  <a class="it" href="#">线路<em>6 / 8 可用</em></a>
+  <a class="it" href="#">用量</a>
+  <a class="it" href="#">公告<em>2 条未读</em></a>
+  <a class="it" href="#">文档</a>
+  <a class="it" href="#">工单</a>
+  <h4>账户</h4>
+  <a class="it" href="#">订单<em>1 笔待付款</em></a>
+  <a class="it" href="#">钱包<em class="num">¥128.50</em></a>
+  <a class="it" href="#">邀请</a>
+  <a class="it" href="#">账户设置</a>
+  <h4>偏好</h4>
+  <div class="prefs">主题<div><button data-theme-set="light">浅色</button><button data-theme-set="dark">深色</button><button data-theme-set="system">跟随系统</button></div></div>
+  <div class="prefs">语言<div><button aria-pressed="true">中文</button><button>English</button></div></div>
+  <a class="out" href="login.html">退出登录</a>
+</div>
+
+<main class="wrap">
+  <div class="ph">
+    <div>
+      <h1>仪表盘</h1>
+      <p>标准 Pro · 月付 · 每月 1 日重置流量</p>
+    </div>
+    <a class="link" href="shop.html">续费或更换套餐<svg class="i"><use href="#i-arrow"/></svg></a>
+  </div>
+
+  <div class="banner c-amber" role="region" aria-label="最新公告">
+    <div class="tx">
+      <div class="tt"><span class="tg c-amber">维护</span><span>日本节点今晚 02:00–03:00 维护</span></div>
+      <p class="sm">期间东京、大阪线路短暂不可用，其他地区不受影响。</p>
+    </div>
+    <a class="link go" href="#">查看详情</a>
+    <button class="iconbtn x" aria-label="不再显示这条公告"><svg class="i"><use href="#i-x"/></svg></button>
+  </div>
+
+  <div class="notes only-notices">
+    <div class="note">
+      <svg class="i"><use href="#i-clock"/></svg>
+      <p class="tx"><b>有一笔订单待付款</b><span class="gap">　</span><span class="num">进阶 Plus · 年付 · ¥342.80，23 分钟后自动取消</span></p>
+      <a class="btn sm" href="#">去付款</a>
+    </div>
+    <div class="note warn">
+      <svg class="i"><use href="#i-alert"/></svg>
+      <p class="tx"><b>流量快用完了</b><span class="gap">　</span><span class="num">只剩 14.2 GB（7%），11 月 1 日才会重置。</span></p>
+      <a class="btn sm" href="shop.html">购买重置包<span class="d-only">&nbsp;¥5</span></a>
+    </div>
+  </div>
+
+  <section class="kpis" aria-label="账户概况">
+    <div class="kpi">
+      <div class="lb">剩余流量</div>
+      <div class="v"><span class="only-default">136.6</span><span class="only-notices">14.2</span><small>GB</small></div>
+      <div class="meter only-default" role="meter" aria-valuenow="68"><i style="width:68.3%"></i></div>
+      <div class="meter warn only-notices" role="meter" aria-valuenow="7"><i style="width:7.1%"></i></div>
+      <div class="sub only-default">共 200 GB，已用 63.4 GB · 11-01 重置</div>
+      <div class="sub only-notices">共 200 GB，已用 185.8 GB · 11-01 重置</div>
+    </div>
+    <div class="kpi">
+      <div class="lb">套餐剩余</div>
+      <div class="v">38<small>天</small></div>
+      <div class="sub"><span class="d-only">2026-</span>11-29 到期</div>
+    </div>
+    <div class="kpi">
+      <div class="lb">可用线路</div>
+      <div class="v">6<small>/ 8 条</small></div>
+      <div class="sub">1 维护 · 1 离线</div>
+    </div>
+    <div class="kpi">
+      <div class="lb">账户余额</div>
+      <div class="v"><span class="ccy">¥</span>128.50</div>
+      <div class="sub">可提现 ¥50.00<span class="d-only"> · <a href="#">充值</a></span></div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="h-traffic">
+    <div class="sh wrapm">
+      <div>
+        <h2 id="h-traffic">近 7 日流量</h2>
+        <p class="num">合计 39.8 GB，其中下行 31.2 GB、上行 8.6 GB</p>
+      </div>
+      <div class="legend"><span><i style="background:var(--brand)"></i>下行</span><span><i style="background:var(--brand-2)"></i>上行</span><span>单位 GB</span></div>
+    </div>
+    <div class="chart" role="img" aria-label="近 7 日每日流量柱状图，最高为 10 月 20 日 10.0 GB">
+      <div class="yax"><span style="top:100%">0</span><span style="top:75%">3</span><span style="top:50%">6</span><span style="top:25%">9</span><span style="top:0">12</span></div>
+      <div class="plot">
+        <i class="grid-l" style="top:0"></i><i class="grid-l" style="top:25%"></i><i class="grid-l" style="top:50%"></i><i class="grid-l" style="top:75%"></i>
+        <div class="col"><span class="tot">5.3</span><div class="stack" style="height:44.2%"><i class="up" style="flex:1.1"></i><i class="dn" style="flex:4.2"></i></div><div class="xl">周五<span>10-16</span></div><div class="tip num">10-16　下行 4.2 · 上行 1.1</div></div>
+        <div class="col"><span class="tot">8.4</span><div class="stack" style="height:70%"><i class="up" style="flex:1.6"></i><i class="dn" style="flex:6.8"></i></div><div class="xl">周六<span>10-17</span></div><div class="tip num">10-17　下行 6.8 · 上行 1.6</div></div>
+        <div class="col"><span class="tot">4.0</span><div class="stack" style="height:33.3%"><i class="up" style="flex:.9"></i><i class="dn" style="flex:3.1"></i></div><div class="xl">周日<span>10-18</span></div><div class="tip num">10-18　下行 3.1 · 上行 0.9</div></div>
+        <div class="col"><span class="tot">6.8</span><div class="stack" style="height:56.7%"><i class="up" style="flex:1.4"></i><i class="dn" style="flex:5.4"></i></div><div class="xl">周一<span>10-19</span></div><div class="tip num">10-19　下行 5.4 · 上行 1.4</div></div>
+        <div class="col"><span class="tot">10.0</span><div class="stack" style="height:83.3%"><i class="up" style="flex:2.1"></i><i class="dn" style="flex:7.9"></i></div><div class="xl">周二<span>10-20</span></div><div class="tip num">10-20　下行 7.9 · 上行 2.1</div></div>
+        <div class="col"><span class="tot">3.4</span><div class="stack" style="height:28.3%"><i class="up" style="flex:.8"></i><i class="dn" style="flex:2.6"></i></div><div class="xl">周三<span>10-21</span></div><div class="tip num">10-21　下行 2.6 · 上行 0.8</div></div>
+        <div class="col today"><span class="tot">1.9</span><div class="stack" style="height:15.8%"><i class="up" style="flex:.7"></i><i class="dn" style="flex:1.2"></i></div><div class="xl">今天<span>10-22</span></div><div class="tip num">今天截至 14:30　下行 1.2 · 上行 0.7</div></div>
+      </div>
+    </div>
+    <p class="chart-foot">按北京时间统计；线路倍率已计入“计费流量”，见 <a class="link" href="#">用量明细</a></p>
+  </section>
+
+  <div class="cols">
+    <section class="sec" aria-labelledby="h-access">
+      <div class="sh">
+        <div>
+          <h2 id="h-access">接入配置</h2>
+          <p>一个链接导入任意客户端。链接等同密码，不要发给别人。</p>
+        </div>
+        <a class="link" href="#" style="color:var(--muted)"><svg class="i" style="width:14px;height:14px"><use href="#i-refresh"/></svg>重置链接</a>
+      </div>
+      <div class="access">
+        <div>
+          <div class="row-actions">
+            <button class="btn pri"><svg class="i"><use href="#i-copy"/></svg>复制订阅链接</button>
+            <button class="select" aria-label="订阅格式">自动识别<svg class="i" style="width:14px;height:14px"><use href="#i-chev"/></svg></button>
+          </div>
+          <div class="sublink"><svg class="i" style="width:14px;height:14px"><use href="#i-link"/></svg><span class="mono">https://sub.akari.example/s/7Qk2•••••••aB8J3k</span></div>
+          <p class="k">一键导入</p>
+          <div class="clients">
+            <a href="#"><b>Clash Verge</b><span>桌面全平台</span><em>导入</em></a>
+            <a href="#"><b>Shadowrocket</b><span>iOS</span><em>导入</em></a>
+            <a href="#"><b>Stash</b><span>iOS · macOS</span><em>导入</em></a>
+            <a href="#"><b>Clash Meta</b><span>Android</span><em>导入</em></a>
+            <a href="#"><b>Hiddify</b><span>Android · Windows</span><em>导入</em></a>
+            <a href="#"><b>sing-box</b><span>全平台</span><em>导入</em></a>
+          </div>
+        </div>
+        <div class="qr">
+          <div class="box"><svg viewBox="0 0 25 25" shape-rendering="crispEdges" aria-label="订阅二维码"><path fill="#111" d="M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM8 0h1v1h-1zM9 0h1v1h-1zM10 0h1v1h-1zM11 0h1v1h-1zM12 0h1v1h-1zM14 0h1v1h-1zM15 0h1v1h-1zM18 0h1v1h-1zM19 0h1v1h-1zM20 0h1v1h-1zM21 0h1v1h-1zM22 0h1v1h-1zM23 0h1v1h-1zM24 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM9 1h1v1h-1zM10 1h1v1h-1zM12 1h1v1h-1zM13 1h1v1h-1zM15 1h1v1h-1zM16 1h1v1h-1zM18 1h1v1h-1zM24 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM11 2h1v1h-1zM15 2h1v1h-1zM18 2h1v1h-1zM20 2h1v1h-1zM21 2h1v1h-1zM22 2h1v1h-1zM24 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM9 3h1v1h-1zM10 3h1v1h-1zM11 3h1v1h-1zM13 3h1v1h-1zM14 3h1v1h-1zM18 3h1v1h-1zM20 3h1v1h-1zM21 3h1v1h-1zM22 3h1v1h-1zM24 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM15 4h1v1h-1zM18 4h1v1h-1zM20 4h1v1h-1zM21 4h1v1h-1zM22 4h1v1h-1zM24 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM9 5h1v1h-1zM12 5h1v1h-1zM13 5h1v1h-1zM14 5h1v1h-1zM15 5h1v1h-1zM16 5h1v1h-1zM18 5h1v1h-1zM24 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM12 6h1v1h-1zM13 6h1v1h-1zM14 6h1v1h-1zM18 6h1v1h-1zM19 6h1v1h-1zM20 6h1v1h-1zM21 6h1v1h-1zM22 6h1v1h-1zM23 6h1v1h-1zM24 6h1v1h-1zM10 7h1v1h-1zM14 7h1v1h-1zM15 7h1v1h-1zM16 7h1v1h-1zM0 8h1v1h-1zM6 8h1v1h-1zM8 8h1v1h-1zM11 8h1v1h-1zM12 8h1v1h-1zM15 8h1v1h-1zM16 8h1v1h-1zM17 8h1v1h-1zM20 8h1v1h-1zM24 8h1v1h-1zM1 9h1v1h-1zM2 9h1v1h-1zM7 9h1v1h-1zM10 9h1v1h-1zM11 9h1v1h-1zM12 9h1v1h-1zM13 9h1v1h-1zM15 9h1v1h-1zM16 9h1v1h-1zM17 9h1v1h-1zM19 9h1v1h-1zM20 9h1v1h-1zM23 9h1v1h-1zM3 10h1v1h-1zM4 10h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM8 10h1v1h-1zM12 10h1v1h-1zM16 10h1v1h-1zM18 10h1v1h-1zM19 10h1v1h-1zM0 11h1v1h-1zM5 11h1v1h-1zM12 11h1v1h-1zM16 11h1v1h-1zM17 11h1v1h-1zM18 11h1v1h-1zM19 11h1v1h-1zM20 11h1v1h-1zM21 11h1v1h-1zM0 12h1v1h-1zM3 12h1v1h-1zM6 12h1v1h-1zM8 12h1v1h-1zM12 12h1v1h-1zM13 12h1v1h-1zM15 12h1v1h-1zM16 12h1v1h-1zM17 12h1v1h-1zM19 12h1v1h-1zM21 12h1v1h-1zM22 12h1v1h-1zM23 12h1v1h-1zM1 13h1v1h-1zM5 13h1v1h-1zM6 13h1v1h-1zM7 13h1v1h-1zM9 13h1v1h-1zM10 13h1v1h-1zM11 13h1v1h-1zM14 13h1v1h-1zM15 13h1v1h-1zM19 13h1v1h-1zM20 13h1v1h-1zM22 13h1v1h-1zM23 13h1v1h-1zM2 14h1v1h-1zM4 14h1v1h-1zM6 14h1v1h-1zM7 14h1v1h-1zM10 14h1v1h-1zM11 14h1v1h-1zM13 14h1v1h-1zM14 14h1v1h-1zM15 14h1v1h-1zM16 14h1v1h-1zM17 14h1v1h-1zM18 14h1v1h-1zM19 14h1v1h-1zM21 14h1v1h-1zM23 14h1v1h-1zM24 14h1v1h-1zM0 15h1v1h-1zM1 15h1v1h-1zM2 15h1v1h-1zM5 15h1v1h-1zM8 15h1v1h-1zM10 15h1v1h-1zM13 15h1v1h-1zM17 15h1v1h-1zM21 15h1v1h-1zM22 15h1v1h-1zM23 15h1v1h-1zM24 15h1v1h-1zM0 16h1v1h-1zM2 16h1v1h-1zM3 16h1v1h-1zM4 16h1v1h-1zM8 16h1v1h-1zM9 16h1v1h-1zM10 16h1v1h-1zM11 16h1v1h-1zM12 16h1v1h-1zM13 16h1v1h-1zM14 16h1v1h-1zM18 16h1v1h-1zM20 16h1v1h-1zM21 16h1v1h-1zM22 16h1v1h-1zM23 16h1v1h-1zM8 17h1v1h-1zM9 17h1v1h-1zM10 17h1v1h-1zM17 17h1v1h-1zM18 17h1v1h-1zM20 17h1v1h-1zM23 17h1v1h-1zM0 18h1v1h-1zM1 18h1v1h-1zM2 18h1v1h-1zM3 18h1v1h-1zM4 18h1v1h-1zM5 18h1v1h-1zM6 18h1v1h-1zM14 18h1v1h-1zM15 18h1v1h-1zM16 18h1v1h-1zM17 18h1v1h-1zM18 18h1v1h-1zM0 19h1v1h-1zM6 19h1v1h-1zM8 19h1v1h-1zM9 19h1v1h-1zM10 19h1v1h-1zM12 19h1v1h-1zM16 19h1v1h-1zM22 19h1v1h-1zM23 19h1v1h-1zM24 19h1v1h-1zM0 20h1v1h-1zM2 20h1v1h-1zM3 20h1v1h-1zM4 20h1v1h-1zM6 20h1v1h-1zM9 20h1v1h-1zM11 20h1v1h-1zM12 20h1v1h-1zM13 20h1v1h-1zM15 20h1v1h-1zM18 20h1v1h-1zM19 20h1v1h-1zM22 20h1v1h-1zM23 20h1v1h-1zM24 20h1v1h-1zM0 21h1v1h-1zM2 21h1v1h-1zM3 21h1v1h-1zM4 21h1v1h-1zM6 21h1v1h-1zM11 21h1v1h-1zM14 21h1v1h-1zM15 21h1v1h-1zM17 21h1v1h-1zM18 21h1v1h-1zM19 21h1v1h-1zM20 21h1v1h-1zM21 21h1v1h-1zM23 21h1v1h-1zM0 22h1v1h-1zM2 22h1v1h-1zM3 22h1v1h-1zM4 22h1v1h-1zM6 22h1v1h-1zM10 22h1v1h-1zM11 22h1v1h-1zM12 22h1v1h-1zM13 22h1v1h-1zM14 22h1v1h-1zM16 22h1v1h-1zM18 22h1v1h-1zM19 22h1v1h-1zM21 22h1v1h-1zM22 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM8 23h1v1h-1zM11 23h1v1h-1zM12 23h1v1h-1zM14 23h1v1h-1zM16 23h1v1h-1zM17 23h1v1h-1zM20 23h1v1h-1zM22 23h1v1h-1zM24 23h1v1h-1zM0 24h1v1h-1zM1 24h1v1h-1zM2 24h1v1h-1zM3 24h1v1h-1zM4 24h1v1h-1zM5 24h1v1h-1zM6 24h1v1h-1zM8 24h1v1h-1zM9 24h1v1h-1zM10 24h1v1h-1zM11 24h1v1h-1zM12 24h1v1h-1zM13 24h1v1h-1zM14 24h1v1h-1zM15 24h1v1h-1zM19 24h1v1h-1zM20 24h1v1h-1zM22 24h1v1h-1zM23 24h1v1h-1zM24 24h1v1h-1z"/></svg></div>
+          <p>手机扫码导入</p>
+        </div>
+      </div>
+      <div class="help">
+        <span class="lead"><svg class="i" style="width:15px;height:15px"><use href="#i-download"/></svg>还没有客户端？按平台查看教程：</span>
+        <a href="#">Windows</a><a href="#">macOS</a><a href="#">iOS</a><a href="#">Android</a><a href="#">Linux</a>
+      </div>
+    </section>
+
+    <section class="sec" aria-labelledby="h-news">
+      <div class="sh">
+        <div><h2 id="h-news">公告与动态</h2><p>2 条未读</p></div>
+        <a class="link" href="#">全部公告<svg class="i" style="width:14px;height:14px"><use href="#i-right"/></svg></a>
+      </div>
+      <div class="list">
+        <a class="li unread" href="#"><div class="main"><div class="t"><span class="tg c-amber">维护</span><span>日本节点今晚 02:00–03:00 维护</span></div><p class="s">期间东京、大阪线路短暂不可用。</p></div><div class="r"><span class="pin"><svg class="i"><use href="#i-pin"/></svg>置顶</span></div></a>
+        <a class="li unread" href="#"><div class="main"><div class="t"><span class="tg c-pink">活动</span><span>双十一全场八折，年付再送 50 GB</span></div><p class="s">活动时间 11 月 1 日至 11 月 11 日。</p></div><div class="r">2 小时前</div></a>
+        <a class="li" href="#"><div class="main"><div class="t"><span class="tg c-teal">新线路</span><span>新增新加坡 IPLC 线路</span></div><p class="s">已加入所有标准及以上套餐的订阅。</p></div><div class="r">昨天</div></a>
+        <a class="li" href="#"><div class="main"><div class="t"><span class="tg c-blue">调整</span><span>流量重置日调整为每月 1 日</span></div><p class="s">本月剩余流量照常可用，下月起统一。</p></div><div class="r">3 天前</div></a>
+        <a class="li" href="#"><div class="main"><div class="t"><span>服务条款更新</span></div><p class="s">第 4 条退款说明措辞调整。</p></div><div class="r">10-01</div></a>
+      </div>
+    </section>
+  </div>
+
+  <div class="cols">
+    <section class="sec" aria-labelledby="h-lines">
+      <div class="sh">
+        <div><h2 id="h-lines">订阅内的线路</h2><p>6 条可用，共 8 条 · 延迟为面板测得，每 30 秒刷新</p></div>
+        <a class="link" href="#">全部线路<svg class="i" style="width:14px;height:14px"><use href="#i-right"/></svg></a>
+      </div>
+      <div class="list">
+        <div class="li"><span class="rc">HK</span><div class="main"><div class="t"><span>香港 01 IPLC</span></div></div><span class="st ok num">在线 · 32 ms</span><span class="mult">×2</span></div>
+        <div class="li"><span class="rc">HK</span><div class="main"><div class="t"><span>香港 02</span></div></div><span class="st ok num">在线 · 41 ms</span><span class="mult">×1</span></div>
+        <div class="li"><span class="rc">SG</span><div class="main"><div class="t"><span>新加坡 01 IPLC</span></div></div><span class="st ok num">在线 · 75 ms</span><span class="mult">×1</span></div>
+        <div class="li"><span class="rc">JP</span><div class="main"><div class="t"><span>东京 01</span></div></div><span class="st ok num">在线 · 68 ms</span><span class="mult">×1</span></div>
+        <div class="li dim"><span class="rc">JP</span><div class="main"><div class="t"><span>大阪 01</span></div></div><span class="st warn">维护中，03:00 恢复</span><span class="mult">×1</span></div>
+        <div class="li dim"><span class="rc">US</span><div class="main"><div class="t"><span>洛杉矶 01</span></div></div><span class="st off">离线</span><span class="mult">×0.5</span></div>
+      </div>
+    </section>
+
+    <section class="sec" aria-labelledby="h-docs">
+      <div class="sh">
+        <div><h2 id="h-docs">使用文档</h2><p>按设备找到安装与导入步骤</p></div>
+        <a class="link" href="#">全部文档<svg class="i" style="width:14px;height:14px"><use href="#i-right"/></svg></a>
+      </div>
+      <div class="docs">
+        <a href="#"><svg class="i"><use href="#i-monitor"/></svg><span>Windows<i class="here">当前设备</i></span><em>3 篇</em></a>
+        <a href="#"><svg class="i"><use href="#i-laptop"/></svg><span>macOS</span><em>2 篇</em></a>
+        <a href="#"><svg class="i"><use href="#i-phone"/></svg><span>iOS 与 iPadOS</span><em>3 篇</em></a>
+        <a href="#"><svg class="i"><use href="#i-phone"/></svg><span>Android</span><em>2 篇</em></a>
+        <a href="#"><svg class="i"><use href="#i-router"/></svg><span>Linux 与路由器</span><em>2 篇</em></a>
+        <a href="#"><svg class="i"><use href="#i-help"/></svg><span>常见问题</span><em>6 篇</em></a>
+        <a href="#"><svg class="i"><use href="#i-card"/></svg><span>账户与付款</span><em>4 篇</em></a>
+        <a href="#"><svg class="i"><use href="#i-book"/></svg><span>订阅格式说明</span><em>1 篇</em></a>
+      </div>
+    </section>
+  </div>
+</main>
+<footer><div class="wrap"><span>© 2026 Akari</span><nav><a href="#">服务条款</a><a href="#">隐私政策</a><a href="#">联系我们</a></nav></div></footer>
+
+<script src="app.js"></script>
+</body>
+</html>
