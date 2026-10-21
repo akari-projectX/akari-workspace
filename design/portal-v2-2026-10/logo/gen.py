@@ -4,7 +4,7 @@ def S(d,col): return f'<path d="{d}" fill="none" stroke="{col}" stroke-width="{W
 def C(cx,cy,r,col): return f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="{col}" stroke-width="{W}"/>'
 def glyphs(ink,blue):
     g=[(58, S('M52,40 V100',ink)+C(26,70,26,ink)),
-       (50, S('M0,0 V100',ink)+S('M48,40 L12,74',ink)+S('M24,64 L50,100',ink)),
+       (52, '<g transform="translate(2,0)">'+S('M0,0 V100',ink)+S('M46,40 L0,74',ink)+S('M20,59 L48,100',ink)+'</g>'),  # k：臂接到竖笔中线、腿从臂上分出（2026-10-22 修正断开）
        (58, S('M52,40 V100',ink)+C(26,70,26,ink)),
        (36, S('M0,100 V68 A28,28 0 0 1 36,42',ink)),
        (0,  S('M0,46 V100',ink)+f'<circle cx="0" cy="18" r="9.5" fill="{blue}"/>')]
@@ -12,7 +12,7 @@ def glyphs(ink,blue):
     for w,d in g: out+=f'<g transform="translate({x},0)">{d}</g>'; x+=w+22
     return out,x-22
 def wordmark(ink,blue):
-    body,w=glyphs(ink,blue); p=W/2+1
+    body,w=glyphs(ink,blue); p=11  # 留够 i 点（r 9.5）与圆头笔画
     vb=f'{-p:.1f} {-p:.1f} {w+2*p:.1f} {100+2*p:.1f}'
     return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{vb}">{body}</svg>'
 def icon(bg,ink,blue,dot=True):
