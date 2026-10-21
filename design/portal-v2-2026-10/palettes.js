@@ -1,0 +1,4 @@
+(function(){var N={"a": ["现状 · 冷灰蓝", "#2563eb"], "b": ["暖调 · 靛蓝", "#4f46e5"], "c": ["清透 · 天青", "#0277b6"], "d": ["活力 · 亮蓝紫", "#3355ff"], "e": ["自然 · 墨绿", "#0f7a5c"]};var h=document.documentElement;var cur='a';try{cur=localStorage.getItem('akari-palette')||'a'}catch(e){}
+var q=(location.search.match(/[?&]p=([a-e])/)||[])[1];if(q)cur=q;h.dataset.palette=cur;
+function ui(){var p=document.createElement('div');p.id='pal';p.innerHTML='<b>配色候选</b>';Object.keys(N).forEach(function(k){var b=document.createElement('button');b.type='button';b.innerHTML='<i style="background:'+N[k][1]+'"></i>'+k.toUpperCase()+' '+N[k][0];b.setAttribute('aria-pressed',k===cur);b.onclick=function(){cur=k;h.dataset.palette=k;try{localStorage.setItem('akari-palette',k)}catch(e){}p.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b)})};p.appendChild(b)});document.body.appendChild(p)}
+if(document.body)ui();else document.addEventListener('DOMContentLoaded',ui)})();
