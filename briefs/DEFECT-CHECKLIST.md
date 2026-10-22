@@ -25,3 +25,6 @@
 10. **NULL 让上限失效；取整超过上限**（GCRA 逐行 floor）。
 11. **秘密进日志**：后台前缀、订阅路径与 token、enrollment / 安装 token、私钥、主密钥派生物一律不进日志、trace、指标标签；路径用 `web::redacted_path`。
 12. **失败被当成收敛**：agent 应用失败不前移持有版本；Ack `ok=false` 不算收敛。
+
+## Rust（2026-10-22 起）
+- 是否符合 `briefs/RUST-STYLE.md`（Google Rust Style Guide）：无 glob 导入、非测试代码无 `unwrap()`（用 `expect("原因")` 或 `?`）、参数用 `&str`/`&[T]`、不明确的 bool 参数改枚举、易混值用 newtype、无缩写命名、公开项有文档、断言带说明、`unsafe` 有 `SAFETY:`。
