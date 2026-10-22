@@ -47,4 +47,4 @@ An agent's context must stay under 500k tokens. When you estimate you are near ~
 ## Agent count (user rule 2026-10-13)
 Do not spawn helper or sub-agents; do the task yourself, sequentially. The lead runs at most two workers at a time.
 
-- Rust 代码遵循 `briefs/RUST-STYLE.md`（Google Rust Style Guide，2026-10-22 用户决定）；brief 涉及 Rust 时必须附上。
+- Rust 代码遵循 `briefs/RUST-STYLE.md`、Go 代码遵循 `briefs/GO-STYLE.md`（Google 规范，2026-10-22 用户决定）；brief 涉及对应语言时必须附上。

@@ -28,3 +28,6 @@
 
 ## Rust（2026-10-22 起）
 - 是否符合 `briefs/RUST-STYLE.md`（Google Rust Style Guide）：无 glob 导入、非测试代码无 `unwrap()`（用 `expect("原因")` 或 `?`）、参数用 `&str`/`&[T]`、不明确的 bool 参数改枚举、易混值用 newtype、无缩写命名、公开项有文档、断言带说明、`unsafe` 有 `SAFETY:`。
+
+## Go（2026-10-22 起）
+- 是否符合 `briefs/GO-STYLE.md`（Google Go Style Guide）：错误带上下文 `%w` 包装且不丢弃、错误串小写、context 首参不入结构体、每个 goroutine 有明确退出、接口由使用方定义、首字母缩写大小写一致、无 Get 前缀、导出名有文档、测试失败信息 `got/want` + `cmp.Diff`。
