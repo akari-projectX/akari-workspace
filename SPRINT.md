@@ -568,3 +568,4 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
 - **裁决（2026-10-22，用户给出 https://google.github.io/styleguide/rustguide.html）**：akari-panel 的 Rust 代码（含 bench/fuzz）采用 Google Rust Style Guide，落地为 `briefs/RUST-STYLE.md`（按应用代码口径；chrome/fuchsia 专属条目不适用；axum/tokio 共享状态用 `Arc` 属允许例外）。新代码立即执行；存量代码分 PR 整改：① clippy 规则 + 机械修正（glob 导入、`unwrap`→`expect`/`?` 等，按模块拆分）② 只能人工审的条目（命名缩写、bool 参数、newtype、文档、断言说明）。整改 PR 不改行为。在 #139（Rust 依赖）合并后开工。
 - **裁决（2026-10-22，用户："Google Go 规范也要 先完成当前工作 Google Go/rust 规范 整改排期 第一优先级"）**：akari-agent 采用 Google Go Style Guide（`briefs/GO-STYLE.md`）。当前进行中的工作收尾后，Rust / Go 规范整改为**第一优先级**，排在门户 PR 3 之前；两仓各一个 worker 并行。
 - **修订（2026-10-22，用户："先完成门户全部工作再整改规范！"）**：顺序改为 门户 v2 全部 7 个 PR（含切换与性能对比）→ Rust / Go 规范整改（随后的第一优先级）→ 其余。新代码照常按规范写。
+- **正式发版 v1.4.0（2026-10-22）**：release.yml 39702597072 全绿后发布（Latest）。内容：#135、#137 依赖安全更新；#138 admin 依赖最新 + Dependabot + Actions；#136 门户 v2 骨架（`AKARI_PORTAL_V2=1` 才启用）。
