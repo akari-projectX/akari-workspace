@@ -19,8 +19,8 @@
 - **迁移期间门户冻结新功能**：公告标签的后端 + 后台部分可先做，门户部分直接在 Svelte 版里做。
 - **风险**：shadcn-svelte 与 React 版 shadcn 组件细节不完全相同（弹窗、下拉、焦点管理），靠截图对比与现有 e2e 兜底；通行密钥、付款等流程 e2e 必须全部照旧通过。
 
-## ★ 第一优先级：Google Rust / Go 规范整改（2026-10-22 用户："先完成当前工作 … 整改排期 第一优先级"）
-当前进行中的工作收尾后（v1.4.0 发版、门户 PR 2 登录页、#139 Rust 依赖、#143 spa 依赖），**先做这一项，再继续门户 PR 3 起**。
+## ★ 门户 v2 全部完成后的第一优先级：Google Rust / Go 规范整改（2026-10-22 用户修订："先完成门户全部工作再整改规范！"）
+顺序：门户 v2 七个 PR 全部完成（含切换上线与性能对比）→ 本项（第一优先级）→ 其余排期。新写的代码现在就按规范写。
 - 规范：`briefs/RUST-STYLE.md`（akari-panel，含 bench/fuzz）、`briefs/GO-STYLE.md`（akari-agent；akari-client 恢复时适用）。新代码已立即执行。
 - Rust（约 12 万行 / 188 文件）：① clippy 规则写进 `Cargo.toml [lints.clippy]` + 机械修正（通配导入、非测试 `unwrap`→`expect`/`?`、参数类型等），按模块拆 PR；② 人工条目（命名缩写、bool 参数→枚举、newtype、文档、断言说明、毒化锁）按模块过。
 - Go（约 2.7 万行 / 83 文件）：① golangci-lint 配置 + CI + 机械修正；② 人工条目（goroutine 生命周期、错误包装、测试 got/want + cmp、文档、命名）按包过。
