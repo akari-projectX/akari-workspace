@@ -570,3 +570,4 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
 - **修订（2026-10-22，用户："先完成门户全部工作再整改规范！"）**：顺序改为 门户 v2 全部 7 个 PR（含切换与性能对比）→ Rust / Go 规范整改（随后的第一优先级）→ 其余。新代码照常按规范写。
 - **正式发版 v1.4.0（2026-10-22）**：release.yml 39702597072 全绿后发布（Latest）。内容：#135、#137 依赖安全更新；#138 admin 依赖最新 + Dependabot + Actions；#136 门户 v2 骨架（`AKARI_PORTAL_V2=1` 才启用）。
 - **暂停（2026-10-22，用户："暂停全部"）**：门户 v2 PR 3（#146 仪表盘，草稿，分支 portal-v2-dashboard）与 PR 4（商店 / 订单 / 付款，分支 portal-v2-shop，刚开工）的 worker 已停止；工作区 `.work/portal-v2-dashboard`、`.work/portal-v2-shop` 保留未推送的进度。恢复时：#146 先同步 main（#145 已合并）跑最后一轮；PR 4 从 `.work/portal-v2-shop` 现状继续（先看 git status / 是否已推送）。
+- **恢复（2026-10-22，用户："继续"）**：新 worker 接手 #146（同步 main、最后一轮、截图、转正式）与 PR 4（从 `.work/portal-v2-shop` 未提交进度继续）。
