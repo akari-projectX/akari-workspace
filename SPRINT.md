@@ -572,3 +572,4 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
 - **暂停（2026-10-22，用户："暂停全部"）**：门户 v2 PR 3（#146 仪表盘，草稿，分支 portal-v2-dashboard）与 PR 4（商店 / 订单 / 付款，分支 portal-v2-shop，刚开工）的 worker 已停止；工作区 `.work/portal-v2-dashboard`、`.work/portal-v2-shop` 保留未推送的进度。恢复时：#146 先同步 main（#145 已合并）跑最后一轮；PR 4 从 `.work/portal-v2-shop` 现状继续（先看 git status / 是否已推送）。
 - **恢复（2026-10-22，用户："继续"）**：新 worker 接手 #146（同步 main、最后一轮、截图、转正式）与 PR 4（从 `.work/portal-v2-shop` 未提交进度继续）。
 - **#146 合并（2026-10-22）**：门户 v2 仪表盘（手写平滑面积图，30 天读 `/me/traffic` 真实数据；手机端公告条「查看详情」修复）。仪表盘首屏 JS（gzip）Svelte 约 70 KiB vs React 约 164 KiB；mobile-mid 冷启动内容就绪 Svelte 4268 ms vs React 8210 ms。截图 `design/portal-v2-2026-10/impl/pr3/`。
+- **#147 合并（2026-10-23）**：门户 v2 商店 / 确认订单 / 订单 / 订单详情 / 付款（余额、支付宝、易支付、USDT）。推荐套餐与当前套餐都用主按钮。修复：mock 链区块时间改用真实时间（原超出 600 s 匹配窗口导致 USDT 被判无匹配）；手机订单详情长订单号撑出横向滚动。首屏 JS：商店 53.6 vs 182.7 KiB，订单详情 59.1 vs 184.1 KiB。截图 `impl/pr4/`。
