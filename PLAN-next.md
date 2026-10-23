@@ -14,15 +14,15 @@
 - **排序**：第一优先级（用户 2026-10-23）；Rust / Go 规范整改**延期**。
 
 ## （延期）代码规范整改 + 业务代码全面体检（Rust / Go，合并阶段 D）（2026-10-23 用户："Rust / Go 规范整改 顺便分析业务代码：代码质量 死代码 bug 逻辑错误 提高性能 等等其他技术债务"）
-**状态：延期**（门户恢复上一版界面为第一优先级）。新写的代码照常按 `briefs/RUST-STYLE.md` / `briefs/GO-STYLE.md` 写。本项与下方「阶段 D」合并执行（阶段 D 的计费漏洞重点、全仓审计、工程规范与 CI 检查、CodeQL 提示都在本项里做）。
-- **范围**：akari-panel（Rust 后端约 12 万行 / 188 文件，含 bench/fuzz、迁移与 SQL）、akari-agent（Go 约 2.7 万行 / 83 文件）；前端（portal/、admin/）只做死代码与重复代码检查。
+**状态：延期**（门户恢复上一版界面为第一优先级）。新写的代码照常按 `briefs/RUST-STYLE.md` / `briefs/GO-STYLE.md` 写。本项**取代原「阶段 D：代码质量与技术债」**（其内容已全部并入下文，原节已删除）。
+- **范围**：akari-panel（Rust 后端约 12 万行 / 188 文件，含 bench/fuzz、迁移、SQL 与 proto；smoke / e2e、安装器与 akari-ctl、CI、部署文件、文档）、akari-agent（Go 约 2.7 万行 / 83 文件，含 updater、systemd / OpenRC 单元、安装脚本）、工作区脚本与文档；前端（portal/、admin/）查死代码、重复与首屏 / 交互性能；akari-client 暂停中，只做依赖与安全快速检查。
 - **第 1 步：体检（只读，出报告，不改代码）**——按模块分批，每批一份 `research/code-audit-2026-10/<仓>-<模块>.md`，每个发现带：位置、类别、严重度（P0 资金/安全/数据错误 → P3 风格）、复现或推理、建议修法：
   - **bug 与逻辑错误**：计费与资金（结算 SQL、倍率、额度、退款与折算、佣金与追回、余额、优惠券、时区与分区、并发与重复计费）、授权与撤权、收敛与下发、订阅、认证与会话、并发锁序、错误处理吞错、边界条件；
   - **死代码与重复**：未用函数/类型/路由/错误码/迁移遗留、未用依赖（`cargo-udeps`/`cargo-machete`、`go mod why`、`deadcode`、前端 knip）、重复实现与第二个事实来源（jscpd 等）；
   - **性能**：热点路径（flush、订阅渲染、desired_state、门户 API、仪表盘）的查询计划、N+1、锁持有时间、分配与克隆，用 `make bench` / pprof 量化；
   - **代码质量与规范偏差**：对照 Google Rust / Go 规范（机器可查的先跑 clippy / golangci-lint 统计，再人工抽查）；
-  - **其他技术债**：过期注释与文档、TODO、测试缺口（覆盖率、缺失的并发/失败路径测试）、CodeQL 既有提示（约 118 个）。
-- **第 2 步：按报告分 PR 修**，顺序：P0/P1 bug 修复（每个独立 PR，T1 逐行审，涉及资金加 `full-ci`）→ 性能（改前后数据进 PR）→ 死代码/重复删除 → 规范整改（clippy / golangci-lint 规则进 CI + 机械修正按模块拆 PR → 人工条目）→ 立规矩（`briefs/ENGINEERING.md`、CI 加重复/死代码检测）。修 bug 与改写法分开 PR；规范整改 PR 不改行为。
+  - **其他技术债**：过期注释与文档、TODO、测试缺口（覆盖率、缺失的并发/失败路径测试）、CodeQL 既有提示（约 118 个：误报标「不适用」写理由，真问题修；重点确认 `src/auth.rs` insecure-cookie，`src/plans.rs`、`src/signup/pow.rs`、`src/account.rs`、`src/api.rs` 的 hard-coded crypto，bench 明文传输）。
+- **第 2 步：按报告分 PR 修**，顺序：P0/P1 bug 修复（每个独立 PR，T1 逐行审，涉及资金加 `full-ci`）→ 性能（改前后数据进 PR）→ 死代码/重复删除 → 规范整改（clippy / golangci-lint 规则进 CI + 机械修正按模块拆 PR → 人工条目）→ **立规矩**：工程规范 `briefs/ENGINEERING.md`（各仓 CLAUDE.md 引用：单一事实来源、模块边界与分层、命名、错误处理、SQL 与计费规则、前端组件与数据层约定、测试要求（每个 bug 修复带回归测试、每个功能带 e2e）、文档同步）；CI 机器检查（重复代码 jscpd 设阈值、未用依赖与死代码：Rust lint / cargo-machete、前端 knip、Go staticcheck unused；更严格的 lint；入口集合、错误码表、路由表一致性的约束性测试）；`briefs/DEFECT-CHECKLIST.md` 增加「是否复用已有实现 / 是否引入第二个事实来源」「是否留下无用代码」「性能影响」。修 bug 与改写法分开 PR；规范整改 PR 不改行为。
 - **人手**：两仓各 1 个 worker 并行（共 2 个上限）；先体检后修复，用户看报告后可调整修复顺序。
 
 ## DNS 管理：后台管理 Cloudflare 全部区域的 DNS（2026-10-15 用户需求，已排期）
@@ -72,15 +72,6 @@
 - 面板压测（登录洪水、订阅高并发、管理 API、大量节点重连、结算），瓶颈分析与优化。
 - 单节点容量（各协议在线设备 / 连接数，有无中转对比），写入 PERF.md。
 - Alpine 节点的后台下发升级实测（Debian 已测）；面板升级失败自动回滚路径实测。
-
-## 阶段 D：代码质量与技术债（已并入上方「代码规范整改 + 业务代码全面体检」，以下为原清单）
-- 重点（用户要求）：**计费漏洞 / bug**（结算 SQL、倍率、额度、退款与折算、佣金、余额、时区与分区、并发与重复计费 / 漏计）、**重复代码**、**无用代码**（已删除功能残留、死代码、未用依赖）、**改进优化与性能**（热点查询、结算、生成配置、订阅渲染、前端首屏与交互）。按领域拆成多个本地 agent 只读审查 → 汇总带行号的报告 → 分批修复 PR（串行）。
-- **全仓审计**：akari-panel（后端 src/、迁移、proto、spa/、admin/、smoke / e2e、安装器与 akari-ctl、CI、部署文件、文档）、akari-agent（全部，含 updater、OpenRC / systemd 单元、安装脚本）、工作区脚本与文档；akari-client 暂停中，只做依赖与安全快速检查。
-- **为后续开发立规矩**，审计结束时产出并落地：
-  - 工程规范 `briefs/ENGINEERING.md`（各仓 CLAUDE.md 引用）：单一事实来源、模块边界与分层、命名、错误处理、SQL 与计费规则、前端组件与数据层约定、测试要求（每个 bug 修复带回归测试、每个功能带 e2e）、文档同步。
-  - 机器检查进 CI：重复代码检测（如 jscpd，设阈值）、无用代码 / 未用依赖检测（Rust 未用依赖与死代码 lint；前端 knip / ts-prune；Go staticcheck / unused）、更严格的 lint、禁止多处重复定义的约束性测试（入口集合、错误码表、路由表一致性）。
-  - `briefs/DEFECT-CHECKLIST.md` 增加"是否复用已有实现 / 是否引入第二个事实来源""是否留下无用代码""性能影响"。
-- CodeQL 既有提示约 118 个：误报标记"不适用"写理由，真问题修复（`src/auth.rs` insecure-cookie 重点确认；`src/plans.rs`、`src/signup/pow.rs`、`src/account.rs`、`src/api.rs` 的 hard-coded crypto；bench 明文传输）。
 
 ## 阶段 E：Red team
 - 后台前缀探测、订阅路径 / 令牌猜测；认证（通行密钥、Turnstile、蜜罐、会话）；支付回调与资金逻辑；节点 mTLS 与注册；中转隔离；一键安装链接；审计规则绕过；远程规则集下载（SSRF）；DoS；安装脚本供应链。修复 + 回归测试 + 复测。
