@@ -13,6 +13,16 @@
 - **拆 PR**（按页面组，每个可单独合并，沿用 v2 的 e2e/截图/性能门）：① 外壳（导航、布局、主题、令牌、页头页脚、启动画面）→ ② 登录注册条款 → ③ 仪表盘 → ④ 商店订单付款 → ⑤ 钱包邀请线路用量 → ⑥ 文档公告工单账户 → ⑦ 收尾（截图对比报告、性能复测，不得比 v2.0.0 慢）。
 - **排序**：第一优先级（用户 2026-10-23）；Rust / Go 规范整改**延期**。
 
+## CI 提速（2026-10-26 用户："CI 提速加入排期"；继续用 GitHub Actions，不自建——公开仓库标准运行器免费不限分钟，自建运行器对公开仓库有 fork PR 执行风险）
+现状：全套 CI 约 40–60 分钟（e2e 最长），npm audit 偶发超时、个别测试不稳，合并一个 PR 后其余 PR 都要同步重跑。
+- **e2e 拆分并行**：门户 / 后台、桌面 / 手机分成独立 job（各自起面板与数据库），必需检查名称变化时同步改分支保护；目标全套 ≤25 分钟。
+- **arm64 原生构建**：release/ci 的 linux/arm64 构建改用 GitHub 原生 arm 运行器（`ubuntu-24.04-arm`，公开仓库免费），不再走 QEMU 模拟。
+- **合并队列（merge queue）**：main 开启 merge queue（保持「分支须最新」语义），CI 增加 `merge_group` 触发；lead 合并改为入队，省掉手动同步重跑。
+- **npm audit 重试**：audit 步骤遇到 registry 端点错误自动重试（仅网络/端点错误，真实漏洞照常失败）。
+- **smoke**：改为跑完全部再报告 + 拆成并行任务（原小项，并入此处）。
+- 其他：缓存命中检查（rust-cache / BuildKit gha / npm）、去掉重复执行的步骤、`concurrency` 取消同一分支的旧运行。
+- 拆 PR：① e2e 拆分 + npm audit 重试 → ② arm64 原生构建 → ③ smoke 并行 → ④ merge queue（需改仓库设置，lead 执行）。每个 PR 附前后耗时对比。
+
 ## （延期）代码规范整改 + 业务代码全面体检（Rust / Go，合并阶段 D）（2026-10-23 用户："Rust / Go 规范整改 顺便分析业务代码：代码质量 死代码 bug 逻辑错误 提高性能 等等其他技术债务"）
 **状态：延期**（门户恢复上一版界面为第一优先级）。新写的代码照常按 `briefs/RUST-STYLE.md` / `briefs/GO-STYLE.md` 写。本项**取代原「阶段 D：代码质量与技术债」**（其内容已全部并入下文，原节已删除）。
 - **范围**：akari-panel（Rust 后端约 12 万行 / 188 文件，含 bench/fuzz、迁移、SQL 与 proto；smoke / e2e、安装器与 akari-ctl、CI、部署文件、文档）、akari-agent（Go 约 2.7 万行 / 83 文件，含 updater、systemd / OpenRC 单元、安装脚本）、工作区脚本与文档；前端（portal/、admin/）查死代码、重复与首屏 / 交互性能；akari-client 暂停中，只做依赖与安全快速检查。
@@ -53,7 +63,6 @@
 - 后台用户详情的流量明细只按节点分组（USR-23），按入口分组（R43）待补。
 - `akari-agent-uninstall --help` 会直接卸载、无确认。
 - 安装器纯 IP 安装多余等待（check_proxy 3×60 s、wait_health 120 s），约 4 分钟。
-- smoke 改为"跑完全部再报告"模式 + 拆成并行任务。
 - `nodestat::tests::history_unknown_values` 分钟边界的毫秒级竞态。
 - 面板仓库旧文档 `akari-panel/PLAN.md`、`akari-panel/HANDOVER.md`（2026-09-30）已过时：归档或删除。
 - 测试部署低优先发现中未处理的（如有）；DEPLOY 文档复核。
