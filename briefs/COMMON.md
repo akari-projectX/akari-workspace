@@ -51,3 +51,6 @@ Do not spawn helper or sub-agents; do the task yourself, sequentially. The lead 
 
 ## Merge queue is rebase-only (2026-10-26)
 The panel's merge queue merges by rebase: every commit of the PR is replayed onto main. A conflict resolved inside a merge commit cannot be replayed, the PR becomes `rebaseable: false`, and the queue silently refuses it. So: start from the latest `origin/main`; to catch up later, `git rebase origin/main` BEFORE the PR is opened; after it is open, only merge main if the merge has no conflicts — if it would conflict, stop and tell the lead (the lead re-bases it onto a new branch). Check `rebaseable` in `GET /repos/akari-projectX/akari-panel/pulls/<n>` before reporting a PR as ready. After resolving any conflict, compile (`cargo clippy --all-targets`) before pushing — a hand-merged test file once lost three lines (#171).
+
+## Generated protobuf code (agent `pb/`)
+CI regenerates `pb/` with buf (latest) and protoc-gen-go v1.36.12 / protoc-gen-go-grpc v1.6.2 **built with the go.mod toolchain** (go1.27.3) and fails on any diff. Build the plugins the same way before `make sync-proto`/`make proto`: `GOTOOLCHAIN=$(awk '/^toolchain/{print $2}' go.mod) go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.36.12` (and the grpc plugin) — another Go version formats doc comments differently.
