@@ -616,3 +616,4 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
 - **门户改用系统字体（2026-10-26，用户提议、按 lead 建议执行）**：门户去掉自托管 Noto Sans SC（115 片）与 Inter，改系统字体栈；字重只用 400 / 600（微软雅黑无 500、300 在 Windows/安卓/Linux 常退回 400，层次会塌），次要文字靠颜色与字号，`npm run check` 拒绝其他字重；全部截图前后对比 + 性能前后数据，lead 逐张看过再合并。后台保留自己的字体子集，门户效果好再跟进。clippy 规范整改顺延到本 PR 与体检 P3 修复之后。
 - **akari-agent v0.6.0 发布（2026-10-26）**：用户说「发版」。tag 由用户本机推送（本会话代理禁止推 tag 与 `git/refs` 写入，发版 = 用户推 tag，其余由 lead 跟进）。发布前全套 CI + fuzz 全绿；资产：amd64/arm64 二进制、签名 manifest（.json + .sig）、SBOM、SHA256SUMS、THIRD_PARTY_LICENSES，全部 cosign 签名。内容：xray v26.10.21、协议 8、rollback manifest schema 2、更新器/ACME 修复、golangci-lint。
 - **#179 门户系统字体 + 统计卡片（2026-10-27 合并）**：去掉自托管字体（dist/app 2.36 MB → 0.90 MB），字重 400/600（`check:weights`），统计卡片统一为等宽网格（用户反馈每页不对称）；手机中端仪表盘 LCP 4.0 s → 2.9 s。lead 验收时补 `font-synthesis: weight`（`none` 让缺粗体的系统汉字字体把标题退成常规）。CI 只有 Linux 字体，Mac/Windows 实机效果待用户看。
+- **用户裁决（2026-10-27）**：阶段 E 红队测试搁置；后台**不**改用系统字体（保留自己的字体子集），只门户用系统字体。
