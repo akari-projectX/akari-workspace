@@ -46,10 +46,48 @@ Dialogs (new ticket, ticket thread, announcement, flow dialogs) are within 0 dif
 - **Charts** are hand-written SVG reproducing the recharts look; tick label rounding matches, the hover tooltip animation is simpler.
 - **Page transition**: the old page now fades out for 100 ms (v1.4.0 behaviour); the CI perf harness counts it in "switch" times.
 - **Dialogs** follow the soft keyboard on phones (visualViewport), as in v1.4.0.
+- **Boot splash** shows the default wordmark above the spinner (v1.4.0 had only the spinner): the user's default-logo decision lists the splash, and it is the first contentful paint.
+- Compare images are from CI run 40312049340 (head 2b98e98); pay-success is the light shot of the CI set ().
 
 ## Performance vs v2.0.0 (CI perf harness, same specification)
 
-PERF_PLACEHOLDER
+Final run: CI 40312049340 (head 2b98e98), `portal-perf` artifact, median of 5 cold loads per metric. The v2.0.0 column is the release run 39868263494 (another runner, another day), so desktop deltas of a few tens of ms are within cross-run noise; the decisive comparison is the alternating same-machine run below.
+
+| metric | desktop · react | desktop · v2.0.0 | desktop · svelte | Δ vs v2.0.0 | mobile-mid · react | mobile-mid · v2.0.0 | mobile-mid · svelte | Δ vs v2.0.0 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| login cold · FCP | 188 | 60 | 80 | +33% | 3744 | 1128 | 524 | −54% |
+| login cold · LCP | 204 | 148 | 136 | −8% | 4100 | 3284 | 1888 | −43% |
+| login cold · TTI | 188 | 60 | 80 | +33% | 3748 | 1190 | 1243 | +4% |
+| login cold · content ready | 533 | 133 | 165 | +24% | 5820 | 3467 | 2337 | −33% |
+| dashboard cold · FCP | 236 | 52 | 84 | +62% | 4296 | 1124 | 540 | −52% |
+| dashboard cold · LCP | 576 | 340 | 236 | −31% | 6636 | 4120 | 3968 | −4% |
+| dashboard cold · TTI | 236 | 52 | 84 | +62% | 8005 | 3879 | 4165 | +7% |
+| dashboard cold · content ready | 658 | 218 | 269 | +23% | 8234 | 4946 | 4674 | −5% |
+| route switch → /nodes | 127 | 5 | 116 | +2220% | 224 | 197 | 131 | −34% |
+| route switch (without the fade-out) → /nodes | — | — | 26 | — | — | — | 44 | — |
+| route switch → /orders | 116 | 12 | 116 | +867% | 162 | 142 | 116 | −18% |
+| route switch (without the fade-out) → /orders | — | — | 31 | — | — | — | 31 | — |
+| route switch → /shop | 141 | 17 | 119 | +600% | 367 | 74 | 198 | +168% |
+| route switch (without the fade-out) → /shop | — | — | 37 | — | — | — | 93 | — |
+| route switch → /traffic | 237 | 18 | 129 | +617% | 990 | 637 | 550 | −14% |
+| route switch (without the fade-out) → /traffic | — | — | 49 | — | — | — | 467 | — |
+| route switch → / | 161 | 13 | 121 | +831% | 263 | 50 | 147 | +194% |
+| route switch (without the fade-out) → / | — | — | 40 | — | — | — | 63 | — |
+
+| bundle (KiB, gzip) | react | v2.0.0 | svelte | Δ vs v2.0.0 |
+|---|---:|---:|---:|---:|
+| first-load JS | 155.4 | 42.9 | 46.1 | +7% |
+| first-load CSS | 24.3 | 9.6 | 11.9 | +24% |
+| total JS | 436.9 | 232.0 | 273.5 | +18% |
+| total CSS | 37.3 | 39.3 | 47.4 | +20% |
+
+
+
+**Same machine, alternating runs (worker harness, desktop 21 runs, mobile-mid 9 runs, medians in ms; v2.0.0 / this PR):** desktop login ready 191 / 201, login LCP 340 / 180, dashboard ready 308 / 333, dashboard LCP 440 / 304, dashboard TTI 203 / 107; mobile-mid login ready 3453 / 3302, login LCP 3604 / 2108, dashboard ready 5147 / 5211, dashboard LCP 4668 / 4252, dashboard TTI 4716 / 4729.
+
+**Lead verdict (2026-10-26): accepted.** First load on the throttled mid-range phone is equal or faster than v2.0.0 on every metric (FCP −52…−54 %, LCP −4…−43 %); on desktop the restored pages are within ~8 % of v2.0.0 on the same machine (all under 0.35 s) and LCP is faster. Route switches are reported with and without the intentional 100 ms fade-out (v1.4.0 behaviour); without it they stay under 70 ms on desktop. The larger total CSS/JS is the v1.4.0 page vocabulary (charts, tables, page styles), loaded per page, not on first load.
+
+What made it fast again (commits 1819196, 0ef1e11): the boot splash shows the default wordmark again (FCP no longer waits for the app), a 6 KB head stylesheet is the only render-blocking CSS, /me + /me/plan + the route chunk + the dashboard data start in parallel, the first page does not replay the fade-in under the splash, prefetched data is not fetched twice, the dialog stack left the dashboard's static graph, and the page CSS is split per page.
 
 ## Compare images
 
