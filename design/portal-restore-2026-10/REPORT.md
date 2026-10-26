@@ -47,7 +47,7 @@ Dialogs (new ticket, ticket thread, announcement, flow dialogs) are within 0 dif
 - **Page transition**: the old page now fades out for 100 ms (v1.4.0 behaviour); the CI perf harness counts it in "switch" times.
 - **Dialogs** follow the soft keyboard on phones (visualViewport), as in v1.4.0.
 - **Boot splash** shows the default wordmark above the spinner (v1.4.0 had only the spinner): the user's default-logo decision lists the splash, and it is the first contentful paint.
-- Compare images are from CI run 40312049340 (head 2b98e98); pay-success is the light shot of the CI set ().
+- Compare images are from CI run 40312049340 (head 2b98e98); pay-success is the light shot of the CI set (`desktop-pay-success-light.png`, `mobile-pay-success-light.png`).
 
 ## Performance vs v2.0.0 (CI perf harness, same specification)
 
