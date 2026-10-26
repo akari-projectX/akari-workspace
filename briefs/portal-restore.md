@@ -20,14 +20,15 @@ The new L3 lowercase "akari" wordmark + icon stays the **default** (backup: `des
 2. **Screenshots**: `/home/lam/projectX/akari-workspace/design/portal-v1-reference-2026-10/screens/` (v1.4.0 release CI `portal-screens`: dashboard, chart + tooltip, docs, invite, nav, account/dashboard/orders/privacy/tickets pages, pay-success, shop + shop cards, wallet + ledger + withdrawals, loading skeleton; USDT shots are obsolete). For pages without a shot, follow the v1.4.0 source exactly.
 3. **Acceptance**: the new portal's screenshot set must include a same-name counterpart for every reference shot (same seed data where possible, same viewport/theme); put side-by-side comparison images (reference | restored) in `design/portal-restore-2026-10/<pr>/compare/` and list every remaining difference with its reason in the PR body (acceptable reasons: logo, removed USDT, v2 behaviour fixes, data differences).
 
-## PR sequence (each independently mergeable, green in 1–2 CI runs)
-1. Shell: tokens (v1.4.0 colours/radii/shadows/motion), fonts, layout, top nav + 更多 dropdown + user menu + mobile menu as v1.4.0, page header/footer, boot splash, skeleton/spinner, toasts, dialog/sheet base components, logo placement.
-2. Auth + legal pages.
-3. Dashboard (incl. the v1.4.0 「近 7 日流量趋势」 chart look).
-4. Shop, confirm order, orders, order detail, payments (balance / Alipay / EPay).
-5. Wallet, invite, withdrawals; nodes; traffic.
-6. Docs/help + articles, announcements, tickets, account & settings.
-7. Wrap-up: full comparison report `design/portal-restore-2026-10/REPORT.md`, perf re-run vs v2.0.0, cleanup of v2-only styles/components no longer used, docs/CLAUDE.md updates.
+## Delivery (user rule 2026-10-26: one feature = one PR)
+PR 1 (shell, #157) is done. **Everything else is ONE PR** (branch `portal-restore`), one commit per page group, in this order — the lead accepts each commit (compare images + diff) as it lands:
+1. Auth + legal pages.
+2. Dashboard (incl. the v1.4.0 「近 7 日流量趋势」 chart look).
+3. Shop, confirm order, orders, order detail, payments (balance / Alipay / EPay).
+4. Wallet, invite, withdrawals; nodes; traffic.
+5. Docs/help + articles, announcements, tickets, account & settings.
+6. Wrap-up: full comparison report `design/portal-restore-2026-10/REPORT.md`, perf re-run vs v2.0.0 (not slower), page-transition fade-out of the old page and dialogs following the soft keyboard (v1.4.0 behaviour), cleanup of v2-only styles/components, `portal/CLAUDE.md` and docs.
+Use prefixed class names (a generic `.top` collided with `.li.top` in PR 1). Workers that hit the context cap hand off; the next worker continues the same branch/PR.
 
 ## Rules
 Follow `briefs/COMMON.md`, `briefs/DEFECT-CHECKLIST.md`, and for any Rust change `briefs/RUST-STYLE.md`. One agent = one PR; no helper agents; context cap 350k (push, HANDOFF.md, report "HANDOFF"). **Context economy**: never Read whole large docs (akari-panel/CLAUDE.md ~60k tokens, portal/CLAUDE.md, spa/CLAUDE.md in the ref checkout) — grep/sed what you need. Worktree under `.work/<branch>/akari-panel`. Local fast checks only; never `make smoke`; never read `akari-panel/data/` or `~/secrets`. Don't merge, bump or tag. Wrap `gh` in `timeout 60` and retry (local proxy flaky); `npm audit` "audit endpoint returned an error" = npm outage → `gh run rerun <id> --failed`. Commits end with `Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>`; PR bodies end with `🤖 Generated with [Claude Code](https://claude.com/claude-code)`. Don't push again while a run is in progress unless something failed; batch fixes; rebase onto the latest main right before the final push.
