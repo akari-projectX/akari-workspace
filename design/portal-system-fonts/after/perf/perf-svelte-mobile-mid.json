@@ -1,0 +1,25 @@
+{
+  "portal": "svelte",
+  "profile": "mobile-mid",
+  "runs": 5,
+  "result": {
+    "login.fcp": 548,
+    "login.lcp": 1752,
+    "login.tti": 1270,
+    "login.ready": 1802,
+    "dashboard.fcp": 544,
+    "dashboard.lcp": 2852,
+    "dashboard.tti": 3039,
+    "dashboard.ready": 3151,
+    "switch./nodes": 145,
+    "bare./nodes": 51,
+    "switch./orders": 120,
+    "bare./orders": 36,
+    "switch./shop": 141,
+    "bare./shop": 56,
+    "switch./traffic": 375,
+    "bare./traffic": 288,
+    "switch./": 168,
+    "bare./": 81
+  }
+}
