@@ -593,3 +593,4 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
 - **开工（2026-10-26，用户："开始"）**：第一优先级——门户还原 v1.4.0 界面（共用 brief `briefs/portal-restore.md`；视觉依据 = 标签 v1.4.0 的 `spa/` 源码（只读检出 `.work/ref-v1.4.0`）+ v1.4.0 截图；验收 = 逐页并排对比图 + 差异理由；保留 Svelte 架构、预加载与性能、v2 行为修复；默认新 logo）。PR 1 外壳与后台默认新 logo 两个 worker 并行。
 - **裁决（2026-10-26，用户："写代码模型选择 Sonnet 5.5 opus5.5 验收"）**：写代码的 worker 一律用 Sonnet 5.5；lead（Opus 5.5）负责验收（diff、截图、性能、CI，资金/认证/协议逐行）。刚开工的两个 worker 已按此改为 Sonnet 重开（未丢工作）。
 - **排期（2026-10-26，用户："CI 提速加入排期"）**：继续用 GitHub Actions（公开仓库免费、自建运行器对公开仓库有安全风险）；提速项：e2e 拆分并行、arm64 原生运行器构建、merge queue、npm audit 遇端点错误重试、smoke 跑完再报告 + 并行、缓存与 concurrency。拆 4 个 PR，排在门户还原之后、规范整改之前。
+- **裁决（2026-10-26，用户："做！"）**：启用 GitHub 合并队列，提前到现在做（原 CI 提速第 4 步）。设计：PR 阶段只真跑快速检查（重型 job 跳过，带 `full-ci` 标签仍跑全套），队列（merge_group）跑全套，合并后 push 到 main 只跑轻量（镜像缓存等），夜间 / 手动 / 发版照旧全套；npm audit 遇端点错误自动重试。worker（Sonnet）改工作流，lead 改仓库设置（ruleset 加 merge_queue 规则）。
