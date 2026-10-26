@@ -33,7 +33,7 @@
 - 认证：管理员找回密码邮件、管理员邮件里的后台链接、HSTS、`Sec-Fetch-Site` 校验、邮箱验证默认开启。
 - 核心：安装脚本的未签名备用下载、Docker 基础镜像按 digest 钉住、v1 前再压缩迁移。
 - 延后：billing P3-15、auth P3-22/23、core P3-6/8/13/15、前端死导出、路由鉴权覆盖表测试（并入规范整改）。
-- CodeQL：`src/sub/mod.rs:29`「SHA-256 哈希敏感数据」为误报（256 位随机令牌），需在 GitHub 网页标「不适用」（本会话无 code-scanning 权限）。
+- CodeQL：`src/sub/mod.rs:29` 误报已由用户在 GitHub 上关闭（2026-10-27）。
 
 ## 小项（随时可做）
 - **xray 私有地址放行做成设置**：v26.10.21 起 freedom 默认拦截用户访问私有/回环地址，目前只有环境变量 `AKARI_ALLOW_PRIVATE_DESTINATIONS`；若有运营者需要（内网落地），做成节点级设置。
