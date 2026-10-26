@@ -55,6 +55,9 @@
 - 样稿已确认（C 实底）；一个 PR（后端 + 后台 + 门户都小），下个周期做。
 
 ## 小项（随时可做）
+- **SS2022 墓碑机制拆除（2026-10-26 体检第 3 批 P3-19）**：xray v26.10.21 的多用户 SS2022 按 hash/email 查用户，RemoveUser 不再交换删除，原生删除在挂起握手与并发下已验证安全（akari-agent `TestSS2022NativeRemove*`）。拆除 agent 的墓碑与 `WouldShrinkUnsafe`、放宽面板对协议 5 的 delta 规则（`shrink_unsafe`），需新协议号，面板先行。
+- **xray 私有地址放行做成设置**：v26.10.21 起 freedom 默认拦截用户访问私有/回环地址，目前只有环境变量 `AKARI_ALLOW_PRIVATE_DESTINATIONS`；若有运营者需要（内网落地），做成节点级设置。
+- **回滚 manifest 绑定版本与有效期（体检第 3 批 P2-2）**：签名的 rollback manifest 无过期、不绑定回滚来源版本，可重放降级；manifest schema + `proto/update_vector.json` + 面板 `updates.rs` + agent `release/`，面板先行。
 - CI 偶发：后台性能预算（一次 932 ms > 900 ms）、后台手机端用户列表 e2e、发版签名 Rekor 409——观察，复现就修。
 - **订阅分流遗留**：
   - 每行没写规则类型的纯域名列表（如 `+.x.com`）作为 Clash classical rule-provider 可能不被 mihomo 读取 → 面板像给 sing-box 一样，另托管一份转换后的 Clash 副本并让 Clash 引用它。
