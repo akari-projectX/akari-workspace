@@ -599,3 +599,8 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
 - **#159 合并（2026-10-26，用户："强行合并"，管理员合并）**：CI 分级（PR 快速 / 队列全套 / main 推送轻量 / 夜间·手动·发版全套）、npm audit 端点错误重试、Dependabot 每月分组 + 小版本自动合并。失败的 e2e 是 main 上 #157 带来的钱包标题语言 bug（#161 修复），与 #159 无关。
 - **仓库设置（2026-10-26，lead）**：开启 Allow auto-merge；main 分支保护去掉「分支须最新」（strict=false，由队列保证）；新增 ruleset「main merge queue」（id 25856479：rebase、ALLGREEN、每批 ≤3、并发构建 2、最少 1 个、等 5 分钟、检查超时 120 分钟）；8 个必需检查不变。之后合并一律 `gh pr merge <n> --rebase --auto`（进队列）。
 - **交接（2026-10-26，用户："完成后 本地不再工作 交接给云端"）**：lead 改由云端会话担任。新交接 `HANDOVER-2026-10-26.md`（旧的归档），门户还原交接笔记与比对工具 `handoff/portal-restore/`；CLAUDE.md 阅读顺序已更新。本地的长期记忆规则已全部写进交接 §4。
+
+<a id="cloud-lead-1026"></a>
+### 2026-10-26 云端 lead 接手 · 授权范围（用户）
+- 用户："涉及账号/部署/花钱的项目……不用询问，按照你的建议，我只需要结果"。lead 按 PLAN-next 顺序自主执行（#160 → CI 提速 → Rust/Go 体检与修复 → DNS → 公告标签 → 小项/通行密钥遗留 → 阶段 C/E → 功能与运营），只汇报里程碑与结果；缺少外部凭据（真实 SMTP、支付宝沙箱 App 等）的实测项用模拟环境代替或在汇报中注明阻碍。
+- 云端环境：`gh` CLI 无有效令牌，GitHub 操作走 GitHub MCP 工具与 `api.github.com` REST（代理认证）；GraphQL 不可用，自动合并 / 入队用 `PUT /repos/{o}/{r}/pulls/{n}/ccr/auto_merge`。三个代码仓检出在 `/home/user/<repo>`，workspace 下为同名符号链接。
