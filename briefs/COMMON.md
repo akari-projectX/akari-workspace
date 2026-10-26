@@ -48,3 +48,6 @@ An agent's context must stay under 500k tokens. When you estimate you are near ~
 Do not spawn helper or sub-agents; do the task yourself, sequentially. The lead runs at most two workers at a time.
 
 - Rust 代码遵循 `briefs/RUST-STYLE.md`、Go 代码遵循 `briefs/GO-STYLE.md`（Google 规范，2026-10-22 用户决定）；brief 涉及对应语言时必须附上。
+
+## Merge queue is rebase-only (2026-10-26)
+The panel's merge queue merges by rebase: every commit of the PR is replayed onto main. A conflict resolved inside a merge commit cannot be replayed, the PR becomes `rebaseable: false`, and the queue silently refuses it. So: start from the latest `origin/main`; to catch up later, `git rebase origin/main` BEFORE the PR is opened; after it is open, only merge main if the merge has no conflicts — if it would conflict, stop and tell the lead (the lead re-bases it onto a new branch). Check `rebaseable` in `GET /repos/akari-projectX/akari-panel/pulls/<n>` before reporting a PR as ready.
