@@ -3,7 +3,7 @@
 > 2026-10-13 起只列**未完成**的事项；已完成的从本文件删除（用户："已经完成工作 清除它"），完成记录在 `SPRINT.md` 与 git 历史里（v1.0.0 之前的完整清单见本文件 2026-10-13 之前的版本）。
 > 做法：大改动拆成可单独合并的 PR（SPRINT `pr-size-1013`）。
 
-## ✅ 已完成（2026-10-26）：门户系统字体与统计卡片（#179）、agent v0.6.0、门户还原 v1.4.0 界面（#170）、CI 提速（#164，全套 ≈15 分钟）、xray-core v26.10.21（#166 + agent#37）、DNS 管理（#172）、公告标签（#176）、SS2022 墓碑拆除（#175 + agent#40，协议 8）、回滚 manifest 绑定、体检第 1–4 批报告（`research/code-audit-2026-10/`）及其 P1/P2 修复（#165、#168、#171、#173、#174 + agent#38、#39）。
+## ✅ 已完成（2026-10-26/27）：体检 P3 修复（#180）、clippy 规范（#181）、安装器界面（#183）、agent lint（agent#41）与压测工具（agent#42）、门户系统字体与统计卡片（#179）、agent v0.6.0、门户还原 v1.4.0 界面（#170）、CI 提速（#164，全套 ≈15 分钟）、xray-core v26.10.21（#166 + agent#37）、DNS 管理（#172）、公告标签（#176）、SS2022 墓碑拆除（#175 + agent#40，协议 8）、回滚 manifest 绑定、体检第 1–4 批报告（`research/code-audit-2026-10/`）及其 P1/P2 修复（#165、#168、#171、#173、#174 + agent#38、#39）。
 
 ## ✅ 已完成：门户 Svelte 迁移（v2.0.0，2026-10-23；过程与性能见 SPRINT 与 akari-panel `docs/PORTAL-V2-PERF.md`）
 
@@ -42,24 +42,18 @@
   - 每行没写规则类型的纯域名列表（如 `+.x.com`）作为 Clash classical rule-provider 可能不被 mihomo 读取 → 面板像给 sing-box 一样，另托管一份转换后的 Clash 副本并让 Clash 引用它。
   - 后台分流编辑页的「生成的 Clash 配置」预览：需要后端按当前草稿渲染样例配置的只读接口。
   - 测试框对分类只按名称匹配：目录可附少量示例域名用于判断。
-- 后台用户详情的流量明细只按节点分组（USR-23），按入口分组（R43）待补。
-- `akari-agent-uninstall --help` 会直接卸载、无确认。
-- 安装器纯 IP 安装多余等待（check_proxy 3×60 s、wait_health 120 s），约 4 分钟。
-- `nodestat::tests::history_unknown_values` 分钟边界的毫秒级竞态。
-- 面板仓库旧文档 `akari-panel/PLAN.md`、`akari-panel/HANDOVER.md`（2026-09-30）已过时：归档或删除。
 - 测试部署低优先发现中未处理的（如有）；DEPLOY 文档复核。
 
 ## 通行密钥（ROR，#110）遗留
-- 补测试：smoke 断言 well-known 的内容与字节同构拒绝；e2e 两个主机名上同一把通行密钥登录（需再加一个主机名和中心域名）；通行密钥注册 → 弹窗绑定邮箱的整条流程（Chromium 虚拟认证器）。
-- 新请求体（`OptionsReq`/`FinishReq`/`BindReq`/`BindCodeReq`/`PasskeyDomainReq`）加进 fuzz `json_bodies` 严格解析清单。
+- 补测试（smoke 的 well-known 断言已在 #178 完成）：e2e 两个主机名上同一把通行密钥登录（需再加一个主机名和中心域名）；通行密钥注册 → 弹窗绑定邮箱的整条流程（Chromium 虚拟认证器）。
 - 浏览器行为未实测：Chrome 是否把 RP 自己计入 5 个标签上限；新增主域名后 well-known 的浏览器缓存生效延迟；Firefox 稳定性（曾有 140 版 `OpaqueResponseBlocking` 反馈）。
-- 「仅通行密钥」策略在浏览器不支持 ROR / 中心域名不可达时会把账户挡在密码之外（兜底 `akari admin reset-login`）：**用户裁决（2026-10-15，按 lead 建议）：允许回退**——仅在通行密钥确实不可用（浏览器不支持 ROR / 中心域名不可达）时开放密码登录，每次回退登录记安全日志。**下个周期做**，与「`akari-agent-uninstall --help` 直接卸载」修复同批。
+- 「仅通行密钥」策略在浏览器不支持 ROR / 中心域名不可达时会把账户挡在密码之外（兜底 `akari admin reset-login`）：**用户裁决（2026-10-15，按 lead 建议）：允许回退**——仅在通行密钥确实不可用（浏览器不支持 ROR / 中心域名不可达）时开放密码登录，每次回退登录记安全日志。已在 #178 实现（密码 + 已验证邮箱验证码）。
 
 ## 部署
-- **安装器重新设计（2026-10-27 用户：现在做）**：①界面（`briefs/installer-ui.md`：AKARI ASCII 横幅、分步进度与耗时、统一提问样式、完成卡片；面板 `akari-ctl` 与节点安装脚本同一风格；只改呈现，不改安装/校验/秘密处理）→ ②多实例（`briefs/installer-multi.md`：`expose-data`、`join-bundle` + `--join`、`lb-config`、`upgrade --rolling`、双容器 e2e）。顺序执行，①合并后做②。
+- ✅ **安装器重新设计**（界面 #183 已合并；多实例 #184 合并中；仅裸机，Docker 多实例未做）：①界面（`briefs/installer-ui.md`：AKARI ASCII 横幅、分步进度与耗时、统一提问样式、完成卡片；面板 `akari-ctl` 与节点安装脚本同一风格；只改呈现，不改安装/校验/秘密处理）→ ②多实例（`briefs/installer-multi.md`：`expose-data`、`join-bundle` + `--join`、`lb-config`、`upgrade --rolling`、双容器 e2e）。顺序执行，①合并后做②。
 
 ## 阶段 C：性能与稳定性
-- agent 1 小时稳定性压测（大量连接、频繁增删用户、限速、撤权、中转、断线重连；pprof 内存 / goroutine）。
+- agent 1 小时稳定性压测：压测工具已合并（agent#42，`make soak`）；完整 60 分钟运行发现中转入口撤权漏切 3 次 + 协程/句柄残留，排查修复中（`research/agent-soak-2026-10.md`）。
 - 面板压测（登录洪水、订阅高并发、管理 API、大量节点重连、结算），瓶颈分析与优化。
 - ~~单节点容量（真机）~~：2026-10-27 用户裁决不用真 VPS 测；只做容器内能做的（相对数字，不当容量结论）。
 - ~~Alpine 真机后台升级实测~~（不用真 VPS，靠 CI 的 OpenRC 容器测试 `make openrc-test`）；面板升级失败自动回滚路径由安装器 e2e 覆盖。

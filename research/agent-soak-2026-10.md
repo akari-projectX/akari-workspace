@@ -97,3 +97,35 @@ Goroutine profiles (`goroutine-*.txt`): 236 lines at start, 585 at end of load, 
 ## Suggested PERF.md lines
 - Agent soak (akari-agent PR #42, `make soak`, 4 vCPU, xray 26.10.21): 30 live xray clients over six inbounds plus ~3 MiB/s relayed, user churn ~25 ops/s, 3-5 minute runs: revocations cut and refused 100 % (45/45 live connections), accounting within 0.1-1.4 % per user (never above the bytes written, never below the bytes read), baseline 43 goroutines / 24 fds / 9 MiB heap returns to 43-47 / 27-29 / 5-10 MiB after drain and an empty Snapshot. Peak 930 goroutines, 435 fds, 26 MiB live heap, 103 MiB RSS at ~175 concurrent proxied connections. 60-minute result pending.
 - Retained credentials of removed users: about 1.2 KiB per (user, inbound) for 24 h.
+
+## Full 60-minute run (2026-10-27, `run-60m-full`) and what it found
+
+`make soak SOAK_DURATION=60m` on the PR #42 harness: 3811 s of samples (load 60 min + 2.5 min drain), data in `agent-soak-2026-10-data/run-60m-full/`.
+
+| | |
+|---|---|
+| streams / kills / snapshots / deltas | 21 / 20 / 13 / 2273, 0 ack-not-ok, 0 state-hash mismatches |
+| ghost churn | 1788 batches, 71 520 ops, 20 890 distinct users installed (102 012 user x inbound pairs) |
+| live transitions | 485 batches (129 rotations, 40 restores, 103 limit changes) |
+| revocation | 817 slots revoked, 804 with a live connection beforehand, **801 proven cut, 3 "not cut"**, 817/817 new connections refused |
+| collateral | 844 untouched live connections checked, 0 lost |
+| baseline -> drained -> rebuilt | heap 8.9 -> 84.0 -> **76.2 MiB**; goroutines 43 -> 185 -> **186**; fds 24 -> 93 -> **93**; RSS 52 -> 179 -> 172 MiB |
+| peaks | heap 102 MiB, RSS 258 MiB, 1070 goroutines, 506 fds |
+
+Passed: accounting, hashes, leases, gate/applied/counted maps empty after the drain. Failed: the three "not cut" (all `<user>#1|e1`) and the goroutine / fd / heap residue.
+
+### 1. The three "not cut" connections are not a revocation bypass
+
+`e1` is plain VLESS over TCP (no TLS, no flow). The instrumented rerun (40 min) printed, for each such event: `0 tracked dispatches left for the key, 0 bytes counted for the user since the delta's ack; client: echoes completed since the revocation=0, bytes read=0, deaths=0, alive=true`. A captured hang (in-process reproduction, a few hundred revoke cycles with the harness's ping pattern) showed the socket states: the agent's side `FIN_WAIT2` (closed by the agent), the client xray's outbound `CLOSE_WAIT`, its local connection `ESTAB`. The agent cut the relay and closed its socket; the xray *client* in the soak's child process did not close its side after the server's clean EOF. Only plain VLESS produces a clean EOF at revocation (the other protocols raise a decryption/TLS error that the client tears down at once), which is why it is always e1. ~1-2% of e1 revocations. Close latency of the 99% that did close: p50 ~2.0 s, max ~2.06 s for every protocol (hy2 p50 0.9 s), against the 6 s the harness allows.
+
+Harness change: a connection still open after 6 s is a violation only if something crossed (echo completed after the delta, > 64 KiB counted for the user, dispatch still tracked); otherwise it is counted as `stalled`. Agent change (hardening, not the cause): `liveConn.kill` also closes the client connection.
+
+### 2. The residue is a real leak, caused by an upstream xray bug
+
+Goroutine diff (start vs final): +143 = 77 goroutines blocked in `RWMutex.Lock` under `ActivityTimer.finish <- check <- Periodic.Start <- SetTimeout` (trojan 33, SS2022 23, freedom 11, vmess 10) + 66 `task.Run` waiters; fds +69 = the sockets of those 66 handlers. 29 stuck at 20 min, 63-77 at 40-60 min (about 1.5/min at ~85 connections/s). They survive the Rebuild and keep the old instance's users, counters and ciphers reachable (heap-final: `GetOrRegisterCounter`, `ToMemoryUser`, `aes.New`, `sync.Map` nodes; plus ~10 MiB of the harness's own seen-user set, now hashed). `issued` is not a leak: Rebuild clears it (0 in the last samples); its 16 020 entries x 508 B = 8.1 MiB before the Rebuild are the 24 h retention by design.
+
+Mechanism: xray `common/signal/timer.go` `SetTimeout` holds `t.mu` while `Periodic.Start` runs the first check synchronously; if a check of the replaced task takes the token `Update()` just posted, that synchronous check calls `finish()`, which locks `t.mu` again. Reproduced in isolation (1 hang per ~10^4 aimed trials), unfixed on xray main. Not fixable inside the agent (`go build -overlay` cannot replace module-cache files); the patch (drain the token in the synchronous run instead of calling `check`) needs a fork + `replace` or an upstream PR. `assertEnd` thresholds were not changed; the failure message now states the number of deadlocked handlers. A canary `TestXrayActivityTimerSelfDeadlock` SKIPs while the bug reproduces.
+
+### 3. Rerun with the branch `soak-fixes` (PR akari-agent#43)
+
+(filled in below when the run finishes)
