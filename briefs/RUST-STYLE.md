@@ -64,6 +64,7 @@ Set in `Cargo.toml [lints.clippy]` (and `clippy.toml`), applied to root, bench a
 `wildcard_imports`, `unwrap_used` (with `allow-unwrap-in-tests = true`), `ptr_arg` (default), `fn_params_excessive_bools`,
 `undocumented_unsafe_blocks`, `mem_forget`, `rc_buffer`, `manual_string_new`, `redundant_clone`, `needless_pass_by_value`,
 `must_use_candidate` is NOT enabled (too noisy for application code) — `#[must_use]` is a review item.
+**As landed (akari-panel `clippy-lints` PR, 2026-10-27):** the whole starting list is enabled as `warn` in `[lints.clippy]` of the root, `bench/` and `fuzz/` `Cargo.toml` (+ `clippy.toml` `allow-unwrap-in-tests = true` at the repo root); no lint was dropped (hits before: needless_pass_by_value 21, redundant_clone 21, manual_string_new 8, unwrap_used 6, wildcard_imports 3, undocumented_unsafe_blocks 1; the rest 0 and kept as guard rails). Exceptions to `needless_pass_by_value` use `#[expect(…, reason = …)]` (only `map_err` callbacks and a generic by-value constructor). `src/fuzzing.rs`/`cfg(fuzzing)` code is not linted by `make fuzz-lint` (path dependency) — run clippy with `RUSTFLAGS="--cfg fuzzing"` on the root crate by hand. See akari-panel/CLAUDE.md "Lint".
 Rules that can't be linted (naming, abbreviations, trait design, docs quality, enum-vs-bool) are review items in
 `briefs/DEFECT-CHECKLIST.md`.
 
