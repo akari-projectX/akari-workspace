@@ -625,3 +625,4 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
 - **发版计划（2026-10-27 用户，按 lead 建议）**：agent 撤权漏切（压测发现）修完后，面板 v2.1.0 与 agent v0.6.1 一起发；先发 agent（agent 先于面板升级），tag 由用户本机推。
 - **订阅模板（2026-10-27 用户）**：改成 xboard 式「订阅模板」，模板取代分流页（旧分流一次性转成默认模板后删除，含规则集托管）；客户端 sing-box / Clash / Surge / Surfboard，Stash 用 Clash 输出。设计 briefs/sub-templates.md（Clash/sing-box 结构化注入、Surge/Surfboard 文本占位符，名字与 xboard 兼容）。
 - **加密货币网关（2026-10-27 用户）**：支付方式增加 CoinPayments 与 Coinbase（托管网关，用户在网关注册商户；不需要自建节点/RPC），**发版前完成**；按 R40 插件方式，设计 briefs/crypto-gateways.md；无商户账号时用模拟网关测完，用户注册后实测。
+- **xray fork（2026-10-27 用户）**：akari-projectX/xray-core（公开，MPL-2.0），分支 akari/v26.10.21 = 上游 v26.10.21 + ActivityTimer 自锁修复（ce7424b），agent go.mod replace 指向它，v0.6.1 带上；上游 PR 由用户账号提交（文案与补丁在 upstream/），上游发版后删 fork 改回官方。
