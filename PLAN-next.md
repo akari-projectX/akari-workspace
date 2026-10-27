@@ -38,7 +38,7 @@
 ## 发版 v2.1.0 / agent v0.6.1 之前必须完成（2026-10-27 用户）
 - agent 撤权漏切修复（压测发现，排查中）。
 - 支付方式 CoinPayments + Coinbase（托管网关，无需自建节点；`briefs/crypto-gateways.md`）。
-- 订阅模板：来得及就带上，不阻塞发版。
+- 订阅模板（PR1 后端 + PR2 后台编辑页）：**必须带上**（2026-10-27 用户）。
 
 - 跟进：XTLS/Xray-core 上游 ActivityTimer 修复 PR（用户从 mwnydev/Xray-core 提交）合并发版后，agent 去掉 `replace`、改回官方 xray-core。
 

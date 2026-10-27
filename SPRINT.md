@@ -628,3 +628,4 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
 - **xray fork（2026-10-27 用户）**：akari-projectX/xray-core（公开，MPL-2.0），分支 akari/v26.10.21 = 上游 v26.10.21 + ActivityTimer 自锁修复（ce7424b），agent go.mod replace 指向它，v0.6.1 带上；上游 PR 由用户账号提交（文案与补丁在 upstream/），上游发版后删 fork 改回官方。
 - **#184 安装器多实例（2026-10-27 合并）**：仅裸机；lead 补「从实例 purge 不删本地库」。
 - **xray 上游 PR（2026-10-27）**：用户已用 mwnydev/Xray-core 向 XTLS/Xray-core 提交 ActivityTimer 自锁修复的 PR；上游合并发版后，agent 改回官方 xray-core 并删除 akari-projectX/xray-core 的 replace。
+- **发版门（修订，2026-10-27 用户）**：订阅模板发版前必须带上（PR1 后端 + PR2 后台编辑页）。agent 修复 + 支付网关 + 订阅模板齐了才发 v0.6.1 / v2.1.0。
