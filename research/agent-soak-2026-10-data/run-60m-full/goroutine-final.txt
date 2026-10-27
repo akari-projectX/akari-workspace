@@ -1,0 +1,326 @@
+goroutine profile: total 186
+33 @ 0x492aca 0x46ab37 0xad81e5 0x117aa53 0x1179c05 0xe741f9 0x49a3c1
+#	0xad81e4	github.com/xtls/xray-core/common/task.Run+0x284					/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/task/task.go:48
+#	0x117aa52	github.com/xtls/xray-core/proxy/trojan.(*Server).handleConnection+0x532		/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/proxy/trojan/server.go:355
+#	0x1179c04	github.com/xtls/xray-core/proxy/trojan.(*Server).Process+0x12a4			/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/proxy/trojan/server.go:244
+#	0xe741f8	github.com/xtls/xray-core/app/proxyman/inbound.(*tcpWorker).callback+0x978	/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/app/proxyman/inbound/worker.go:123
+
+33 @ 0x492aca 0x46b8d2 0x46b8a9 0x494685 0x4a313a 0x4a4af1 0x4a4acf 0x4a4ad3 0xad8836 0x4a3c6b 0xad85f6 0xad85cf 0xad8973 0xad7ae4 0xad7d85 0xad8786 0x117e02a 0xad8468 0x49a3c1
+#	0x494684	internal/sync.runtime_SemacquireMutex+0x24					/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/runtime/sema.go:95
+#	0x4a3139	internal/sync.(*Mutex).lockSlow+0x159						/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/sync/mutex.go:149
+#	0x4a4af0	internal/sync.(*Mutex).Lock+0x30						/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/sync/mutex.go:70
+#	0x4a4ace	sync.(*Mutex).Lock+0xe								/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/sync/mutex.go:46
+#	0x4a4ad2	sync.(*RWMutex).Lock+0x12							/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/sync/rwmutex.go:150
+#	0xad8835	github.com/xtls/xray-core/common/signal.(*ActivityTimer).finish.func1+0x35	/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/signal/timer.go:45
+#	0x4a3c6a	sync.(*Once).doSlow+0xaa							/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/sync/once.go:78
+#	0xad85f5	sync.(*Once).Do+0x35								/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/sync/once.go:69
+#	0xad85ce	github.com/xtls/xray-core/common/signal.(*ActivityTimer).finish+0xe		/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/signal/timer.go:43
+#	0xad8972	github.com/xtls/xray-core/common/signal.(*ActivityTimer).check+0x32		/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/signal/timer.go:37
+#	0xad7ae3	github.com/xtls/xray-core/common/task.(*Periodic).checkedExecute+0x43		/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/task/periodic.go:32
+#	0xad7d84	github.com/xtls/xray-core/common/task.(*Periodic).Start+0xa4			/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/task/periodic.go:63
+#	0xad8785	github.com/xtls/xray-core/common/signal.(*ActivityTimer).SetTimeout+0x165	/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/signal/timer.go:75
+#	0x117e029	github.com/xtls/xray-core/proxy/trojan.(*Server).handleConnection.func2+0x189	/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/proxy/trojan/server.go:351
+#	0xad8467	github.com/xtls/xray-core/common/task.Run.func1+0x27				/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/task/task.go:28
+
+23 @ 0x492aca 0x46ab37 0xad81e5 0x107abfc 0x106b58f 0x106a83c 0xe741f9 0x49a3c1
+#	0xad81e4	github.com/xtls/xray-core/common/task.Run+0x284						/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/task/task.go:48
+#	0x107abfb	github.com/xtls/xray-core/proxy/shadowsocks_2022.TransportTCP+0x41b			/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/proxy/shadowsocks_2022/stream.go:650
+#	0x106b58e	github.com/xtls/xray-core/proxy/shadowsocks_2022.(*MultiUserInbound).processTCP+0xcae	/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/proxy/shadowsocks_2022/inbound_multi.go:271
+#	0x106a83b	github.com/xtls/xray-core/proxy/shadowsocks_2022.(*MultiUserInbound).Process+0x11b	/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/proxy/shadowsocks_2022/inbound_multi.go:194
+#	0xe741f8	github.com/xtls/xray-core/app/proxyman/inbound.(*tcpWorker).callback+0x978		/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/app/proxyman/inbound/worker.go:123
+
+23 @ 0x492aca 0x46b8d2 0x46b8a9 0x494685 0x4a313a 0x4a4af1 0x4a4acf 0x4a4ad3 0xad8836 0x4a3c6b 0xad85f6 0xad85cf 0xad8973 0xad7ae4 0xad7d85 0xad8786 0x107cad0 0xad8468 0x49a3c1
+#	0x494684	internal/sync.runtime_SemacquireMutex+0x24					/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/runtime/sema.go:95
+#	0x4a3139	internal/sync.(*Mutex).lockSlow+0x159						/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/sync/mutex.go:149
+#	0x4a4af0	internal/sync.(*Mutex).Lock+0x30						/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/sync/mutex.go:70
+#	0x4a4ace	sync.(*Mutex).Lock+0xe								/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/sync/mutex.go:46
+#	0x4a4ad2	sync.(*RWMutex).Lock+0x12							/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/sync/rwmutex.go:150
+#	0xad8835	github.com/xtls/xray-core/common/signal.(*ActivityTimer).finish.func1+0x35	/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/signal/timer.go:45
+#	0x4a3c6a	sync.(*Once).doSlow+0xaa							/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/sync/once.go:78
+#	0xad85f5	sync.(*Once).Do+0x35								/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/sync/once.go:69
+#	0xad85ce	github.com/xtls/xray-core/common/signal.(*ActivityTimer).finish+0xe		/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/signal/timer.go:43
+#	0xad8972	github.com/xtls/xray-core/common/signal.(*ActivityTimer).check+0x32		/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/signal/timer.go:37
+#	0xad7ae3	github.com/xtls/xray-core/common/task.(*Periodic).checkedExecute+0x43		/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/task/periodic.go:32
+#	0xad7d84	github.com/xtls/xray-core/common/task.(*Periodic).Start+0xa4			/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/task/periodic.go:63
+#	0xad8785	github.com/xtls/xray-core/common/signal.(*ActivityTimer).SetTimeout+0x165	/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/signal/timer.go:75
+#	0x107cacf	github.com/xtls/xray-core/proxy/shadowsocks_2022.TransportTCP.func2+0x16f	/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/proxy/shadowsocks_2022/stream.go:646
+#	0xad8467	github.com/xtls/xray-core/common/task.Run.func1+0x27				/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/task/task.go:28
+
+11 @ 0x492aca 0x46b8d2 0x46b8a9 0x494685 0x4a313a 0x4a4af1 0x4a4acf 0x4a4ad3 0xad8836 0x4a3c6b 0xad85f6 0xad85cf 0xad8973 0xad7ae4 0xad7d85 0xad8786 0xec5ed9 0xad84e2 0xad8468 0x49a3c1
+#	0x494684	internal/sync.runtime_SemacquireMutex+0x24					/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/runtime/sema.go:95
+#	0x4a3139	internal/sync.(*Mutex).lockSlow+0x159						/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/sync/mutex.go:149
+#	0x4a4af0	internal/sync.(*Mutex).Lock+0x30						/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/sync/mutex.go:70
+#	0x4a4ace	sync.(*Mutex).Lock+0xe								/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/sync/mutex.go:46
+#	0x4a4ad2	sync.(*RWMutex).Lock+0x12							/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/sync/rwmutex.go:150
+#	0xad8835	github.com/xtls/xray-core/common/signal.(*ActivityTimer).finish.func1+0x35	/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/signal/timer.go:45
+#	0x4a3c6a	sync.(*Once).doSlow+0xaa							/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/sync/once.go:78
+#	0xad85f5	sync.(*Once).Do+0x35								/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/sync/once.go:69
+#	0xad85ce	github.com/xtls/xray-core/common/signal.(*ActivityTimer).finish+0xe		/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/signal/timer.go:43
+#	0xad8972	github.com/xtls/xray-core/common/signal.(*ActivityTimer).check+0x32		/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/signal/timer.go:37
+#	0xad7ae3	github.com/xtls/xray-core/common/task.(*Periodic).checkedExecute+0x43		/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/task/periodic.go:32
+#	0xad7d84	github.com/xtls/xray-core/common/task.(*Periodic).Start+0xa4			/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/task/periodic.go:63
+#	0xad8785	github.com/xtls/xray-core/common/signal.(*ActivityTimer).SetTimeout+0x165	/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/signal/timer.go:75
+#	0xec5ed8	github.com/xtls/xray-core/proxy/freedom.(*Handler).Process.func4+0x2b8		/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/proxy/freedom/freedom.go:435
+#	0xad84e1	github.com/xtls/xray-core/common/task.OnSuccess.func1+0x21			/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/task/task.go:12
+#	0xad8467	github.com/xtls/xray-core/common/task.Run.func1+0x27				/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/task/task.go:28
+
+10 @ 0x492aca 0x46ab37 0xad81e5 0x11a2a14 0xe741f9 0x49a3c1
+#	0xad81e4	github.com/xtls/xray-core/common/task.Run+0x284					/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/task/task.go:48
+#	0x11a2a13	github.com/xtls/xray-core/proxy/vmess/inbound.(*Handler).Process+0xe73		/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/proxy/vmess/inbound/inbound.go:313
+#	0xe741f8	github.com/xtls/xray-core/app/proxyman/inbound.(*tcpWorker).callback+0x978	/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/app/proxyman/inbound/worker.go:123
+
+10 @ 0x492aca 0x46b8d2 0x46b8a9 0x494685 0x4a313a 0x4a4af1 0x4a4acf 0x4a4ad3 0xad8836 0x4a3c6b 0xad85f6 0xad85cf 0xad8973 0xad7ae4 0xad7d85 0xad8786 0x11a31cd 0xad8468 0x49a3c1
+#	0x494684	internal/sync.runtime_SemacquireMutex+0x24					/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/runtime/sema.go:95
+#	0x4a3139	internal/sync.(*Mutex).lockSlow+0x159						/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/sync/mutex.go:149
+#	0x4a4af0	internal/sync.(*Mutex).Lock+0x30						/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/sync/mutex.go:70
+#	0x4a4ace	sync.(*Mutex).Lock+0xe								/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/sync/mutex.go:46
+#	0x4a4ad2	sync.(*RWMutex).Lock+0x12							/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/sync/rwmutex.go:150
+#	0xad8835	github.com/xtls/xray-core/common/signal.(*ActivityTimer).finish.func1+0x35	/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/signal/timer.go:45
+#	0x4a3c6a	sync.(*Once).doSlow+0xaa							/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/sync/once.go:78
+#	0xad85f5	sync.(*Once).Do+0x35								/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/sync/once.go:69
+#	0xad85ce	github.com/xtls/xray-core/common/signal.(*ActivityTimer).finish+0xe		/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/signal/timer.go:43
+#	0xad8972	github.com/xtls/xray-core/common/signal.(*ActivityTimer).check+0x32		/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/signal/timer.go:37
+#	0xad7ae3	github.com/xtls/xray-core/common/task.(*Periodic).checkedExecute+0x43		/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/task/periodic.go:32
+#	0xad7d84	github.com/xtls/xray-core/common/task.(*Periodic).Start+0xa4			/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/task/periodic.go:63
+#	0xad8785	github.com/xtls/xray-core/common/signal.(*ActivityTimer).SetTimeout+0x165	/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/signal/timer.go:75
+#	0x11a31cc	github.com/xtls/xray-core/proxy/vmess/inbound.(*Handler).Process.func2+0x1cc	/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/proxy/vmess/inbound/inbound.go:309
+#	0xad8467	github.com/xtls/xray-core/common/task.Run.func1+0x27				/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/task/task.go:28
+
+5 @ 0x492aca 0x451437 0x491cc5 0x4d60e7 0x4dab7d 0x4dab6b 0x6eb2a9 0x70577b 0x704a90 0xe6f7e5 0x49a3c1
+#	0x491cc4	internal/poll.runtime_pollWait+0x84						/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/runtime/netpoll.go:351
+#	0x4d60e6	internal/poll.(*pollDesc).wait+0x26						/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_poll_runtime.go:84
+#	0x4dab7c	internal/poll.(*pollDesc).waitRead+0x27c					/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_poll_runtime.go:89
+#	0x4dab6a	internal/poll.(*FD).Accept+0x26a						/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_unix.go:618
+#	0x6eb2a8	net.(*netFD).accept+0x28							/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/net/fd_unix.go:149
+#	0x70577a	net.(*TCPListener).accept+0x1a							/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/net/tcpsock_posix.go:159
+#	0x704a8f	net.(*TCPListener).Accept+0x2f							/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/net/tcpsock.go:387
+#	0xe6f7e4	github.com/xtls/xray-core/transport/internet/tcp.(*Listener).keepAccepting+0x64	/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/transport/internet/tcp/hub.go:92
+
+3 @ 0x492aca 0x41ea0e 0x41e552 0x9768ad 0x49a3c1
+#	0x9768ac	google.golang.org/grpc/internal/grpcsync.(*CallbackSerializer).run+0x10c	/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/grpcsync/callback_serializer.go:114
+
+1 @ 0x44df51 0x49189d 0x658991 0x658665 0x6555c9 0x132f651 0x133275e 0x56a22a 0x49a3c1
+#	0x658990	runtime/pprof.writeRuntimeProfile+0xb0	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/runtime/pprof/pprof.go:848
+#	0x658664	runtime/pprof.writeGoroutine+0x44	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/runtime/pprof/pprof.go:781
+#	0x6555c8	runtime/pprof.(*Profile).WriteTo+0x148	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/runtime/pprof/pprof.go:405
+#	0x132f650	akari/agent.(*soak).profiles+0x290	/home/user/akari-workspace/.work/soak-full/soak_test.go:738
+#	0x133275d	akari/agent.TestSoak+0x30bd		/home/user/akari-workspace/.work/soak-full/soak_test.go:963
+#	0x56a229	testing.tRunner+0xe9			/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/testing/testing.go:2195
+
+1 @ 0x492aca 0x41ea0e 0x41e532 0x12901a5 0x128e48e 0x128df86 0x1364868 0x49a3c1
+#	0x12901a4	akari/agent.(*Agent).session+0xf44	/home/user/akari-workspace/.work/soak-full/agent.go:658
+#	0x128e48d	akari/agent.(*Agent).run+0x48d		/home/user/akari-workspace/.work/soak-full/agent.go:262
+#	0x128df85	akari/agent.(*Agent).Run+0x65		/home/user/akari-workspace/.work/soak-full/agent.go:232
+#	0x1364867	akari/agent.TestSoak.func3+0x27		/home/user/akari-workspace/.work/soak-full/soak_test.go:837
+
+1 @ 0x492aca 0x41ea0e 0x41e532 0x56a792 0x571337 0x56a22a 0x56c7f0 0x56b3af 0x12fb8ba 0x13816c5 0x4584e7 0x49a3c1
+#	0x56a791	testing.(*T).Run+0x4f1		/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/testing/testing.go:2268
+#	0x571336	testing.runTests.func1+0x36	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/testing/testing.go:2744
+#	0x56a229	testing.tRunner+0xe9		/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/testing/testing.go:2195
+#	0x56c7ef	testing.runTests+0x50f		/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/testing/testing.go:2742
+#	0x56b3ae	testing.(*M).Run+0x6ae		/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/testing/testing.go:2602
+#	0x12fb8b9	akari/agent.TestMain+0x19	/home/user/akari-workspace/.work/soak-full/main_test.go:13
+#	0x13816c4	main.main+0xa4			_testmain.go:470
+#	0x4584e6	runtime.main+0x426		/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/runtime/proc.go:302
+
+1 @ 0x492aca 0x41ea0e 0x41e552 0xe77874 0x49a3c1
+#	0xe77873	github.com/xtls/xray-core/app/proxyman/inbound.(*udpWorker).handlePackets+0x93	/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/app/proxyman/inbound/worker.go:382
+
+1 @ 0x492aca 0x451437 0x491cc5 0x4d60e7 0x4d7168 0x4d7156 0x4e2c4f 0x4e2c4a 0x54a59b 0x1363acf 0x49a3c1
+#	0x491cc4	internal/poll.runtime_pollWait+0x84		/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/runtime/netpoll.go:351
+#	0x4d60e6	internal/poll.(*pollDesc).wait+0x26		/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_poll_runtime.go:84
+#	0x4d7167	internal/poll.(*pollDesc).waitRead+0x2a7	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_poll_runtime.go:89
+#	0x4d7155	internal/poll.(*FD).Read+0x295			/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_unix.go:170
+#	0x4e2c4e	os.(*File).read+0x4e				/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/os/file_posix.go:30
+#	0x4e2c49	os.(*File).Read+0x49				/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/os/file.go:144
+#	0x54a59a	bufio.(*Scanner).Scan+0x47a			/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/bufio/scan.go:219
+#	0x1363ace	akari/agent.(*soak).startChild.func1+0x10e	/home/user/akari-workspace/.work/soak-full/soak_test.go:574
+
+1 @ 0x492aca 0x451437 0x491cc5 0x4d60e7 0x4d85aa 0x4d8594 0x6e9bf1 0x708d3b 0x706f9e 0x706ea5 0xb5913d 0xb58b29 0x49a3c1
+#	0x491cc4	internal/poll.runtime_pollWait+0x84					/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/runtime/netpoll.go:351
+#	0x4d60e6	internal/poll.(*pollDesc).wait+0x26					/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_poll_runtime.go:84
+#	0x4d85a9	internal/poll.(*pollDesc).waitRead+0x329				/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_poll_runtime.go:89
+#	0x4d8593	internal/poll.(*FD).ReadMsgInet4+0x313					/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_unix.go:327
+#	0x6e9bf0	net.(*netFD).readMsgInet4+0x30						/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/net/fd_posix.go:97
+#	0x708d3a	net.(*UDPConn).readMsg+0x19a						/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/net/udpsock_posix.go:101
+#	0x706f9d	net.(*UDPConn).ReadMsgUDPAddrPort+0x3d					/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/net/udpsock.go:200
+#	0x706ea4	net.(*UDPConn).ReadMsgUDP+0x24						/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/net/udpsock.go:188
+#	0xb5913c	github.com/xtls/xray-core/transport/internet/udp.ReadUDPMsg+0x1c	/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/transport/internet/udp/hub_linux.go:33
+#	0xb58b28	github.com/xtls/xray-core/transport/internet/udp.(*Hub).start+0x148	/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/transport/internet/udp/hub.go:106
+
+1 @ 0x492aca 0x451437 0x491cc5 0x4d60e7 0x4dab7d 0x4dab6b 0x6eb2a9 0x70577b 0x704a90 0x7aed24 0x135f5bf 0x49a3c1
+#	0x491cc4	internal/poll.runtime_pollWait+0x84		/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/runtime/netpoll.go:351
+#	0x4d60e6	internal/poll.(*pollDesc).wait+0x26		/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_poll_runtime.go:84
+#	0x4dab7c	internal/poll.(*pollDesc).waitRead+0x27c	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_poll_runtime.go:89
+#	0x4dab6a	internal/poll.(*FD).Accept+0x26a		/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_unix.go:618
+#	0x6eb2a8	net.(*netFD).accept+0x28			/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/net/fd_unix.go:149
+#	0x70577a	net.(*TCPListener).accept+0x1a			/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/net/tcpsock_posix.go:159
+#	0x704a8f	net.(*TCPListener).Accept+0x2f			/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/net/tcpsock.go:387
+#	0x7aed23	crypto/tls.(*listener).Accept+0x23		/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/crypto/tls/tls.go:78
+#	0x135f5be	akari/agent.tlsEcho.func2+0x3e			/home/user/akari-workspace/.work/soak-full/rt_canary_test.go:41
+
+1 @ 0x492aca 0x451437 0x491cc5 0x4d60e7 0x4dab7d 0x4dab6b 0x6eb2a9 0x70577b 0x704a90 0xa45943 0x1364c5f 0x49a3c1
+#	0x491cc4	internal/poll.runtime_pollWait+0x84		/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/runtime/netpoll.go:351
+#	0x4d60e6	internal/poll.(*pollDesc).wait+0x26		/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_poll_runtime.go:84
+#	0x4dab7c	internal/poll.(*pollDesc).waitRead+0x27c	/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_poll_runtime.go:89
+#	0x4dab6a	internal/poll.(*FD).Accept+0x26a		/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_unix.go:618
+#	0x6eb2a8	net.(*netFD).accept+0x28			/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/net/fd_unix.go:149
+#	0x70577a	net.(*TCPListener).accept+0x1a			/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/net/tcpsock_posix.go:159
+#	0x704a8f	net.(*TCPListener).Accept+0x2f			/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/net/tcpsock.go:387
+#	0xa45942	google.golang.org/grpc.(*Server).Serve+0x462	/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/server.go:952
+#	0x1364c5e	akari/agent.TestSoak.func1+0x1e			/home/user/akari-workspace/.work/soak-full/soak_test.go:814
+
+1 @ 0x492aca 0x451437 0x491cc5 0x4d60e7 0x4db607 0x4db5f0 0x700196 0x9a8bc7 0x9a8e93 0x4cc503 0x995605 0x9955d3 0x995c67 0x9d0225 0x9c373a 0x49a3c1
+#	0x491cc4	internal/poll.runtime_pollWait+0x84								/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/runtime/netpoll.go:351
+#	0x4d60e6	internal/poll.(*pollDesc).wait+0x26								/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_poll_runtime.go:84
+#	0x4db606	internal/poll.(*pollDesc).waitRead+0x126							/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_poll_runtime.go:89
+#	0x4db5ef	internal/poll.(*FD).RawRead+0x10f								/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_unix.go:715
+#	0x700195	net.(*rawConn).Read+0x35									/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/net/rawconn.go:44
+#	0x9a8bc6	google.golang.org/grpc/internal/transport/readyreader.(*nonBlockingReader).ReadOnReady+0xa6	/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/readyreader/ready_reader.go:114
+#	0x9a8e92	google.golang.org/grpc/internal/transport/readyreader.(*bufReadyReader).Read+0x172		/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/readyreader/ready_reader.go:221
+#	0x4cc502	io.ReadAtLeast+0x82										/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/io/io.go:335
+#	0x995604	io.ReadFull+0x64										/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/io/io.go:354
+#	0x9955d2	golang.org/x/net/http2.readFrameHeader+0x32							/root/go/pkg/mod/golang.org/x/net@v0.61.0/http2/frame.go:250
+#	0x995c66	golang.org/x/net/http2.(*Framer).ReadFrameHeader+0x66						/root/go/pkg/mod/golang.org/x/net@v0.61.0/http2/frame.go:513
+#	0x9d0224	google.golang.org/grpc/internal/transport.(*framer).readFrame+0x44				/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/http_util.go:504
+#	0x9c3739	google.golang.org/grpc/internal/transport.(*http2Client).reader+0x1b9				/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/http2_client.go:1733
+
+1 @ 0x492aca 0x451437 0x491cc5 0x4d60e7 0x4db607 0x4db5f0 0x700196 0x9a8bc7 0x9a8e93 0x4cc503 0x995605 0x9955d3 0x995c67 0x9d0225 0x9c8e5f 0xa46953 0xa5b636 0x49a3c1
+#	0x491cc4	internal/poll.runtime_pollWait+0x84								/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/runtime/netpoll.go:351
+#	0x4d60e6	internal/poll.(*pollDesc).wait+0x26								/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_poll_runtime.go:84
+#	0x4db606	internal/poll.(*pollDesc).waitRead+0x126							/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_poll_runtime.go:89
+#	0x4db5ef	internal/poll.(*FD).RawRead+0x10f								/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_unix.go:715
+#	0x700195	net.(*rawConn).Read+0x35									/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/net/rawconn.go:44
+#	0x9a8bc6	google.golang.org/grpc/internal/transport/readyreader.(*nonBlockingReader).ReadOnReady+0xa6	/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/readyreader/ready_reader.go:114
+#	0x9a8e92	google.golang.org/grpc/internal/transport/readyreader.(*bufReadyReader).Read+0x172		/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/readyreader/ready_reader.go:221
+#	0x4cc502	io.ReadAtLeast+0x82										/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/io/io.go:335
+#	0x995604	io.ReadFull+0x64										/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/io/io.go:354
+#	0x9955d2	golang.org/x/net/http2.readFrameHeader+0x32							/root/go/pkg/mod/golang.org/x/net@v0.61.0/http2/frame.go:250
+#	0x995c66	golang.org/x/net/http2.(*Framer).ReadFrameHeader+0x66						/root/go/pkg/mod/golang.org/x/net@v0.61.0/http2/frame.go:513
+#	0x9d0224	google.golang.org/grpc/internal/transport.(*framer).readFrame+0x44				/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/http_util.go:504
+#	0x9c8e5e	google.golang.org/grpc/internal/transport.(*http2Server).HandleStreams+0xfe			/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/http2_server.go:652
+#	0xa46952	google.golang.org/grpc.(*Server).serveStreams+0x392						/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/server.go:1090
+#	0xa5b635	google.golang.org/grpc.(*Server).handleRawConn.func1+0x55					/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/server.go:1024
+
+1 @ 0x492aca 0x451437 0x491cc5 0x4d60e7 0x4db607 0x4db5f0 0x700196 0xc7e2d0 0xc7f205 0xc86797 0xc8678f 0xcd1862 0xcd4095 0xcdc165 0x49a3c1
+#	0x491cc4	internal/poll.runtime_pollWait+0x84				/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/runtime/netpoll.go:351
+#	0x4d60e6	internal/poll.(*pollDesc).wait+0x26				/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_poll_runtime.go:84
+#	0x4db606	internal/poll.(*pollDesc).waitRead+0x126			/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_poll_runtime.go:89
+#	0x4db5ef	internal/poll.(*FD).RawRead+0x10f				/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/internal/poll/fd_unix.go:715
+#	0x700195	net.(*rawConn).Read+0x35					/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/net/rawconn.go:44
+#	0xc7e2cf	golang.org/x/net/internal/socket.(*syscaller).recvmmsg+0x6f	/root/go/pkg/mod/golang.org/x/net@v0.61.0/internal/socket/mmsghdr_unix.go:120
+#	0xc7f204	golang.org/x/net/internal/socket.(*Conn).recvMsgs+0x164		/root/go/pkg/mod/golang.org/x/net@v0.61.0/internal/socket/rawconn_mmsg.go:24
+#	0xc86796	golang.org/x/net/internal/socket.(*Conn).RecvMsgs+0x56		/root/go/pkg/mod/golang.org/x/net@v0.61.0/internal/socket/socket.go:268
+#	0xc8678e	golang.org/x/net/ipv4.(*payloadHandler).ReadBatch+0x4e		/root/go/pkg/mod/golang.org/x/net@v0.61.0/ipv4/batch.go:80
+#	0xcd1861	github.com/apernet/quic-go.(*oobConn).ReadPacket+0x7a1		/root/go/pkg/mod/github.com/apernet/quic-go@v0.61.1-0.20260806010916-184d081eef3e/sys_conn_oob.go:174
+#	0xcd4094	github.com/apernet/quic-go.(*Transport).listen+0x74		/root/go/pkg/mod/github.com/apernet/quic-go@v0.61.1-0.20260806010916-184d081eef3e/transport.go:547
+#	0xcdc164	github.com/apernet/quic-go.(*Transport).init.func1.1+0x64	/root/go/pkg/mod/github.com/apernet/quic-go@v0.61.1-0.20260806010916-184d081eef3e/transport.go:442
+
+1 @ 0x492aca 0x46ab37 0x12925af 0x49a3c1
+#	0x12925ae	akari/agent.(*Agent).leaseLoop+0xce	/home/user/akari-workspace/.work/soak-full/agent.go:915
+
+1 @ 0x492aca 0x46ab37 0x129886a 0x49a3c1
+#	0x1298869	akari/agent.(*Agent).checkpointLoop+0xe9	/home/user/akari-workspace/.work/soak-full/checkpoint.go:218
+
+1 @ 0x492aca 0x46ab37 0x12a12a6 0x49a3c1
+#	0x12a12a5	akari/agent.(*Agent).renewLoop+0x145	/home/user/akari-workspace/.work/soak-full/enroll.go:173
+
+1 @ 0x492aca 0x46ab37 0x12a716c 0x49a3c1
+#	0x12a716b	akari/agent.(*prober).loop+0x16b	/home/user/akari-workspace/.work/soak-full/latency.go:183
+
+1 @ 0x492aca 0x46ab37 0x12aa508 0x135468b 0x49a3c1
+#	0x12aa507	akari/agent.heartbeatLoop+0xe7		/home/user/akari-workspace/.work/soak-full/monitor.go:33
+#	0x135468a	akari/agent.(*Agent).session.func8+0xca	/home/user/akari-workspace/.work/soak-full/agent.go:621
+
+1 @ 0x492aca 0x46ab37 0x12aaabb 0x1354426 0x49a3c1
+#	0x12aaaba	akari/agent.trafficLoop+0xda		/home/user/akari-workspace/.work/soak-full/monitor.go:75
+#	0x1354425	akari/agent.(*Agent).session.func9+0x85	/home/user/akari-workspace/.work/soak-full/agent.go:625
+
+1 @ 0x492aca 0x46ab37 0x132c5bf 0xa67022 0xa483f4 0xa49ed4 0xa5b85f 0x49a3c1
+#	0x132c5be	akari/agent.(*soak).OpenChannel+0x7be				/home/user/akari-workspace/.work/soak-full/soak_test.go:377
+#	0xa67021	akari/agent/pb._AgentChannel_OpenChannel_Handler+0xe1		/home/user/akari-workspace/.work/soak-full/pb/agent_grpc.pb.go:193
+#	0xa483f3	google.golang.org/grpc.(*Server).processRPC+0x11d3		/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/server.go:1443
+#	0xa49ed3	google.golang.org/grpc.(*Server).handleStream+0xa93		/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/server.go:1587
+#	0xa5b85e	google.golang.org/grpc.(*Server).serveStreams.func2.1+0x7e	/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/server.go:1096
+
+1 @ 0x492aca 0x46ab37 0x13547ff 0x49a3c1
+#	0x13547fe	akari/agent.(*Agent).session.func7+0xfe	/home/user/akari-workspace/.work/soak-full/agent.go:612
+
+1 @ 0x492aca 0x46ab37 0x1354f85 0x49a3c1
+#	0x1354f84	akari/agent.(*Agent).session.func4+0x104	/home/user/akari-workspace/.work/soak-full/agent.go:510
+
+1 @ 0x492aca 0x46ab37 0x1355339 0x49a3c1
+#	0x1355338	akari/agent.(*Agent).session.func1+0x98	/home/user/akari-workspace/.work/soak-full/agent.go:446
+
+1 @ 0x492aca 0x46ab37 0x1363ec5 0x49a3c1
+#	0x1363ec4	akari/agent.TestSoak.func6+0x1a4	/home/user/akari-workspace/.work/soak-full/soak_test.go:903
+
+1 @ 0x492aca 0x46ab37 0x9b10ea 0x9b1898 0x9d5e7b 0x49a3c1
+#	0x9b10e9	google.golang.org/grpc/internal/transport.(*controlBuffer).get+0x109	/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/controlbuf.go:431
+#	0x9b1897	google.golang.org/grpc/internal/transport.(*loopyWriter).run+0x77	/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/controlbuf.go:606
+#	0x9d5e7a	google.golang.org/grpc/internal/transport.NewHTTP2Client.func6+0xda	/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/http2_client.go:478
+
+1 @ 0x492aca 0x46ab37 0x9b10ea 0x9b1898 0x9d7307 0x49a3c1
+#	0x9b10e9	google.golang.org/grpc/internal/transport.(*controlBuffer).get+0x109	/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/controlbuf.go:431
+#	0x9b1897	google.golang.org/grpc/internal/transport.(*loopyWriter).run+0x77	/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/controlbuf.go:606
+#	0x9d7306	google.golang.org/grpc/internal/transport.NewServerTransport.func3+0xe6	/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/http2_server.go:350
+
+1 @ 0x492aca 0x46ab37 0x9c3f0f 0x49a3c1
+#	0x9c3f0e	google.golang.org/grpc/internal/transport.(*http2Client).keepalive+0x18e	/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/http2_client.go:1807
+
+1 @ 0x492aca 0x46ab37 0x9cd088 0x49a3c1
+#	0x9cd087	google.golang.org/grpc/internal/transport.(*http2Server).keepalive+0x1e7	/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/http2_server.go:1220
+
+1 @ 0x492aca 0x46ab37 0x9d3405 0x9d3117 0x9d42c5 0x9d3e49 0xa4099a 0xa41857 0xa42aab 0xa56719 0xa690ce 0x13638a8 0x49a3c1
+#	0x9d3404	google.golang.org/grpc/internal/transport.(*recvBufferReader).readMessageHeader+0xa4	/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/transport.go:281
+#	0x9d3116	google.golang.org/grpc/internal/transport.(*recvBufferReader).ReadMessageHeader+0x76	/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/transport.go:250
+#	0x9d42c4	google.golang.org/grpc/internal/transport.(*transportReader).ReadMessageHeader+0x24	/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/transport.go:561
+#	0x9d3e48	google.golang.org/grpc/internal/transport.(*Stream).ReadMessageHeader+0xa8		/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/transport.go:470
+#	0xa40999	google.golang.org/grpc.(*parser).recvMsg+0x39						/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/rpc_util.go:786
+#	0xa41856	google.golang.org/grpc.recvAndDecompress+0x96						/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/rpc_util.go:945
+#	0xa42aaa	google.golang.org/grpc.recv+0xaa							/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/rpc_util.go:1054
+#	0xa56718	google.golang.org/grpc.(*serverStream).RecvMsg+0x198					/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/stream.go:1907
+#	0xa690cd	google.golang.org/grpc.(*GenericServerStream[...]).Recv+0x4d				/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/stream_interfaces.go:234
+#	0x13638a7	akari/agent.(*soak).OpenChannel.func1+0x47						/home/user/akari-workspace/.work/soak-full/soak_test.go:344
+
+1 @ 0x492aca 0x46ab37 0x9d3689 0x9d30e5 0x9d42c5 0x9d3e49 0xa4099a 0xa41857 0xa42aab 0xa52a1c 0xa5ce1f 0xa50b3e 0xa51aa9 0xa4c3ae 0xa68dae 0x1354088 0x49a3c1
+#	0x9d3688	google.golang.org/grpc/internal/transport.(*recvBufferReader).readMessageHeaderClient+0xa8	/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/transport.go:302
+#	0x9d30e4	google.golang.org/grpc/internal/transport.(*recvBufferReader).ReadMessageHeader+0x44		/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/transport.go:248
+#	0x9d42c4	google.golang.org/grpc/internal/transport.(*transportReader).ReadMessageHeader+0x24		/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/transport.go:561
+#	0x9d3e48	google.golang.org/grpc/internal/transport.(*Stream).ReadMessageHeader+0xa8			/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/internal/transport/transport.go:470
+#	0xa40999	google.golang.org/grpc.(*parser).recvMsg+0x39							/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/rpc_util.go:786
+#	0xa41856	google.golang.org/grpc.recvAndDecompress+0x96							/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/rpc_util.go:945
+#	0xa42aaa	google.golang.org/grpc.recv+0xaa								/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/rpc_util.go:1054
+#	0xa52a1b	google.golang.org/grpc.(*csAttempt).recvMsg+0x33b						/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/stream.go:1287
+#	0xa5ce1e	google.golang.org/grpc.(*clientStream).RecvMsg.func1+0x1e					/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/stream.go:1133
+#	0xa50b3d	google.golang.org/grpc.(*clientStream).withRetry+0x39d						/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/stream.go:937
+#	0xa51aa8	google.golang.org/grpc.(*clientStream).RecvMsg+0x148						/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/stream.go:1132
+#	0xa4c3ad	google.golang.org/grpc.(*clientStreamWrapper).RecvMsg+0x2d					/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/stream.go:194
+#	0xa68dad	google.golang.org/grpc.(*GenericClientStream[...]).Recv+0x4d					/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/stream_interfaces.go:185
+#	0x1354087	akari/agent.(*Agent).session.func10+0xe7							/home/user/akari-workspace/.work/soak-full/agent.go:640
+
+1 @ 0x492aca 0x46ab37 0xa5c96e 0x49a3c1
+#	0xa5c96d	google.golang.org/grpc.newClientStreamWithParams.func4+0x8d	/root/go/pkg/mod/google.golang.org/grpc@v1.85.0-dev.0.20260825072537-93e31b48545e/stream.go:524
+
+1 @ 0x492aca 0x46ab37 0xacdb8c 0x49a3c1
+#	0xacdb8b	github.com/xtls/xray-core/common/log.(*generalLogger).run+0x1ab	/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/log/logger.go:89
+
+1 @ 0x492aca 0x46ab37 0xcc5f2a 0x49a3c1
+#	0xcc5f29	github.com/apernet/quic-go.(*baseServer).run+0x109	/root/go/pkg/mod/github.com/apernet/quic-go@v0.61.1-0.20260806010916-184d081eef3e/server.go:299
+
+1 @ 0x492aca 0x46ab37 0xcc61d5 0x49a3c1
+#	0xcc61d4	github.com/apernet/quic-go.(*baseServer).runSendQueue+0x194	/root/go/pkg/mod/github.com/apernet/quic-go@v0.61.1-0.20260806010916-184d081eef3e/server.go:312
+
+1 @ 0x492aca 0x46ab37 0xcc64a5 0xcc52c5 0xcc52b9 0xe64445 0x49a3c1
+#	0xcc64a4	github.com/apernet/quic-go.(*baseServer).accept+0xa4					/root/go/pkg/mod/github.com/apernet/quic-go@v0.61.1-0.20260806010916-184d081eef3e/server.go:334
+#	0xcc52c4	github.com/apernet/quic-go.(*baseServer).Accept+0x24					/root/go/pkg/mod/github.com/apernet/quic-go@v0.61.1-0.20260806010916-184d081eef3e/server.go:330
+#	0xcc52b8	github.com/apernet/quic-go.(*Listener).Accept+0x18					/root/go/pkg/mod/github.com/apernet/quic-go@v0.61.1-0.20260806010916-184d081eef3e/server.go:131
+#	0xe64444	github.com/xtls/xray-core/transport/internet/hysteria.(*Listener).keepAccepting+0x44	/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/transport/internet/hysteria/hub.go:177
+
+1 @ 0x492aca 0x46ab37 0xcd384f 0x49a3c1
+#	0xcd384e	github.com/apernet/quic-go.(*Transport).runSendQueue+0xee	/root/go/pkg/mod/github.com/apernet/quic-go@v0.61.1-0.20260806010916-184d081eef3e/transport.go:463
+
+1 @ 0x492aca 0x4972c5 0xe2f9a9 0x49a3c1
+#	0x4972c4	time.Sleep+0x164					/root/go/pkg/mod/golang.org/toolchain@v0.0.1-go1.27.3.linux-amd64/src/runtime/time.go:368
+#	0xe2f9a8	github.com/xtls/xray-core/common/mux.init.0.func1+0x28	/root/go/pkg/mod/github.com/xtls/xray-core@v1.260327.1-0.20261021115930-1b1647cd9ddf/common/mux/session.go:241
+
