@@ -6,26 +6,28 @@ Scope: `scripts/install.sh` (= `akari-ctl`, POSIX sh, ~2300 lines) and the node 
 **no change to what gets installed, verified or written** (trust chain, secrets handling, exit codes, flags,
 env vars, non-interactive `--yes` behaviour all stay byte-for-byte equivalent in effect).
 
-## Language and locale (user ruling 2026-10-27: Chinese only)
-- **All installer text is Simplified Chinese only** (prompts, steps, errors, `--help`, summary card) in both
-  scripts. Flag names, env var names, file paths and log keys stay ASCII. No English mode.
-- **First thing the script does (before the banner)**: make sure a `zh_CN.UTF-8` locale is available, and run the
-  rest of the script under `LC_ALL=zh_CN.UTF-8` (exported for the installer process and its children only —
-  never change the system default locale: no writes to /etc/default/locale, /etc/locale.conf or profiles).
-  - Detect: `locale -a` contains `zh_CN.utf8` / `zh_CN.UTF-8` (case-insensitive, either spelling).
-  - Missing on Debian: `apt-get install -y locales`, enable the `zh_CN.UTF-8 UTF-8` line in `/etc/locale.gen`
-    (append if absent, idempotent), `locale-gen`. Ubuntu: `apt-get install -y locales` + `locale-gen zh_CN.UTF-8`.
-    Say what is being done in one line (this happens before the main confirmation, so keep it to the locale only).
-  - Alpine/musl: no locale generation exists; musl handles UTF-8 natively — use `LC_ALL=C.UTF-8` and treat it as
-    satisfied (do not install musl-locales).
-  - If installation fails (offline apt, read-only image): fall back to `C.UTF-8` if `locale -a` has it, else
-    continue with a one-line warning — the script's own output is UTF-8 bytes and renders if the operator's
-    terminal is UTF-8; never abort the install for the locale.
-  - Note in the docs: what the operator sees depends on their own terminal (SSH client) being UTF-8; the server
-    locale only affects the installer's own child programs.
-- Because of this, the earlier "plain-ASCII banner when the locale is not UTF-8" fallback is dropped; keep only:
-  no colour when not a TTY / `NO_COLOR` / `TERM=dumb`, and the log file stays plain text (UTF-8 Chinese is fine
-  in the log).
+## Language and locale (user rulings 2026-10-27: Chinese first, English fallback)
+- **Two languages, Simplified Chinese by default, English as the fallback.** Every user-facing string (prompts,
+  steps, errors, `--help`, summary card) exists in both; flag names, env vars, paths and log keys stay ASCII.
+  Implement as one message table per script (a `msg <key>` function with a `case` per language — POSIX sh, no
+  external files, both scripts self-contained); a CI check (small sh/python script in `installer-test/`) fails if
+  a key is missing in either language.
+- **First thing the script does (before the banner)**: make sure `zh_CN.UTF-8` is available and, if so, run the
+  rest under `LC_ALL=zh_CN.UTF-8` in Chinese (exported for the installer process and its children only — never
+  change the system default locale: no writes to /etc/default/locale, /etc/locale.conf or profiles).
+  - Detect: `locale -a` lists `zh_CN.utf8` / `zh_CN.UTF-8` (case-insensitive).
+  - Missing on Debian: `apt-get install -y locales`, enable `zh_CN.UTF-8 UTF-8` in `/etc/locale.gen` (append if
+    absent, idempotent), `locale-gen`. Ubuntu: `apt-get install -y locales` + `locale-gen zh_CN.UTF-8`. One line
+    says what is being done (in English, since Chinese is not yet guaranteed).
+  - Alpine/musl: no locale generation; musl handles UTF-8 natively → `LC_ALL=C.UTF-8`, Chinese.
+  - **If zh_CN.UTF-8 cannot be installed** (offline apt, read-only image, no `locale-gen`): switch to **English**
+    for the whole run, with `LC_ALL=C.UTF-8` if available else `C`; one line explains why. Never abort for this.
+- **Explicit choice**: `--lang zh|en` / `AKARI_LANG=zh|en` overrides detection (`en` skips the locale install).
+  `akari-ctl` remembers the language used at install in `/etc/akari/` for later commands (upgrade, info, …),
+  still re-checking the locale exists. The node script gets the same flag/env.
+- The operator's own terminal (SSH client) must be UTF-8 to show Chinese; say so in the docs and in `--help`.
+- Fallbacks kept: no colour when not a TTY / `NO_COLOR` / `TERM=dumb`; the log file is plain text (no escapes).
+  In English mode with `LC_ALL=C` (non-UTF-8), the banner uses a plain ASCII version and ✓/✗ become OK/FAIL.
 
 ## Hard constraints (from akari-panel/CLAUDE.md, do not break)
 - POSIX sh (dash, busybox ash on Alpine): no bash-isms, no `read -s`/`-n`, no `$'..'`; `shellcheck` clean; the
@@ -69,4 +71,4 @@ env vars, non-interactive `--yes` behaviour all stay byte-for-byte equivalent in
   installer-bare (Debian domain, Ubuntu IP), installer-host (docker + migrate), smoke (node script incl. Alpine).
 - Record a terminal session of a full interactive panel install and a node install as text captures
   (`script -q` / asciinema-style plain capture) into `akari-workspace/design/installer-ui-2026-10/` — with
-  colour (raw) and with `NO_COLOR=1` — plus a run on a minimal image without zh_CN (shows the locale being installed), for lead review. Add an installer-test case: a Debian container without `locales` ends the install with `zh_CN.UTF-8` present and the system default locale unchanged.
+  colour (raw) and with `NO_COLOR=1` — plus a run on a minimal image without zh_CN (shows the locale being installed) and an English run (`--lang en` and a run where locale install is made to fail), for lead review. Installer-test cases: a Debian container without `locales` ends the install with `zh_CN.UTF-8` present, Chinese output and the system default locale unchanged; with apt unable to install `locales` the run completes in English.
