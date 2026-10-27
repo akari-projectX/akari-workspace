@@ -1,0 +1,40 @@
+  - zh_CN.UTF-8 is not installed: installing it for this run (the locales package; the system default locale stays as it is)
+2
+bad domain
+example.com
+
+
+   █████╗ ██╗  ██╗ █████╗ ██████╗ ██╗
+  ██╔══██╗██║ ██╔╝██╔══██╗██╔══██╗██║
+  ███████║█████╔╝ ███████║██████╔╝██║
+  ██╔══██║██╔═██╗ ██╔══██║██╔══██╗██║
+  ██║  ██║██║  ██╗██║  ██║██║  ██║██║
+  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝
+  面板安装器 1.2.3
+
+  ? 安装方式
+    1) Docker Compose（推荐：隔离、易升级/卸载） (默认)
+    2) 裸机（systemd：PostgreSQL 18 + Valkey 9 + Caddy）
+  › [1] 
+  ? 主域名（DNS 已指向本机；留空 = 仅用 IP 访问）
+  ›     ✗ 域名无效：bad domain
+  › 
+  ? 继续？ [Y/n] 
+[1/2] 下载并验证 akari v1（amd64）
+[K      ⠋ 下载并验证 akari v1（amd64） 0s[K      ⠙ 下载并验证 akari v1（amd64） 1s[K      ⠹ 下载并验证 akari v1（amd64） 1s[K      ⠸ 下载并验证 akari v1（amd64） 1s[K      ⠼ 下载并验证 akari v1（amd64） 1s[K      ⠴ 下载并验证 akari v1（amd64） 1s[K      ⠦ 下载并验证 akari v1（amd64） 2s[K      ⠧ 下载并验证 akari v1（amd64） 2s[K      ⠇ 下载并验证 akari v1（amd64） 2s[K      ⠏ 下载并验证 akari v1（amd64） 2s[K      · 无法读取 x
+      ✓ 2s
+
+[2/2] 启动面板
+[K      ⠋ 启动面板 0s[K      ⠙ 启动面板 1s[K      ⠹ 启动面板 1s[K      ⠸ 启动面板 1s[K      ⠼ 启动面板 1s[K      ✓ 1s
+
+  ┌─ 安装完成 ────────────────────────
+  │
+  │  管理后台      https://x/y/app
+  │  密码          pw
+  │  （密码只显示这一次，请立即保存）
+  └───────────────────────────────
+
+      ! 警告： 经 Caddy 的 HTTPS 检查未通过：确认 DNS 已指向本机、端口 80/443 已放行（云防火墙/安全组），证书签发可能需要几分钟
+
+  ✗ 错误： 备份失败
+  日志： /tmp/demo.log
