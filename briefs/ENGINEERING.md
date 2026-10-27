@@ -121,7 +121,12 @@ Risk tiers and the pre-PR checklist → `DEFECT-CHECKLIST.md`. Where this file a
 - Removing or replacing a feature deletes, in the same PR: functions, routes, error codes, i18n keys, settings, flags, columns/tables, tests, docs and CLAUDE.md lines that only served it. Nothing is "kept for later" or commented out.
 - No parameter, field, config key, CLI flag or API field that nothing reads. No `#[allow(dead_code)]` / `//nolint:unused` to hide it.
 - No TODO/FIXME without an entry in `PLAN-next.md`.
-- Tooling backs this (cargo-machete, knip, golangci `unused`, jscpd; error-code and route consistency tests). A red tool is fixed, not silenced.
+- Tooling backs this, all in `make check` and the fast CI tier; a red tool is fixed, not silenced:
+  - Rust: `cargo clippy -D warnings` (dead_code, unused) and `cargo machete` over the root crate, `bench/`, `fuzz/` (`make machete`; an exception is `[package.metadata.cargo-machete] ignored` with a comment saying why the tool cannot see the use).
+  - TypeScript: `knip` in `portal/` and `admin/` (`npm run check` / `check:unused`; unused files, exports, types and packages; `knip.json` lists only entry points the bundler finds by other means, with a reason). Do not `export` for tests or "later".
+  - Go: golangci-lint `unused` (enabled in `.golangci.yml`; nothing to add) in `akari-agent`.
+  - Duplication: `scripts/jscpd.sh` (`make jscpd`) holds each tree (`src`, `portal/src`, `admin/src`) under its ceiling; the ceiling only goes down. A new copy of existing logic is a review finding even if the ceiling still passes.
+  - Consistency tests: `auth::error_code_tests` (error codes ↔ `src/error_codes.txt` ↔ portal/admin copy scripts) and `auth::route_auth_tests` (every route in `src/route_auth.txt` with its auth class: add a line when you add a route).
 
 ## 13. No compatibility layers
 - This is a new project with no installed base to carry. Never add: data conversion of old shapes, legacy code paths, fallbacks for old versions, deprecated aliases, "accept both" parsing, or panel.toml keys (§ R39).
