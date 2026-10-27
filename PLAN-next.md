@@ -52,7 +52,7 @@
 - 「仅通行密钥」策略在浏览器不支持 ROR / 中心域名不可达时会把账户挡在密码之外（兜底 `akari admin reset-login`）：**用户裁决（2026-10-15，按 lead 建议）：允许回退**——仅在通行密钥确实不可用（浏览器不支持 ROR / 中心域名不可达）时开放密码登录，每次回退登录记安全日志。已在 #178 实现（密码 + 已验证邮箱验证码）。
 
 ## 部署
-- ✅ **安装器重新设计**（界面 #183 已合并；多实例 #184 合并中；仅裸机，Docker 多实例未做）：①界面（`briefs/installer-ui.md`：AKARI ASCII 横幅、分步进度与耗时、统一提问样式、完成卡片；面板 `akari-ctl` 与节点安装脚本同一风格；只改呈现，不改安装/校验/秘密处理）→ ②多实例（`briefs/installer-multi.md`：`expose-data`、`join-bundle` + `--join`、`lb-config`、`upgrade --rolling`、双容器 e2e）。顺序执行，①合并后做②。
+- ✅ **安装器重新设计**（界面 #183 已合并；多实例 #184 已合并；仅裸机，Docker 多实例未做）：①界面（`briefs/installer-ui.md`：AKARI ASCII 横幅、分步进度与耗时、统一提问样式、完成卡片；面板 `akari-ctl` 与节点安装脚本同一风格；只改呈现，不改安装/校验/秘密处理）→ ②多实例（`briefs/installer-multi.md`：`expose-data`、`join-bundle` + `--join`、`lb-config`、`upgrade --rolling`、双容器 e2e）。顺序执行，①合并后做②。
 
 ## 阶段 C：性能与稳定性
 - agent 1 小时稳定性压测：压测工具已合并（agent#42，`make soak`）；完整 60 分钟运行发现中转入口撤权漏切 3 次 + 协程/句柄残留，排查修复中（`research/agent-soak-2026-10.md`）。
