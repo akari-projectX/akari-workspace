@@ -42,6 +42,13 @@
 
 - 跟进：XTLS/Xray-core 上游 ActivityTimer 修复 PR（用户从 mwnydev/Xray-core 提交）合并发版后，agent 去掉 `replace`、改回官方 xray-core。
 
+## 兼容代码清理（2026-10-27 用户「不要留下技术债务」；订阅模板 PR1 合并后做，发版前完成）
+面板与 agent 各一个 PR，只删不加，行为对当前版本不变：
+- 面板：panel.toml 废弃键导入（`config::OBSOLETE`/`Legacy`/`settings::import_legacy`/`legacy_config_imports`、`[payments.alipay]` 导入）；`totp.key`→`master.key` 改名；`state.json` 前缀导入（安装器直接写库）；旧支付回调 `/pay/alipay/notify`；订阅令牌 `Stored::Legacy`（0120 前只有哈希）；最低 agent 协议提到 8（删 SS2022 墓碑旧规则、协议 <3/<4/<6 的分支、`legacy_presence`、`refuse_acme_for_old_agent`、`stale-units`/旧更新器回退单元副本 `deploy/systemd` + `nodeinstall` 的 include_str 回退、旧版无 OpenRC 脚本的拒绝）；smoke 里按 agent 能力 SKIP 的旧闸门；门户旧地址重定向（`/invite`、`?tab=security`）与 React 时代的存储键；安装器的 v0.3 拒绝、Cloudsmith 源处理、无 bundle 的旧发布回退。
+- 迁移：v1 前把 1000_baseline + 1010…1122 压成新的单一基线（新项目无存量库）。
+- agent：bootstrap v1 格式（配置内私钥）、旧 launcher 时代的 state 字段、旧面板（无 LeaseGrant/无 Renew 的 Unimplemented 1h 退避）分支、`metrics-presence` 之前的回退。
+- 逐项先确认「当前已发布的 agent v0.6.x 与面板」都不需要它再删；清单以 grep 为准，PR 里列出删除项。
+
 ## 小项（随时可做）
 - **xray 私有地址放行做成设置**：v26.10.21 起 freedom 默认拦截用户访问私有/回环地址，目前只有环境变量 `AKARI_ALLOW_PRIVATE_DESTINATIONS`；若有运营者需要（内网落地），做成节点级设置。
 - CI 偶发：后台性能预算（一次 932 ms > 900 ms）、后台手机端用户列表 e2e、发版签名 Rekor 409——观察，复现就修。
