@@ -11,6 +11,7 @@
 - New features ship with tests: unit + real-DB tests; new/changed HTTP endpoints get assertions in smoke.sh.
 - Billing core coverage ≥90% stays; new money/auth modules are added to the coverage gate (scripts/coverage-gate.py).
 - When removing/changing a feature, delete the now-unused code, tables, columns, settings, i18n keys and docs in the same PR. No tech debt left behind.
+- **No compatibility layers (user rule 2026-10-27: new project, no tech debt).** Never add migration/conversion of old data, legacy code paths, fallbacks for old versions, deprecated aliases or "kept for old clients" branches. Replace = delete the old thing in the same PR. The only exception is the agent⇄panel wire protocol across the CURRENT released agent (nodes upgrade after the panel); anything older is dropped. If you think compatibility is needed, stop and ask the lead.
 - Anything an operator might reasonably choose is a setting/switch, not hardcoded.
 - Keep invariants from akari-panel/CLAUDE.md: SQL-only billing, byte-identical deny responses, `errors.*` error codes, CSP 'self', audit for admin mutations.
 - Phase A is backend + API. Touch the existing SPA only as much as needed to keep it compiling and e2e green (remove UI for deleted features, adapt changed fields). Do NOT build new UI: the admin console is rewritten in W33-b and the portal replaced in W36-b. Document every new/changed endpoint in the API docs so W33-b/W36-b can consume it.
