@@ -623,3 +623,4 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
 - **安装器语言（修订，2026-10-27 用户）**：中英双语，默认中文；先检测并安装 zh_CN.UTF-8，装不上就整次改用英文；`--lang zh|en` / `AKARI_LANG` 可强制，akari-ctl 记住安装时的语言。取代上一条「只支持中文」。
 - **#181 clippy 规范整改、#183 安装器界面（2026-10-27 合并）**：#181 RUST-STYLE 全部 lint 启用、零删减；#183 两个安装器共用界面块（`ui-check.py` 校验一致与中英齐全），中文默认 / 装不上 zh_CN.UTF-8 回落英文，完成卡片不进日志；lead 验收补修步骤日志未创建就读取。
 - **发版计划（2026-10-27 用户，按 lead 建议）**：agent 撤权漏切（压测发现）修完后，面板 v2.1.0 与 agent v0.6.1 一起发；先发 agent（agent 先于面板升级），tag 由用户本机推。
+- **订阅模板（2026-10-27 用户）**：改成 xboard 式「订阅模板」，模板取代分流页（旧分流一次性转成默认模板后删除，含规则集托管）；客户端 sing-box / Clash / Surge / Surfboard，Stash 用 Clash 输出。设计 briefs/sub-templates.md（Clash/sing-box 结构化注入、Surge/Surfboard 文本占位符，名字与 xboard 兼容）。
