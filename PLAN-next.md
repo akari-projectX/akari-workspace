@@ -40,6 +40,8 @@
 - 支付方式 CoinPayments + Coinbase（托管网关，无需自建节点；`briefs/crypto-gateways.md`）。
 - 订阅模板：来得及就带上，不阻塞发版。
 
+- 跟进：XTLS/Xray-core 上游 ActivityTimer 修复 PR（用户从 mwnydev/Xray-core 提交）合并发版后，agent 去掉 `replace`、改回官方 xray-core。
+
 ## 小项（随时可做）
 - **xray 私有地址放行做成设置**：v26.10.21 起 freedom 默认拦截用户访问私有/回环地址，目前只有环境变量 `AKARI_ALLOW_PRIVATE_DESTINATIONS`；若有运营者需要（内网落地），做成节点级设置。
 - CI 偶发：后台性能预算（一次 932 ms > 900 ms）、后台手机端用户列表 e2e、发版签名 Rekor 409——观察，复现就修。
