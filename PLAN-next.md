@@ -45,7 +45,7 @@
 ## 小项（随时可做）
 - **xray 私有地址放行做成设置**：v26.10.21 起 freedom 默认拦截用户访问私有/回环地址，目前只有环境变量 `AKARI_ALLOW_PRIVATE_DESTINATIONS`；若有运营者需要（内网落地），做成节点级设置。
 - CI 偶发：后台性能预算（一次 932 ms > 900 ms）、后台手机端用户列表 e2e、发版签名 Rekor 409——观察，复现就修。
-- **订阅模板（2026-10-27 用户，xboard 式，取代分流页）**：`briefs/sub-templates.md`；sing-box / Clash（Stash 用 Clash）/ Surge / Surfboard 四个可编辑模板 + 占位符，旧分流设置一次性转成默认模板后删除分流与规则集托管；PR1 后端 + 新格式，PR2 后台编辑页。
+- **订阅模板（2026-10-27 用户，xboard 式，取代分流页）**：`briefs/sub-templates.md`；sing-box / Clash（Stash 用 Clash）/ Surge / Surfboard 四个可编辑模板 + 占位符，直接删除旧分流与规则集托管（新项目不做兼容转换）；PR1 后端 + 新格式，PR2 后台编辑页。
 - 测试部署低优先发现中未处理的（如有）；DEPLOY 文档复核。
 
 ## 通行密钥（ROR，#110）遗留

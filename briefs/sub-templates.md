@@ -4,7 +4,8 @@ User 2026-10-27 (screenshot of xboard "订阅模板"): "订阅分流感觉不是
 - **Templates replace the routing page** (one way to do it): per-client editable config templates with placeholders;
   the current routing settings (`PUT /settings/subscription` `routing`, migration 1107, `sub::routing`, `sub::groups`
   service groups, `sub::catalog`, hosted rule sets `sub::rulesets` + `/{sub_path}/rules/{id}.json`, migration 1108)
-  are converted ONCE into the default templates and then removed (code, API, admin page, docs, smoke, fuzz target).
+  are removed (code, API, admin page, docs, smoke, fuzz target). **No conversion** (user 2026-10-27: new project, no
+  compatibility): sites start from the built-in default templates.
 - **Clients**: sing-box, Clash (mihomo; **Stash uses the Clash output** — UA `Stash` → clash), **Surge**, **Surfboard**
   (new formats), plus the plain share-links format (no template). Tabs in the admin page: Sing-box · Clash · Surge ·
   Surfboard.
@@ -21,14 +22,7 @@ User 2026-10-27 (screenshot of xboard "订阅模板"): "订阅分流感觉不是
   `{body, user_id?}` → rendered output for a sample user (built-in sample data) or a chosen real user (audited
   `user.sub_token.read`-style? no token is shown: the preview never includes the user's subscription URL — use a
   placeholder URL).
-- One-time conversion at startup (like `settings::import_legacy`): if `sub_templates` is empty and the old routing
-  setting is non-default, render the old routing into the four templates (best effort: Clash rule-providers kept,
-  service/region groups become native mihomo `include-all-proxies` + `filter` groups, sing-box gets equivalent
-  selector/urltest outbounds with `{all:<regex>}` tokens; hosted-rule-set references to Clash lists that sing-box cannot
-  read become a commented note in the sing-box template), record it in `legacy_config_imports`, audit actor `system`,
-  WARN. Then drop the old columns/tables in a later migration of the same PR (after the import code reads them — order the
-  migration so the import runs first; or do the conversion in SQL+Rust inside the migration step — pick the simpler
-  that is testable).
+- No one-time conversion: the migration drops the old routing/rule-set storage; the default templates apply.
 
 ## Template language (xboard-compatible names, so an operator can paste an xboard template)
 - **Clash / sing-box: structural, not text substitution.** Parse the template (YAML / JSON), inject, re-serialise:
@@ -74,6 +68,6 @@ fuzz target `rule_sets`, admin routing page, smoke sections, CLAUDE.md bullets (
 docs. `outbound.rs` stays (other callers). Keep `sub::detect_format`, format switches, own-client-only.
 
 ## Split
-PR 1 (backend): templates storage/API/validation/rendering, Surge+Surfboard formats, one-time conversion, removal of
+PR 1 (backend): templates storage/API/validation/rendering, Surge+Surfboard formats, removal of
 routing/rulesets, smoke + tests + fuzz (`sub_templates` parse/render fuzz target). PR 2 (admin page + portal import
 buttons + e2e). Each `full-ci`.
