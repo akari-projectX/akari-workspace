@@ -56,7 +56,7 @@
 - 「仅通行密钥」策略在浏览器不支持 ROR / 中心域名不可达时会把账户挡在密码之外（兜底 `akari admin reset-login`）：**用户裁决（2026-10-15，按 lead 建议）：允许回退**——仅在通行密钥确实不可用（浏览器不支持 ROR / 中心域名不可达）时开放密码登录，每次回退登录记安全日志。**下个周期做**，与「`akari-agent-uninstall --help` 直接卸载」修复同批。
 
 ## 部署
-- **安装器支持多实例（2026-10-13 用户：加入排期，暂不做）**：面板程序本身已支持多实例（共用 PostgreSQL + Valkey + 相同 `data_dir`，HTTPS 反代 + gRPC L4 直通均衡，DEPLOY §4「多个面板实例」），但 `akari-ctl` 只装单机。待做：`akari-ctl join`（第二台机器加入已有面板：安全地取得 `data_dir` 与数据库/Valkey 地址）、数据库与 Valkey 独立部署的选项、负载均衡配置示例或生成、多实例逐台升级、安装器 e2e 覆盖。
+- **安装器重新设计（2026-10-27 用户：现在做）**：①界面（`briefs/installer-ui.md`：AKARI ASCII 横幅、分步进度与耗时、统一提问样式、完成卡片；面板 `akari-ctl` 与节点安装脚本同一风格；只改呈现，不改安装/校验/秘密处理）→ ②多实例（`briefs/installer-multi.md`：`expose-data`、`join-bundle` + `--join`、`lb-config`、`upgrade --rolling`、双容器 e2e）。顺序执行，①合并后做②。
 
 ## 阶段 C：性能与稳定性
 - agent 1 小时稳定性压测（大量连接、频繁增删用户、限速、撤权、中转、断线重连；pprof 内存 / goroutine）。

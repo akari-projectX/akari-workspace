@@ -618,3 +618,4 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
 - **#179 门户系统字体 + 统计卡片（2026-10-27 合并）**：去掉自托管字体（dist/app 2.36 MB → 0.90 MB），字重 400/600（`check:weights`），统计卡片统一为等宽网格（用户反馈每页不对称）；手机中端仪表盘 LCP 4.0 s → 2.9 s。lead 验收时补 `font-synthesis: weight`（`none` 让缺粗体的系统汉字字体把标题退成常规）。CI 只有 Linux 字体，Mac/Windows 实机效果待用户看。
 - **用户裁决（2026-10-27）**：阶段 E 红队测试搁置；后台**不**改用系统字体（保留自己的字体子集），只门户用系统字体。
 - **用户裁决（2026-10-27）**：不用真 VPS 测试；阶段 C 只做容器内可做的（agent 稳定性压测、面板压测），单节点容量与 Alpine 真机升级不做，Alpine 靠 CI 的 OpenRC 容器测试。
+- **安装器（2026-10-27 用户）**：多实例现在做；并重新设计面板与节点安装器界面（更现代、AKARI ASCII 横幅）。lead 设计见 briefs/installer-ui.md、briefs/installer-multi.md：只用编号菜单（不做方向键 TUI，`curl | sh` 与 busybox 下 raw stty 不可靠）；非 UTF-8/NO_COLOR/非终端回退纯文本；加入新实例用口令加密的单文件包（scp 拷贝，24 小时过期），不开网络通道；数据库/Valkey 只对私网 CIDR 开放并加 TLS。
