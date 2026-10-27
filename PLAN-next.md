@@ -18,7 +18,7 @@
 - CodeQL 告警 #170（缓存投毒）：#197 已加固；若重扫后仍报，用户在 GitHub 上以 Won't fix 关闭（理由见 #197）。
 
 ## 跟进
-- XTLS/Xray-core 上游 ActivityTimer 修复 PR（用户从 mwnydev/Xray-core 提交）合并发版后，agent 去掉 go.mod 的 `replace`、改回官方 xray-core，并删掉 `akari-projectX/xray-core` 分支依赖。
+- xray-core fork 长期维护（上游 2026-10-27 拒绝 ActivityTimer 修复）：每次升级 xray 按 agent README「xray-core 分支」手动把补丁带到新分支并更新 replace。
 - 兼容清理遗留的待定项（不是旧版本兼容，但可简化）：会话代码里按能力的闸门（`latency`、`block-rules`、`source-filter` 上报）与 `GET /nodes/{id}/block-rules` 的 `agent_supported` 字段（协议 8 的 agent 都有，删除要改大量假 agent 测试与一个后台字段）；sysstatus 的 `proc_hidden` 诊断；smoke 的「旧 agent（协议 0）收到空状态」段（对应 `MIN_AGENT_PROTOCOL` 以下的降级模式，建议保留）。
 - 压测遗留（PERF.md 阶段 C）：订单搜索用 `pg_trgm`（待定）；节点列表的相关子查询改写。
 
