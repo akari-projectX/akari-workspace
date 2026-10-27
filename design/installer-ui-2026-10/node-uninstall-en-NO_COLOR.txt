@@ -1,0 +1,12 @@
+
+   █████╗ ██╗  ██╗ █████╗ ██████╗ ██╗
+  ██╔══██╗██║ ██╔╝██╔══██╗██╔══██╗██║
+  ███████║█████╔╝ ███████║██████╔╝██║
+  ██╔══██║██╔═██╗ ██╔══██║██╔══██╗██║
+  ██║  ██║██║  ██╗██║  ██║██║  ██║██║
+  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝
+  node installer · 172.17.0.1:8099
+
+› Removing the Akari agent
+      ✓ 0s
+  ✓ akari-agent removed (binary, services, /etc/akari-agent, state). Delete the node in the panel as well.

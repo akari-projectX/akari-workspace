@@ -1,0 +1,36 @@
+  - zh_CN.UTF-8 is not installed: installing it for this run (the locales package; the system default locale stays as it is)
+
+  [38;5;27m █████╗ [38;5;33m██╗  ██╗[38;5;39m █████╗ [38;5;75m██████╗ [38;5;111m██╗[0m
+  [38;5;27m██╔══██╗[38;5;33m██║ ██╔╝[38;5;39m██╔══██╗[38;5;75m██╔══██╗[38;5;111m██║[0m
+  [38;5;27m███████║[38;5;33m█████╔╝ [38;5;39m███████║[38;5;75m██████╔╝[38;5;111m██║[0m
+  [38;5;27m██╔══██║[38;5;33m██╔═██╗ [38;5;39m██╔══██║[38;5;75m██╔══██╗[38;5;111m██║[0m
+  [38;5;27m██║  ██║[38;5;33m██║  ██╗[38;5;39m██║  ██║[38;5;75m██║  ██║[38;5;111m██║[0m
+  [38;5;27m╚═╝  ╚═╝[38;5;33m╚═╝  ╚═╝[38;5;39m╚═╝  ╚═╝[38;5;75m╚═╝  ╚═╝[38;5;111m╚═╝[0m
+  [2m节点安装器 · 172.17.0.1:8099[0m
+
+[38;5;33m[1/6][0m [1m检查本机环境[0m
+      [32m✓[0m [2m0s[0m
+
+[38;5;33m[2/6][0m [1m下载并校验 agent[0m
+/demo/node-install.sh: 221: cannot open /tmp/tmp.odBQvKQorH/step.log: No such file
+      [2m·[0m 从面板下载 akari-agent v0.0.0-demo（amd64）
+[K      [38;5;33m⠋[0m 下载并校验 agent [2m0s[0m[K      [2m·[0m 已校验 akari-agent v0.0.0-demo (demo) go1.27 linux/amd64
+      [32m✓[0m [2m0s[0m
+
+[38;5;33m[3/6][0m [1m安装文件与服务[0m
+      [2m·[0m 该 agent 发布不含 systemd 单元，改用安装器自带的副本
+      [32m✓[0m [2m0s[0m
+
+[38;5;33m[4/6][0m [1mTCP BBR + fq[0m
+      [2m·[0m BBR + fq：已跳过（没有 net.core.default_qdisc / tcp_congestion_control：可能是有独立网络命名空间的容器）
+      [32m✓[0m [2m0s[0m
+
+[38;5;33m[5/6][0m [1mnftables 与防火墙[0m
+[K      [38;5;33m⠋[0m nftables 与防火墙 [2m0s[0m[K      [38;5;33m⠙[0m nftables 与防火墙 [2m0s[0m[K      [38;5;33m⠹[0m nftables 与防火墙 [2m0s[0m[K      [38;5;33m⠸[0m nftables 与防火墙 [2m1s[0m[K      [38;5;33m⠼[0m nftables 与防火墙 [2m1s[0m[K      [38;5;33m⠴[0m nftables 与防火墙 [2m1s[0m[K      [38;5;33m⠦[0m nftables 与防火墙 [2m1s[0m[K      [38;5;33m⠧[0m nftables 与防火墙 [2m1s[0m[K      [38;5;33m⠇[0m nftables 与防火墙 [2m2s[0m[K      [38;5;33m⠏[0m nftables 与防火墙 [2m2s[0m[K      [38;5;33m⠋[0m nftables 与防火墙 [2m2s[0m[K      [38;5;33m⠙[0m nftables 与防火墙 [2m2s[0m[K      [2m·[0m nftables：已安装（中转入口的来源白名单）
+      [32m✓[0m [2m3s[0m
+
+[38;5;33m[6/6][0m [1m启动 agent，等待注册并连接[0m
+[K      [38;5;33m⠋[0m 启动 agent，等待注册并连接 [2m0s[0m[K      [38;5;33m⠙[0m 启动 agent，等待注册并连接 [2m1s[0m[K      [32m✓[0m [2m2s[0m
+  [32m✓[0m [1m成功：agent 已注册并连接，节点在面板中显示为在线。[0m
+  以后卸载（root）：/usr/local/sbin/akari-agent-uninstall
+

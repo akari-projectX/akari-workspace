@@ -1,0 +1,12 @@
+  - zh_CN.UTF-8 is not installed: installing it for this run (the locales package; the system default locale stays as it is)
+
+  [38;5;27m █████╗ [38;5;33m██╗  ██╗[38;5;39m █████╗ [38;5;75m██████╗ [38;5;111m██╗[0m
+  [38;5;27m██╔══██╗[38;5;33m██║ ██╔╝[38;5;39m██╔══██╗[38;5;75m██╔══██╗[38;5;111m██║[0m
+  [38;5;27m███████║[38;5;33m█████╔╝ [38;5;39m███████║[38;5;75m██████╔╝[38;5;111m██║[0m
+  [38;5;27m██╔══██║[38;5;33m██╔═██╗ [38;5;39m██╔══██║[38;5;75m██╔══██╗[38;5;111m██║[0m
+  [38;5;27m██║  ██║[38;5;33m██║  ██╗[38;5;39m██║  ██║[38;5;75m██║  ██║[38;5;111m██║[0m
+  [38;5;27m╚═╝  ╚═╝[38;5;33m╚═╝  ╚═╝[38;5;39m╚═╝  ╚═╝[38;5;75m╚═╝  ╚═╝[38;5;111m╚═╝[0m
+  [2m面板安装器 dev[0m
+
+[38;5;33m›[0m [1m安装基础工具： curl gnupg iproute2 openssl ca-certificates[0m
+[K      [38;5;33m⠋[0m 安装基础工具： curl gnupg iproute2 openssl ca-certificates [2m0s[0m[K      [38;5;33m⠙[0m 安装基础工具： curl gnupg iproute2 openssl ca-certificates [2m0s[0m[K      [38;5;33m⠹[0m 安装基础工具： curl gnupg iproute2 openssl ca-certificates [2m0s[0m[K      [38;5;33m⠸[0m 安装基础工具： curl gnupg iproute2 openssl ca-certificates [2m1s[0m
