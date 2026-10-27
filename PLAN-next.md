@@ -3,81 +3,61 @@
 > 2026-10-13 起只列**未完成**的事项；已完成的从本文件删除（用户："已经完成工作 清除它"），完成记录在 `SPRINT.md` 与 git 历史里（v1.0.0 之前的完整清单见本文件 2026-10-13 之前的版本）。
 > 做法：大改动拆成可单独合并的 PR（SPRINT `pr-size-1013`）。
 
-## ✅ 已完成（2026-10-26/27）：体检 P3 修复（#180）、clippy 规范（#181）、安装器界面（#183）、agent lint（agent#41）与压测工具（agent#42）、门户系统字体与统计卡片（#179）、agent v0.6.0、门户还原 v1.4.0 界面（#170）、CI 提速（#164，全套 ≈15 分钟）、xray-core v26.10.21（#166 + agent#37）、DNS 管理（#172）、公告标签（#176）、SS2022 墓碑拆除（#175 + agent#40，协议 8）、回滚 manifest 绑定、体检第 1–4 批报告（`research/code-audit-2026-10/`）及其 P1/P2 修复（#165、#168、#171、#173、#174 + agent#38、#39）。
+## ✅ 已完成（2026-10-27，进入面板 v2.1.0 / agent v0.6.1）
+- 订阅模板：后端与 Surge / Surfboard 格式（#193）、后台编辑页与门户导入按钮（#194）；旧分流与规则集托管删除，不做转换。
+- 支付：CoinPayments + Coinbase（#186）；fuzz 框架比较方式修正（#196）。
+- 兼容代码清理：面板（#189、#198：panel.toml 废弃键、旧支付回调、最低 agent 协议 8、单元副本、旧跳转、`Stored::Legacy`、迁移压缩为 `0001_baseline.sql`）、agent（agent#45、agent#46：v1 引导格式、旧面板分支、`stale-units`）。
+- 连接池事务泄漏修复（#192）；压测修复（#188：argon2 繁忙提前返回、`jit = off`）。
+- agent 撤权漏切 / 资源泄漏：xray ActivityTimer 自锁，改用 fork 修复（agent#43），浸泡测试复跑通过（`research/agent-soak-2026-10.md`）。
+- 安装器：新界面 + 中英双语（#183）、多实例（#184）、CodeQL 缓存投毒加固（#197）。
+- 发版：面板版本号 2.1.0（#199）；发版说明 `release-notes/`。
 
-## ✅ 已完成：门户 Svelte 迁移（v2.0.0，2026-10-23；过程与性能见 SPRINT 与 akari-panel `docs/PORTAL-V2-PERF.md`）
+## 发版收尾（v2.1.0 / v0.6.1）
+- agent `v0.6.1` tag 已推，发版流程运行中；面板 `v2.1.0` tag 待用户推（提交 `3a14832`）。
+- 两个 Release 生成后：正文换成 `release-notes/` 的说明（保留自动生成的安装命令与镜像，删去「`akari-ctl upgrade` 升级」），核对资产与签名。
+- CodeQL 告警 #170（缓存投毒）：#197 已加固；若重扫后仍报，用户在 GitHub 上以 Won't fix 关闭（理由见 #197）。
 
-## 代码规范整改 + 业务代码全面体检（Rust / Go，合并阶段 D）（2026-10-23 用户："Rust / Go 规范整改 顺便分析业务代码：代码质量 死代码 bug 逻辑错误 提高性能 等等其他技术债务"）
-**状态（2026-10-26）**：第 1 步体检完成（4 份报告），全部 P1/P2 已修；agent 侧规范整改与 P3 已完成（agent#41：golangci-lint 进 CI）；面板剩余 P3 与规范整改（clippy 规则进 CI）、「立规矩」按每仓一个修复 PR 逐步做。新写的代码照常按 `briefs/RUST-STYLE.md` / `briefs/GO-STYLE.md` 写。本项**取代原「阶段 D：代码质量与技术债」**（其内容已全部并入下文，原节已删除）。
-- **范围**：akari-panel（Rust 后端约 12 万行 / 188 文件，含 bench/fuzz、迁移、SQL 与 proto；smoke / e2e、安装器与 akari-ctl、CI、部署文件、文档）、akari-agent（Go 约 2.7 万行 / 83 文件，含 updater、systemd / OpenRC 单元、安装脚本）、工作区脚本与文档；前端（portal/、admin/）查死代码、重复与首屏 / 交互性能；akari-client 暂停中，只做依赖与安全快速检查。
-- **第 1 步：体检（只读，出报告，不改代码）**——按模块分批，每批一份 `research/code-audit-2026-10/<仓>-<模块>.md`，每个发现带：位置、类别、严重度（P0 资金/安全/数据错误 → P3 风格）、复现或推理、建议修法：
-  - **bug 与逻辑错误**：计费与资金（结算 SQL、倍率、额度、退款与折算、佣金与追回、余额、优惠券、时区与分区、并发与重复计费）、授权与撤权、收敛与下发、订阅、认证与会话、并发锁序、错误处理吞错、边界条件；
-  - **死代码与重复**：未用函数/类型/路由/错误码/迁移遗留、未用依赖（`cargo-udeps`/`cargo-machete`、`go mod why`、`deadcode`、前端 knip）、重复实现与第二个事实来源（jscpd 等）；
-  - **性能**：热点路径（flush、订阅渲染、desired_state、门户 API、仪表盘）的查询计划、N+1、锁持有时间、分配与克隆，用 `make bench` / pprof 量化；
-  - **代码质量与规范偏差**：对照 Google Rust / Go 规范（机器可查的先跑 clippy / golangci-lint 统计，再人工抽查）；
-  - **其他技术债**：过期注释与文档、TODO、测试缺口（覆盖率、缺失的并发/失败路径测试）、CodeQL 既有提示（约 118 个：误报标「不适用」写理由，真问题修；重点确认 `src/auth.rs` insecure-cookie，`src/plans.rs`、`src/signup/pow.rs`、`src/account.rs`、`src/api.rs` 的 hard-coded crypto，bench 明文传输）。
-- **第 2 步：按报告分 PR 修**，顺序：P0/P1 bug 修复（每个独立 PR，T1 逐行审，涉及资金加 `full-ci`）→ 性能（改前后数据进 PR）→ 死代码/重复删除 → 规范整改（clippy / golangci-lint 规则进 CI + 机械修正按模块拆 PR → 人工条目）→ **立规矩**：工程规范 `briefs/ENGINEERING.md`（各仓 CLAUDE.md 引用：单一事实来源、模块边界与分层、命名、错误处理、SQL 与计费规则、前端组件与数据层约定、测试要求（每个 bug 修复带回归测试、每个功能带 e2e）、文档同步）；CI 机器检查（重复代码 jscpd 设阈值、未用依赖与死代码：Rust lint / cargo-machete、前端 knip、Go staticcheck unused；更严格的 lint；入口集合、错误码表、路由表一致性的约束性测试）；`briefs/DEFECT-CHECKLIST.md` 增加「是否复用已有实现 / 是否引入第二个事实来源」「是否留下无用代码」「性能影响」。修 bug 与改写法分开 PR；规范整改 PR 不改行为。
-- **人手**：两仓各 1 个 worker 并行（共 2 个上限）；先体检后修复，用户看报告后可调整修复顺序。
+## 跟进
+- XTLS/Xray-core 上游 ActivityTimer 修复 PR（用户从 mwnydev/Xray-core 提交）合并发版后，agent 去掉 go.mod 的 `replace`、改回官方 xray-core，并删掉 `akari-projectX/xray-core` 分支依赖。
+- 兼容清理遗留的待定项（不是旧版本兼容，但可简化）：会话代码里按能力的闸门（`latency`、`block-rules`、`source-filter` 上报）与 `GET /nodes/{id}/block-rules` 的 `agent_supported` 字段（协议 8 的 agent 都有，删除要改大量假 agent 测试与一个后台字段）；sysstatus 的 `proc_hidden` 诊断；smoke 的「旧 agent（协议 0）收到空状态」段（对应 `MIN_AGENT_PROTOCOL` 以下的降级模式，建议保留）。
+- 压测遗留（PERF.md 阶段 C）：订单搜索用 `pg_trgm`（待定）；节点列表的相关子查询改写。
 
-## 公告标签（2026-10-15 用户需求，#176 已合并）
-公告标题前加一个多彩标签，如 **[活动] [维护] [调整] [新功能] [优惠] [重要]**，运营者可自定义；显示在仪表盘顶部公告提示条、仪表盘「公告与动态」列表、公告详情弹窗、门户公告页，以及后台公告列表。原则：好看为准。
-- **标签库（后台「公告标签」管理）**：名称 + 颜色（从一组预设色里选，不开放任意取色，保证浅色 / 深色都好看、对比度达标）+ 可选图标；预置 6 个常用标签（活动-玫红、维护-琥珀、调整-蓝、新功能-紫、优惠-绿、重要-红），可改名、改色、停用、排序；被公告使用中的标签删除前提示（或只允许停用）。
-- **公告编辑**：选 0 或 1 个标签（先做单个，够用且最整齐）；编辑器实时预览标题效果。
-- **样式（用户 2026-10-15 选定 C 实底，样稿 `design/announcement-tags-2026-10/index.html`）**：小号圆角**实底**标签（浅色：700 档底 + 白字；深色：400 档底 + 深色字），11 个预设色；仪表盘顶部提示条卡片左侧加 3px 同色细边；「置顶」保持原蓝色淡底；移动端不换行截断。预置 8 个：活动-玫红、维护-琥珀、调整-蓝、新功能-紫、优惠-绿、重要-红、新线路-青绿、通知-灰。
-- **门户**：「公告与动态」可按标签筛选（标签多于 1 个时才显示筛选）。
-- **实现**：迁移加 `announcement_tags` 表 + `announcements.tag_id`（外键，可空）；`/me/announcements*` 返回标签（名称、颜色键），颜色只传预设色键名、前端映射到 CSS 变量；标签名走 `clean_title` 同款清洗；增删改审计；测试 + smoke + e2e 截图（浅 / 深、桌面 / 手机）。
-- 样稿已确认（C 实底）；一个 PR（后端 + 后台 + 门户都小），下个周期做。
+## 代码规范：立规矩（体检第 2 步剩余）
+体检 4 份报告的 P1/P2/P3 已修，clippy（#181）与 golangci-lint（agent#41）已进 CI。剩余：
+- 工程规范 `briefs/ENGINEERING.md`（单一事实来源、模块边界、命名、错误处理、SQL 与计费规则、前端数据层约定、测试要求、文档同步），各仓 CLAUDE.md 引用。
+- CI 机器检查：重复代码 jscpd（设阈值）、未用依赖与死代码（cargo-machete、前端 knip、Go staticcheck unused）、入口集合 / 错误码表 / 路由鉴权覆盖表的一致性测试。
+- `briefs/DEFECT-CHECKLIST.md` 加「是否复用已有实现 / 是否引入第二个事实来源」「是否留下无用代码」「性能影响」。
+- agent `lint (golangci-lint)` 设为必需检查（需用户在仓库设置里操作）。
 
 ## 体检 P3 待定项（#180 留下，lead 下一轮给建议后做）
 - 资金：续费退款是否收回续费时清零的流量（billing P3-1）；月底续费锚定（P3-5）；原路部分退款的语义（P3-9）。
 - 认证：管理员找回密码邮件、管理员邮件里的后台链接、HSTS、`Sec-Fetch-Site` 校验、邮箱验证默认开启。
-- 核心：安装脚本的未签名备用下载、Docker 基础镜像按 digest 钉住、v1 前再压缩迁移。
-- 延后：billing P3-15、auth P3-22/23、core P3-6/8/13/15、前端死导出、路由鉴权覆盖表测试（并入规范整改）。
-- CodeQL：`src/sub/mod.rs:29` 误报已由用户在 GitHub 上关闭（2026-10-27）。
-
-## 发版 v2.1.0 / agent v0.6.1 之前必须完成（2026-10-27 用户）
-- agent 撤权漏切修复（压测发现，排查中）。
-- 支付方式 CoinPayments + Coinbase（托管网关，无需自建节点；`briefs/crypto-gateways.md`）。
-- 订阅模板（PR1 后端 + PR2 后台编辑页）：**必须带上**（2026-10-27 用户）。
-- 兼容代码清理（面板 + agent）。
-- 连接池事务泄漏排查（压测在超载下看到池连接仍在只读事务里：可能导致写入丢失），确认并修复。
-- ✅ agent 修复（agent#43）、✅ 支付网关（#186）。
-
-- 跟进：XTLS/Xray-core 上游 ActivityTimer 修复 PR（用户从 mwnydev/Xray-core 提交）合并发版后，agent 去掉 `replace`、改回官方 xray-core。
-
-## 兼容代码清理（2026-10-27 用户「不要留下技术债务」；订阅模板 PR1 合并后做，发版前完成）
-面板与 agent 各一个 PR，只删不加，行为对当前版本不变：
-- 面板：panel.toml 废弃键导入（`config::OBSOLETE`/`Legacy`/`settings::import_legacy`/`legacy_config_imports`、`[payments.alipay]` 导入）；`totp.key`→`master.key` 改名；`state.json` 前缀导入（安装器直接写库）；旧支付回调 `/pay/alipay/notify`；订阅令牌 `Stored::Legacy`（0120 前只有哈希）；最低 agent 协议提到 8（删 SS2022 墓碑旧规则、协议 <3/<4/<6 的分支、`legacy_presence`、`refuse_acme_for_old_agent`、`stale-units`/旧更新器回退单元副本 `deploy/systemd` + `nodeinstall` 的 include_str 回退、旧版无 OpenRC 脚本的拒绝）；smoke 里按 agent 能力 SKIP 的旧闸门；门户旧地址重定向（`/invite`、`?tab=security`）与 React 时代的存储键；安装器的 v0.3 拒绝、Cloudsmith 源处理、无 bundle 的旧发布回退。
-- 迁移：v1 前把 1000_baseline + 1010…1122 压成新的单一基线（新项目无存量库）。
-- agent：bootstrap v1 格式（配置内私钥）、旧 launcher 时代的 state 字段、旧面板（无 LeaseGrant/无 Renew 的 Unimplemented 1h 退避）分支、`metrics-presence` 之前的回退。
-- 逐项先确认「当前已发布的 agent v0.6.x 与面板」都不需要它再删；清单以 grep 为准，PR 里列出删除项。
+- 核心：安装脚本的未签名备用下载、Docker 基础镜像按 digest 钉住。
+- 延后：billing P3-15、auth P3-22/23、core P3-6/8/13/15、前端死导出。
 
 ## 小项（随时可做）
 - **xray 私有地址放行做成设置**：v26.10.21 起 freedom 默认拦截用户访问私有/回环地址，目前只有环境变量 `AKARI_ALLOW_PRIVATE_DESTINATIONS`；若有运营者需要（内网落地），做成节点级设置。
 - CI 偶发：后台性能预算（一次 932 ms > 900 ms）、后台手机端用户列表 e2e、发版签名 Rekor 409——观察，复现就修。
-- **订阅模板（2026-10-27 用户，xboard 式，取代分流页）**：`briefs/sub-templates.md`；sing-box / Clash（Stash 用 Clash）/ Surge / Surfboard 四个可编辑模板 + 占位符，直接删除旧分流与规则集托管（新项目不做兼容转换）；PR1 后端 + 新格式，PR2 后台编辑页。
+- 安装器多实例只支持裸机；Docker 多实例未做（有需求再做）。
 - 测试部署低优先发现中未处理的（如有）；DEPLOY 文档复核。
 
 ## 通行密钥（ROR，#110）遗留
-- 补测试（smoke 的 well-known 断言已在 #178 完成）：e2e 两个主机名上同一把通行密钥登录（需再加一个主机名和中心域名）；通行密钥注册 → 弹窗绑定邮箱的整条流程（Chromium 虚拟认证器）。
+- 补测试：e2e 两个主机名上同一把通行密钥登录（需再加一个主机名和中心域名）；通行密钥注册 → 弹窗绑定邮箱的整条流程（Chromium 虚拟认证器）。
 - 浏览器行为未实测：Chrome 是否把 RP 自己计入 5 个标签上限；新增主域名后 well-known 的浏览器缓存生效延迟；Firefox 稳定性（曾有 140 版 `OpaqueResponseBlocking` 反馈）。
-- 「仅通行密钥」策略在浏览器不支持 ROR / 中心域名不可达时会把账户挡在密码之外（兜底 `akari admin reset-login`）：**用户裁决（2026-10-15，按 lead 建议）：允许回退**——仅在通行密钥确实不可用（浏览器不支持 ROR / 中心域名不可达）时开放密码登录，每次回退登录记安全日志。已在 #178 实现（密码 + 已验证邮箱验证码）。
-
-## 部署
-- ✅ **安装器重新设计**（界面 #183 已合并；多实例 #184 已合并；仅裸机，Docker 多实例未做）：①界面（`briefs/installer-ui.md`：AKARI ASCII 横幅、分步进度与耗时、统一提问样式、完成卡片；面板 `akari-ctl` 与节点安装脚本同一风格；只改呈现，不改安装/校验/秘密处理）→ ②多实例（`briefs/installer-multi.md`：`expose-data`、`join-bundle` + `--join`、`lb-config`、`upgrade --rolling`、双容器 e2e）。顺序执行，①合并后做②。
-
-## 阶段 C：性能与稳定性
-- agent 1 小时稳定性压测：压测工具已合并（agent#42，`make soak`）；完整 60 分钟运行发现中转入口撤权漏切 3 次 + 协程/句柄残留，排查修复中（`research/agent-soak-2026-10.md`）。
-- 面板压测（登录洪水、订阅高并发、管理 API、大量节点重连、结算），瓶颈分析与优化。
-- ~~单节点容量（真机）~~：2026-10-27 用户裁决不用真 VPS 测；只做容器内能做的（相对数字，不当容量结论）。
-- ~~Alpine 真机后台升级实测~~（不用真 VPS，靠 CI 的 OpenRC 容器测试 `make openrc-test`）；面板升级失败自动回滚路径由安装器 e2e 覆盖。
 
 ## 阶段 E：Red team（2026-10-27 用户：搁置）
-- 后台前缀探测、订阅路径 / 令牌猜测；认证（通行密钥、Turnstile、蜜罐、会话）；支付回调与资金逻辑；节点 mTLS 与注册；中转隔离；一键安装链接；审计规则绕过；远程规则集下载（SSRF）；DoS；安装脚本供应链。修复 + 回归测试 + 复测。
+- 后台前缀探测、订阅路径 / 令牌猜测；认证（通行密钥、Turnstile、蜜罐、会话）；支付回调与资金逻辑（含新的加密网关）；节点 mTLS 与注册；中转隔离；一键安装链接；审计规则绕过；订阅模板注入；DoS；安装脚本供应链。修复 + 回归测试 + 复测。
+
+## 需要用户的账号 / 设备才能做的实测
+- CoinPayments / Coinbase：注册商户账号，真实小额订单走通付款与回调。
+- 发信实测（需 SMTP 账号或 Resend）；支付宝沙箱完整付款实测（需沙箱 App）。
+- 图形客户端实测导入订阅模板：Clash Verge、Stash、SFA/SFI、Surge、Surfboard、Shadowrocket、Hiddify。
+- 门户系统字体在真实 Mac / Windows 上的观感。
 
 ## 功能与运营
 - 批次 D 剩余：通知邮件（封禁、退款、改 / 取消套餐、提现结果、佣金入账）中新前台 / 后台尚未覆盖的部分；ops-logic-review 低优先项（低-3/5/6/7/8/9）。
-- 发信实测（需 SMTP 账号或 Resend）；支付宝沙箱完整付款实测（需沙箱 App）。
-- 图形客户端实测导入（Clash Verge、Shadowrocket、Hiddify、Stash、SFA/SFI 等），含新的服务分组、容灾与 DNS。
-- 可选：USDT 以外的提现方式 / 自动打款（用户已决定暂不做）；更多支付渠道（易支付等，按 R40 插件方式）。
+- 可选：USDT 以外的提现方式 / 自动打款（用户已决定暂不做）；更多支付渠道（按 R40 插件方式）。
 - 自研客户端 akari-client（暂停中，席位绑定制）；sing-box 第二内核（暂缓）。
+
+## 仓库整理（用户操作）
+- 删除已合并的远程分支（会话代理禁止删除分支；命令已给用户）。
