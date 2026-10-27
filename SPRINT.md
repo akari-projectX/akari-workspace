@@ -621,3 +621,4 @@ P1 的剩余项（S4-1 反代与限速、S4-2 会话吊销、S4-3 SIGTERM）、C
 - **安装器（2026-10-27 用户）**：多实例现在做；并重新设计面板与节点安装器界面（更现代、AKARI ASCII 横幅）。lead 设计见 briefs/installer-ui.md、briefs/installer-multi.md：只用编号菜单（不做方向键 TUI，`curl | sh` 与 busybox 下 raw stty 不可靠）；非 UTF-8/NO_COLOR/非终端回退纯文本；加入新实例用口令加密的单文件包（scp 拷贝，24 小时过期），不开网络通道；数据库/Valkey 只对私网 CIDR 开放并加 TLS。
 - **安装器语言（2026-10-27 用户）**：只支持中文；脚本先检测 zh_CN.UTF-8，没有就先安装（Debian/Ubuntu 装 locales + locale-gen；Alpine 用 musl 自带 C.UTF-8），只对安装器进程生效，不改系统默认语言；装不上不中止。
 - **安装器语言（修订，2026-10-27 用户）**：中英双语，默认中文；先检测并安装 zh_CN.UTF-8，装不上就整次改用英文；`--lang zh|en` / `AKARI_LANG` 可强制，akari-ctl 记住安装时的语言。取代上一条「只支持中文」。
+- **#181 clippy 规范整改、#183 安装器界面（2026-10-27 合并）**：#181 RUST-STYLE 全部 lint 启用、零删减；#183 两个安装器共用界面块（`ui-check.py` 校验一致与中英齐全），中文默认 / 装不上 zh_CN.UTF-8 回落英文，完成卡片不进日志；lead 验收补修步骤日志未创建就读取。
