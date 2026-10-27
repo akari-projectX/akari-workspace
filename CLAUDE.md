@@ -14,7 +14,7 @@
 1. `PLAN-next.md` — 下一版本待办（只列未完成项）
 2. `briefs/round-2026-10-28.md` — 当前轮次的裁决与任务范围；`briefs/COMMON.md` — worker / 云端会话通用规则（必读）
 3. `SPRINT.md` — 裁决记录（只追加）；开头的"当前有效裁决索引"按主题列出仍有效的裁决
-4. `briefs/DEFECT-CHECKLIST.md`（风险分级与缺陷清单）、`briefs/RUST-STYLE.md`、`briefs/GO-STYLE.md`（`briefs/ENGINEERING.md` 待写，见 PLAN-next）
+4. `briefs/DEFECT-CHECKLIST.md`（风险分级与缺陷清单）、`briefs/RUST-STYLE.md`、`briefs/GO-STYLE.md`、`briefs/ENGINEERING.md`（工程规范）
 5. `research/README.md` — 仍有效的研究报告索引（数据库评审、运营逻辑审查、体检报告、agent 浸泡测试、sing-box 验证）
 6. `upstream/` — 上游缺陷记录与补丁（xray ActivityTimer 自锁，agent README「xray-core 分支」引用）；`release-notes/` — 最近两次发版说明；`design/` — 仍被代码注释引用的设计稿与品牌 Logo
 
