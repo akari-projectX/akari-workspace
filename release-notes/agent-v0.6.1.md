@@ -4,7 +4,7 @@
 
 ## 修复
 
-- **xray 计时器自锁导致连接与资源泄漏**：上游 xray-core 的 `ActivityTimer` 在极少数时序下会自己锁死，被锁住的连接（及其 goroutine、文件描述符、旧内核实例）永远不会释放。在持续高频建连断连的浸泡测试里，大约每小时会泄漏 77 个连接处理器。本版本改用修复了该问题的 xray-core 分支构建（[akari-projectX/xray-core](https://github.com/akari-projectX/xray-core) `akari/v26.10.21`，在 v26.10.21 基础上只改这一处）；修复已向上游提交 PR，上游发布后会切回官方版本。
+- **xray 计时器自锁导致连接与资源泄漏**：上游 xray-core 的 `ActivityTimer` 在极少数时序下会自己锁死，被锁住的连接（及其 goroutine、文件描述符、旧内核实例）永远不会释放。在持续高频建连断连的浸泡测试里，大约每小时会泄漏 77 个连接处理器。本版本改用修复了该问题的 xray-core 分支构建（[akari-projectX/xray-core](https://github.com/akari-projectX/xray-core) `akari/v26.10.21`，在 v26.10.21 基础上只改这一处）。上游拒绝了这个修复，所以之后每次升级 xray 都会把补丁带到新版本（步骤见 README「xray-core 分支」）。
 - **撤权时直接关闭客户端连接**：撤销或轮换某个用户的凭据时，除了中断该用户正在转发的流量，还会直接关闭客户端的连接（TCP、XHTTP、Hysteria、gRPC 按各自的连接粒度处理），客户端会立刻发现，不必等超时。
 
 ## 隐私
