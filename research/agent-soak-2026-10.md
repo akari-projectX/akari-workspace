@@ -129,3 +129,13 @@ Mechanism: xray `common/signal/timer.go` `SetTimeout` holds `t.mu` while `Period
 ### 3. Rerun with the branch `soak-fixes` (PR akari-agent#43)
 
 (filled in below when the run finishes)
+
+## Rerun with the xray fork (agent#43, 2026-10-27) — PASS
+
+`make soak SOAK_DURATION=60m` on branch soak-fixes with `replace github.com/xtls/xray-core => github.com/akari-projectX/xray-core` (ActivityTimer self-deadlock fixed). Data: `agent-soak-2026-10-data/run-60m-fork/`.
+
+- Revocation: 809 slots revoked, 796 had a live connection; 795 proven cut, 1 left open by its client with nothing relayed (client-side, harness classifies as stalled); 809/809 new connections refused. Collateral: 898 untouched live connections checked, 0 lost.
+- Deltas 2270, snapshots 13, ack-not-ok 0, state-hash mismatch 0. Users installed 20 790 (101 499 user×inbound pairs).
+- Resources: baseline goroutines 43 / fds 24 / heap 8.9 MiB → after drain + empty Snapshot: 43 / 27 / 9.5 MiB (unpatched run: 186 / 93 / 76 MiB). xray ActivityTimer deadlocks: 0 (unpatched: 77/h). Peaks: goroutines 934, fds 443, heap 38 MiB, RSS 127 MiB.
+- `issued` after drain: 15 953 entries × ~601 B (by design, cleared by Rebuild).
+- Conn-close on kill (gate.go): xray sets `session.Inbound.Conn` only for the accepted per-client stream (TCP worker), per-session XHTTP `splitConn`, per-stream gRPC/Hysteria conns; UDP inbounds leave it nil — closing never affects another user (lead review of xray v26.10.21 source).

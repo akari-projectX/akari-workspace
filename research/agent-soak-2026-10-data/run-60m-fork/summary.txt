@@ -1,0 +1,15 @@
+streams=21 kills=20 snapshots=13 (fallback 0) deltas=2270 resync(in-sync=20, snapshot=1) leases=125 ack-not-ok=0 hash-mismatch=0
+ghost batches=1777 ops=71120 fresh added=17780 removed=17567 unique users installed=20790
+live transitions: batches=492 rotations=125 restores=46 limit changes=103
+revocation: slots revoked=809 (with a live connection beforehand=796, proven cut=795, no live connection to check=13), new connection refused=809
+cut latency: e1 n=128 p50=2009ms p99=2019ms max=2068ms; hy2 n=133 p50=803ms p99=1812ms max=1911ms; ss n=137 p50=2007ms p99=2017ms max=2067ms; trojan n=127 p50=2009ms p99=2040ms max=2043ms; vision n=138 p50=2007ms p99=2019ms max=2067ms; vmess n=132 p50=2008ms p99=2017ms max=2068ms; revoked live connections left open by their client for >6s with nothing relayed=1
+collateral: untouched live connections checked=898 lost=0
+traffic reports=661 rows=5477 heartbeats=248
+baseline: heap_live=8.9MiB rss=56.6MiB goroutines=43 fds=24
+idle:     heap_live=22.4MiB rss=96.5MiB goroutines=42 fds=27
+drained:  heap_live=18.6MiB rss=83.0MiB goroutines=42 fds=27 counted=0 issued=15953
+rebuilt:  heap_live=9.5MiB rss=67.1MiB goroutines=43 fds=27
+xray ActivityTimer self-deadlocks (handlers stuck for good, see stuckTimers): drained=0 rebuilt=0 peak=0
+retained credentials after the drain: 15953 issued entries cost 601 B each (drained heap - rebuilt heap)
+distinct users installed=20790, distinct (user, inbound) pairs=101499
+peaks: heap_live=38.3MiB rss=126.9MiB goroutines=934 fds=443
