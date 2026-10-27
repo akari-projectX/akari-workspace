@@ -95,3 +95,22 @@ Blocked by the hard constraint (do not touch `src/sub/**`, `src/billing/**`, no 
 - The long tail of `React`-era wording in portal comments ("同 React 门户 …", ~25 files): comment-only.
 - `src/mail/templates.rs` (75 "legacy/compat" grep hits are placeholder names, not compat), `passkey` tests: grep noise, no compat found.
 - `bench/` and `fuzz/` crates: not touched (no references to removed items found by grep).
+
+## Panel phase 3 (branch `compat-cleanup-3`, PR after #189/#192/#193)
+
+| # | Where | What it was for | Went with it |
+|---|---|---|---|
+| 1 | `sub::Stored::Legacy`, `/me` `sub_legacy`, admin `legacy`, portal "旧格式链接，重置后可查看", trigger `users_sub_token_enc_guard`, CHECK `users_sub_token_enc_has_hash` | tokens from before the ciphertext column (hash only) | now `Stored::Unreadable` (ciphertext does not open: master.key replaced; link keeps working, `sub_unreadable` / `unreadable`, reset gives a showable link); CHECK `users_sub_token_pair` (hash and ciphertext together); `w20_tests` case rewritten; bench seed writes a placeholder ciphertext; `TestDb::set_sub_token` |
+| 2 | `legacy_config_imports`, `grpc_server_names.source='config'`, `nodes.tags` (API fields, audit snapshot, server JSON, admin type), `server_enrollments.panel_addr/server_name` nullable + install-script branch "links issued before 0060" | panel.toml imports, node-level labels, old install links | smoke node PATCH no longer sends tags |
+| 3 | `db::migrate` pre-baseline refusal, `PRE_BASELINE_ERROR`, installer `refuse_pre_baseline`/`migration_min_version`/message `database_from_v0_3_x_fresh`, `PREV_TAG` flows of `bare-e2e.sh`/`host-e2e.sh` and the CI jobs, Cloudsmith checks of the bare test, per-task migration ranges | v0.3.x databases | docs (DEPLOY §5 "v0.3.x -> v0.4", BACKUP) |
+| 4 | migration squash (see `compat-cleanup-squash/README.md`); `owner` test that re-ran the 1013 repair statement; every "migration NNNN" comment in Rust and docs; `migrations/CLAUDE.md` rewritten (per-table notes kept, per-migration log removed) | | build.rs now reruns on `migrations/` |
+| 5 | admin: `/nodes?open=kind:id` redirect effect, user-list query aliases (`filter=never`, `never_used`, `registered_before`, `last_login_before`) | old links | producers (palette, signup settings page, e2e) use the current names |
+| 6 | docs: notes about imports, hash-only links, protocol 5-7 agents, pre-v0.4.1 units, M3 upgrade, TOTP, v0.4.0 login pages | | |
+
+### Kept, ask lead (phase 3)
+
+* `Hello.capabilities` gates in the session code (`latency`, `block-rules`, `source-filter` reporting; the `agent_supported` field of `GET /nodes/{id}/block-rules`): every protocol-8 agent has them, but removing them touches many fake-agent tests and an admin UI field.
+* `sysstatus` `proc_hidden` hint (a sandbox hiding `/proc`; text no longer says "old unit"): a diagnostic, not a version branch.
+* `smoke.sh` "old agent" section (protocol-0 agent gets the empty state): the kept degrade mode for `MIN_AGENT_PROTOCOL`.
+* `data/state.json` admin-prefix seed (phase-1 decision).
+* After the squash a database created by a released v0.4.x cannot be upgraded in place (sqlx sees versions 1000-1124 that the new chain does not have); this follows from "no deployed data".
