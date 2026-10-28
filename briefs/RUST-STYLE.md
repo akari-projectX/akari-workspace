@@ -33,7 +33,7 @@ Traits
 - `PartialEq`/`PartialOrd` unless total equality/order is actually needed; options-bag structs implement `Default`.
 
 Concurrency
-- Never reach inside a poisoned mutex (no `.lock().unwrap_or_else(|e| e.into_inner())` tricks); prefer tokio primitives in async code.
+- Never reach inside a poisoned mutex (no `.lock().unwrap_or_else(|e| e.into_inner())` tricks); prefer tokio primitives in async code. One documented exception: panel `grpc::lock_or_recover` (session state is re-verified against the agent state hash; SPRINT 2026-10-28).
 
 Macros
 - Plain Rust first, then `macro_rules!`; proc macros only with a strong reason.
