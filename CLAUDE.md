@@ -15,10 +15,10 @@
 2. `briefs/round-2026-10-28.md` — 当前轮次的裁决与任务范围；`briefs/COMMON.md` — worker / 云端会话通用规则（必读）
 3. `SPRINT.md` — 裁决记录（只追加）；开头的"当前有效裁决索引"按主题列出仍有效的裁决
 4. `briefs/DEFECT-CHECKLIST.md`（风险分级与缺陷清单）、`briefs/RUST-STYLE.md`、`briefs/GO-STYLE.md`、`briefs/ENGINEERING.md`（工程规范）
-5. `research/README.md` — 仍有效的研究报告索引（数据库评审、运营逻辑审查、体检报告、agent 浸泡测试、sing-box 验证）
+5. `research/README.md` — 仍有效的研究报告索引（数据库评审、运营逻辑审查、agent 浸泡测试、sing-box 验证）
 6. `upstream/` — 上游缺陷记录与补丁（xray ActivityTimer 自锁，agent README「xray-core 分支」引用）；`release-notes/` — 最近两次发版说明；`design/` — 仍被代码注释引用的设计稿与品牌 Logo
 
-已归档（`archive/`，只作历史，内容可能与现状矛盾）：旧交接（含 `HANDOVER-2026-10-26.md`）、`PLAN-v0.4.md`（D1–D12 决定与中转规格）、已完成任务的 brief、完成的验收清单与调查报告、已完成设计轮次的稿件与截图、门户还原交接。`akari-panel/PLAN.md`、`akari-panel/HANDOVER.md` 若仍存在也是旧文档。
+`archive/` 只留 `PLAN-v0.4.md`（v0.4 决定 D1–D12 与中转规格，被 SPRINT 与代码注释引用，内容是历史记录）；其余历史文档已删除，查 git 历史。
 
 ## 已确认的战略决策（勿推翻）
 

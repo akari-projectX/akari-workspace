@@ -1,6 +1,6 @@
 # Akari 工作区
 
-工作区元仓库 `akari-workspace`：只含工作区文档（裁决、计划、研究报告、worker brief、设计稿；完成的历史在 `archive/`）；`./bootstrap.sh` 会把下面三个独立仓库兄弟检出到本目录：
+工作区元仓库 `akari-workspace`：只含工作区文档（裁决、计划、研究报告、worker brief、设计稿；只保留仍有效的文档，历史查 git）；`./bootstrap.sh` 会把下面三个独立仓库兄弟检出到本目录：
 
 | 目录 | 仓库 | 说明 |
 |---|---|---|

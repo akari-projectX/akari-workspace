@@ -1,33 +1,0 @@
-
-  [38;5;27m █████╗ [38;5;33m██╗  ██╗[38;5;39m █████╗ [38;5;75m██████╗ [38;5;111m██╗[0m
-  [38;5;27m██╔══██╗[38;5;33m██║ ██╔╝[38;5;39m██╔══██╗[38;5;75m██╔══██╗[38;5;111m██║[0m
-  [38;5;27m███████║[38;5;33m█████╔╝ [38;5;39m███████║[38;5;75m██████╔╝[38;5;111m██║[0m
-  [38;5;27m██╔══██║[38;5;33m██╔═██╗ [38;5;39m██╔══██║[38;5;75m██╔══██╗[38;5;111m██║[0m
-  [38;5;27m██║  ██║[38;5;33m██║  ██╗[38;5;39m██║  ██║[38;5;75m██║  ██║[38;5;111m██║[0m
-  [38;5;27m╚═╝  ╚═╝[38;5;33m╚═╝  ╚═╝[38;5;39m╚═╝  ╚═╝[38;5;75m╚═╝  ╚═╝[38;5;111m╚═╝[0m
-  [2mnode installer · 172.17.0.1:8099[0m
-
-[38;5;33m[1/6][0m [1mChecking this machine[0m
-      [32m✓[0m [2m0s[0m
-
-[38;5;33m[2/6][0m [1mDownloading and verifying the agent[0m
-      [2m·[0m downloading akari-agent v0.0.0-demo (amd64) from the panel
-[K      [38;5;33m⠋[0m Downloading and verifying the agent [2m0s[0m[K      [2m·[0m verified akari-agent v0.0.0-demo (demo) go1.27 linux/amd64
-      [32m✓[0m [2m0s[0m
-
-[38;5;33m[3/6][0m [1mInstalling files and services[0m
-      [2m·[0m this agent release does not carry its systemd units; using the installer copies
-      [32m✓[0m [2m0s[0m
-
-[38;5;33m[4/6][0m [1mTCP BBR + fq[0m
-      [2m·[0m BBR + fq: skipped (no net.core.default_qdisc / tcp_congestion_control here: a container with its own network namespace?)
-      [32m✓[0m [2m0s[0m
-
-[38;5;33m[5/6][0m [1mnftables and firewall[0m
-      [32m✓[0m [2m1s[0m
-
-[38;5;33m[6/6][0m [1mStarting the agent and waiting for it to enroll and connect[0m
-[K      [38;5;33m⠋[0m Starting the agent and waiting for it to enroll and connect [2m0s[0m[K      [38;5;33m⠙[0m Starting the agent and waiting for it to enroll and connect [2m1s[0m[K      [32m✓[0m [2m2s[0m
-  [32m✓[0m [1mSUCCESS: the agent enrolled and is connected; the node shows online in the panel.[0m
-  uninstall later with (as root): /usr/local/sbin/akari-agent-uninstall
-
