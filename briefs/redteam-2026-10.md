@@ -35,3 +35,15 @@ Every worker reads briefs/COMMON.md, akari-panel/CLAUDE.md (hard invariants) and
   → 400. Done in area D's PR.
 - Info items: `__Host-` cookie prefix and same-site writes, admin routes answering 401/403 on the portal entry,
   unlocked role read in guard_target — record only. CLAUDE.md lines about hosted rule sets: remove in area D's PR.
+
+## Lead decisions on area C (2026-10-28)
+- C-1 (unbounded Hello strings), C-2 (FetchArtifact per-server slot): fixed in panel #230 (fetch slot uses
+  `expect`; its `Drop` never panics — RUST-STYLE allows poison recovery only in `grpc::lock_or_recover`).
+- C-3 (planted directory under a request name loops the root updater): fixed in agent #53 (`agentDir.consume`
+  renames it aside). With the loop gone the updater unit needs no `StartLimitIntervalSec=0`; units unchanged.
+- First install trusts the panel that serves the script (TOFU through the install link / pinned key): inherent,
+  documented in DEPLOY §3h. No change.
+- Source filter on a port nobody has bound yet is applied (the agent binds after the request): accepted, low;
+  the derived inbound still needs per-entrance credentials.
+- Pre-auth gRPC decode size (the 64 MiB message cap applies before the first message is checked): accepted;
+  enrollment is rate-limited per /64 and globally.
