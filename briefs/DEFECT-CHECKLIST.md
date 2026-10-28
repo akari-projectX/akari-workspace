@@ -31,3 +31,8 @@
 
 ## Go（2026-10-22 起）
 - 是否符合 `briefs/GO-STYLE.md`（Google Go Style Guide）：错误带上下文 `%w` 包装且不丢弃、错误串小写、context 首参不入结构体、每个 goroutine 有明确退出、接口由使用方定义、首字母缩写大小写一致、无 Get 前缀、导出名有文档、测试失败信息 `got/want` + `cmp.Diff`。
+
+## Engineering rules (2026-10-28; see `briefs/ENGINEERING.md`)
+13. **Reuse, no second source of truth**: the change reuses an existing implementation (predicate, SQL function, constant, validator, API module) instead of adding a parallel one; each fact is still defined in exactly one place.
+14. **No unused code left**: no unused functions, routes, error codes, flags, settings, i18n keys, columns, tests or docs (including CLAUDE.md lines) remain after the change; replaced things are deleted in the same PR.
+15. **Performance impact stated**: the PR body states the impact; hot paths touched (flush, snapshot, subscription render, session tick, gate, agent report) are measured before/after (`make bench`), or says "not on a hot path".

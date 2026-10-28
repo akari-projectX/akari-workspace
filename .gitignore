@@ -5,3 +5,5 @@
 /wt-*/
 /devpanel/
 /.work/
+# Valkey snapshots written by a local dev server started from here.
+/dump.rdb

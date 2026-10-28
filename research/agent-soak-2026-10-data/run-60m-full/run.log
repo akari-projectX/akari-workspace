@@ -1,0 +1,914 @@
+SOAK_DURATION=60m SOAK_OUT=/home/user/akari-workspace/.work/soak-full-out go test -tags 'canary soak' -count=1 -run '^TestSoak$' -timeout 0 -v .
+=== RUN   TestSoak
+00:21:49.495 soak: duration 1h0m0s, live users 5, ghosts 3000, out /home/user/akari-workspace/.work/soak-full-out
+2026/10/27 00:21:49.519338 [Warning] infra/conf: REALITY: Listening on non-443 ports will increase the likelihood of your server's IP being blocked by the GFW
+2026/10/27 00:21:49.519557 [Warning] common/errors: The feature VMess (with no Forward Secrecy, etc.) is deprecated, not recommended for using and might be removed. Please migrate to VLESS Encryption as soon as possible.
+2026/10/27 00:21:49.519579 [Warning] common/errors: The feature Trojan (with no Flow, etc.) is deprecated, not recommended for using and might be removed. Please migrate to VLESS with Flow & Seed as soon as possible.
+2026/10/27 00:21:49.519697 [Warning] common/errors: The feature Shadowsocks (with no Forward Secrecy, etc.) is deprecated, not recommended for using and might be removed. Please migrate to VLESS Encryption as soon as possible.
+2026/10/27 00:21:49.522855 [Warning] core: Xray 26.10.21 started
+00:21:59.596 baseline: heap_live=9116KiB rss=52MiB goroutines=43 fds=24 users=1510 counted=1510 issued=3936
+00:21:59.708 clients up: 30 slots
+00:22:13.935 live live-3 rotate slow: plan+prep 321.352µs, delta 8.017779ms, verify 11.662369285s, after 1.756497ms
+00:22:13.935 live live-3: rotate took 11.672s
+00:22:14.610 live live-0: limit took 10ms
+00:22:29.739 t=30s heap=23194KiB inuse=34096KiB rss=91MiB gor=723 fds=338 gate=171/24 counted=1906 gone=120 issued=5360 stale=347 fin=1 rows=34 users=1786 uniq=1906 cpu=7s short=3ms moved=100MiB child(rss=69MiB fds=799 cpu=10s)
+00:22:32.095 live live-2 remove slow: plan+prep 289.123µs, delta 10.640064ms, verify 11.466175617s, after 529ns
+00:22:32.095 live live-2: remove took 11.477s
+00:22:39.187 live live-1 rotate slow: plan+prep 312.502µs, delta 11.615091ms, verify 5.767714637s, after 1.507772ms
+00:22:39.187 live live-1: rotate took 5.781s
+00:22:51.538 live live-4 drop slow: plan+prep 426.715µs, delta 9.979073ms, verify 11.662426339s, after 396ns
+00:22:51.538 live live-4: drop took 11.673s
+00:22:56.091 live live-0: rotate took 3.481s
+00:22:59.733 t=1m0s heap=20537KiB inuse=30688KiB rss=89MiB gor=521 fds=246 gate=121/16 counted=2216 gone=300 issued=6522 stale=1088 fin=1 rows=51 users=1916 uniq=2216 cpu=13s short=9ms moved=178MiB child(rss=61MiB fds=582 cpu=18s)
+00:23:08.145 live live-1 remove slow: plan+prep 342.398µs, delta 12.143384ms, verify 11.465212002s, after 603ns
+00:23:08.146 live live-1: remove took 11.478s
+00:23:08.923 live live-2: readd took 14ms
+00:23:10.398 live live-3: limit took 11ms
+00:23:26.707 live live-4 rotate slow: plan+prep 526.348µs, delta 16.459121ms, verify 6.477215139s, after 1.323584ms
+00:23:26.707 live live-4: rotate took 6.496s
+00:23:29.734 t=1m30s heap=22577KiB inuse=32968KiB rss=93MiB gor=609 fds=293 gate=147/22 counted=2551 gone=528 issued=7808 stale=2014 fin=1 rows=32 users=2023 uniq=2551 cpu=19s short=14ms moved=250MiB child(rss=72MiB fds=685 cpu=25s)
+00:23:30.456 driver: killing the stream
+00:23:36.188 live live-0: limit took 13ms
+00:23:40.267 live live-1: readd took 13ms
+00:23:41.287 live live-2: limit took 14ms
+00:23:49.956 live live-3 rotate slow: plan+prep 324.231µs, delta 13.815656ms, verify 5.463475831s, after 954.616µs
+00:23:49.956 live live-3: rotate took 5.479s
+00:23:56.537 live live-4: restore took 1.014s
+00:23:57.797 live live-1: limit took 13ms
+00:23:59.734 t=2m0s heap=27482KiB inuse=39272KiB rss=101MiB gor=870 fds=408 gate=210/30 counted=2808 gone=738 issued=8883 stale=2953 fin=1 rows=36 users=2070 uniq=2808 cpu=26s short=13ms moved=344MiB child(rss=74MiB fds=965 cpu=34s)
+00:24:09.760 live live-0 rotate slow: plan+prep 336.576µs, delta 19.591307ms, verify 6.47034923s, after 1.109188ms
+00:24:09.760 live live-0: rotate took 6.491s
+00:24:29.181 live live-0 rotate slow: plan+prep 485.449µs, delta 17.582714ms, verify 6.47450043s, after 1.745206ms
+00:24:29.181 live live-0: rotate took 6.494s
+00:24:29.740 t=2m30s heap=28028KiB inuse=40264KiB rss=106MiB gor=857 fds=412 gate=209/30 counted=3051 gone=915 issued=10100 stale=3969 fin=1 rows=46 users=2136 uniq=3090 cpu=34s short=15ms moved=445MiB child(rss=71MiB fds=947 cpu=44s)
+00:24:35.359 live live-1 drop slow: plan+prep 320.129µs, delta 13.13781ms, verify 5.46700701s, after 377ns
+00:24:35.359 live live-1: drop took 5.48s
+00:24:43.344 live live-2 rotate slow: plan+prep 366.367µs, delta 27.070847ms, verify 6.472543345s, after 832.521µs
+00:24:43.344 live live-2: rotate took 6.501s
+00:24:55.937 live live-3 remove slow: plan+prep 254.541µs, delta 12.602379ms, verify 11.464986901s, after 448ns
+00:24:55.937 live live-3: remove took 11.478s
+00:24:59.734 t=3m0s heap=25538KiB inuse=37544KiB rss=101MiB gor=493 fds=227 gate=107/17 counted=3236 gone=1035 issued=11300 stale=4999 fin=1 rows=65 users=2201 uniq=3369 cpu=41s short=21ms moved=537MiB child(rss=64MiB fds=556 cpu=52s)
+00:25:08.162 live live-4 remove slow: plan+prep 226.631µs, delta 11.80372ms, verify 11.465195774s, after 242ns
+00:25:08.162 live live-4: remove took 11.477s
+00:25:20.787 live live-0 remove slow: plan+prep 289.359µs, delta 12.845533ms, verify 11.464522329s, after 350ns
+00:25:20.787 live live-0: remove took 11.478s
+00:25:21.882 live live-1: limit took 12ms
+00:25:22.699 live live-2: limit took 12ms
+00:25:23.622 live live-3: readd took 15ms
+00:25:24.821 live live-4: readd took 17ms
+00:25:29.737 t=3m30s heap=27905KiB inuse=39616KiB rss=96MiB gor=724 fds=345 gate=175/23 counted=3307 gone=1071 issued=12355 stale=5984 fin=1 rows=28 users=2236 uniq=3604 cpu=46s short=18ms moved=590MiB child(rss=65MiB fds=808 cpu=58s)
+00:25:52.738 live live-3 rotate slow: plan+prep 331.159µs, delta 20.020789ms, verify 11.660233881s, after 1.102413ms
+00:25:52.738 live live-3: rotate took 11.682s
+00:25:53.498 live live-0: readd took 14ms
+00:25:58.066 live live-1: drop took 3.487s
+00:25:59.738 t=4m0s heap=29397KiB inuse=42448KiB rss=108MiB gor=707 fds=331 gate=166/22 counted=3374 gone=1088 issued=13522 stale=7045 fin=1 rows=54 users=2286 uniq=3859 cpu=52s short=6ms moved=676MiB child(rss=66MiB fds=780 cpu=66s)
+00:26:10.579 live live-2 remove slow: plan+prep 238.885µs, delta 13.86126ms, verify 11.464722258s, after 283ns
+00:26:10.579 live live-2: remove took 11.479s
+00:26:22.903 live live-3 remove slow: plan+prep 241.365µs, delta 13.070651ms, verify 11.467448548s, after 418ns
+00:26:22.903 live live-3: remove took 11.481s
+00:26:29.736 t=4m30s heap=27279KiB inuse=39760KiB rss=104MiB gor=520 fds=244 gate=119/15 counted=3436 gone=1132 issued=14615 stale=8079 fin=1 rows=44 users=2304 uniq=4077 cpu=58s short=15ms moved=745MiB child(rss=62MiB fds=550 cpu=73s)
+00:26:36.610 live live-4 drop slow: plan+prep 17.831536ms, delta 11.899409ms, verify 12.465970513s, after 449ns
+00:26:36.610 live live-4: drop took 12.496s
+00:26:37.300 driver: killing the stream
+00:26:42.069 live live-0: limit took 13ms
+00:26:54.715 live live-1 rotate slow: plan+prep 447.998µs, delta 17.463524ms, verify 11.661719262s, after 1.711652ms
+00:26:54.715 live live-1: rotate took 11.681s
+00:26:55.816 live live-2: readd took 15ms
+00:26:57.016 live live-3: readd took 21ms
+00:26:59.737 t=5m0s heap=30859KiB inuse=43432KiB rss=105MiB gor=799 fds=378 gate=192/25 counted=3381 gone=1085 issued=15519 stale=9052 fin=1 rows=54 users=2296 uniq=4259 cpu=63s short=6ms moved=803MiB child(rss=66MiB fds=862 cpu=79s)
+00:27:01.722 live live-4: rotate took 3.483s
+00:27:02.483 driver: snapshot (xray rebuild)
+2026/10/27 00:27:02.512972 [Warning] core: Xray 26.10.21 started
+00:27:09.009 live live-1: restore took 1.017s
+00:27:24.492 live live-0: rotate took 3.085s
+00:27:25.326 live live-3: limit took 12ms
+00:27:29.736 t=5m30s heap=31748KiB inuse=47352KiB rss=113MiB gor=779 fds=403 gate=184/24 counted=2596 gone=282 issued=7631 stale=1086 fin=2 rows=40 users=2314 uniq=4457 cpu=69s short=3ms moved=883MiB child(rss=70MiB fds=874 cpu=87s)
+00:27:37.997 live live-2: drop took 3.487s
+00:27:44.501 live live-4 drop slow: plan+prep 258.692µs, delta 12.879126ms, verify 5.762137452s, after 347ns
+00:27:44.501 live live-4: drop took 5.775s
+00:27:48.700 live live-1: drop took 3.475s
+00:27:59.738 t=6m0s heap=29569KiB inuse=45656KiB rss=113MiB gor=632 fds=283 gate=140/20 counted=2922 gone=543 issued=8980 stale=2151 fin=2 rows=49 users=2379 uniq=4650 cpu=76s short=10ms moved=974MiB child(rss=66MiB fds=671 cpu=95s)
+00:28:02.237 live live-3 rotate slow: plan+prep 273.229µs, delta 13.619891ms, verify 6.472676544s, after 2.837103ms
+00:28:02.237 live live-3: rotate took 6.489s
+00:28:15.602 live live-0 rotate slow: plan+prep 388.178µs, delta 13.585736ms, verify 12.465386909s, after 2.209118ms
+00:28:15.602 live live-0: rotate took 12.482s
+00:28:16.931 live live-2: limit took 13ms
+00:28:29.737 t=6m30s heap=31097KiB inuse=46496KiB rss=112MiB gor=628 fds=283 gate=138/17 counted=3184 gone=860 issued=10150 stale=3471 fin=1 rows=38 users=2324 uniq=4820 cpu=82s short=7ms moved=1048MiB child(rss=64MiB fds=628 cpu=103s)
+00:28:31.156 live live-3 remove slow: plan+prep 208.579µs, delta 12.634584ms, verify 11.161694468s, after 546ns
+00:28:31.156 live live-3: remove took 11.175s
+00:28:37.629 live live-0 rotate slow: plan+prep 483.813µs, delta 17.213696ms, verify 5.867071233s, after 2.334163ms
+00:28:37.629 live live-0: rotate took 5.887s
+00:28:39.219 live live-1: restore took 1.019s
+00:28:41.327 live live-4: restore took 1.036s
+00:28:52.026 live live-3: readd took 17ms
+00:28:59.740 t=7m0s heap=34633KiB inuse=50200KiB rss=117MiB gor=783 fds=365 gate=184/25 counted=3423 gone=1094 issued=11219 stale=4513 fin=1 rows=39 users=2329 uniq=4997 cpu=88s short=7ms moved=1126MiB child(rss=68MiB fds=852 cpu=111s)
+00:28:59.862 live live-2 rotate slow: plan+prep 281.877µs, delta 14.318461ms, verify 6.472124621s, after 1.523548ms
+00:28:59.862 live live-2: rotate took 6.488s
+00:29:06.291 live live-0 rotate slow: plan+prep 338.954µs, delta 14.180907ms, verify 5.566966316s, after 1.850383ms
+00:29:06.291 live live-0: rotate took 5.583s
+00:29:13.497 live live-1 drop slow: plan+prep 280.115µs, delta 12.70484ms, verify 6.270566229s, after 811ns
+00:29:13.497 live live-1: drop took 6.284s
+00:29:18.200 live live-4: rotate took 3.486s
+00:29:23.555 live live-2: restore took 1.021s
+00:29:25.574 live live-0: limit took 12ms
+00:29:29.738 t=7m30s heap=35981KiB inuse=52936KiB rss=124MiB gor=901 fds=431 gate=221/29 counted=3483 gone=1127 issued=12396 stale=5591 fin=1 rows=58 users=2356 uniq=5185 cpu=96s short=11ms moved=1223MiB child(rss=71MiB fds=1003 cpu=120s)
+00:29:35.796 live live-3: rotate took 3.484s
+00:29:38.045 driver: killing the stream
+00:29:48.420 live live-4: drop took 3.487s
+00:29:59.738 t=8m0s heap=34263KiB inuse=49840KiB rss=120MiB gor=711 fds=335 gate=164/22 counted=3491 gone=1146 issued=13434 stale=6730 fin=1 rows=70 users=2345 uniq=5350 cpu=103s short=13ms moved=1322MiB child(rss=67MiB fds=764 cpu=129s)
+00:30:01.308 live live-0 remove slow: plan+prep 397.333µs, delta 13.819786ms, verify 11.465391298s, after 377ns
+00:30:01.308 live live-0: remove took 11.48s
+00:30:03.159 live live-1: restore took 1.015s
+00:30:15.245 live live-2 remove slow: plan+prep 239.813µs, delta 12.575424ms, verify 11.463515536s, after 427ns
+00:30:15.245 live live-2: remove took 11.476s
+00:30:16.639 live live-0: readd took 21ms
+00:30:28.792 live live-3 remove slow: plan+prep 255.749µs, delta 17.815941ms, verify 10.66024776s, after 460ns
+00:30:28.792 live live-3: remove took 10.678s
+00:30:29.738 t=8m30s heap=32469KiB inuse=47752KiB rss=119MiB gor=540 fds=247 gate=118/17 counted=3463 gone=1105 issued=14433 stale=7707 fin=1 rows=42 users=2358 uniq=5511 cpu=108s short=14ms moved=1387MiB child(rss=63MiB fds=570 cpu=135s)
+00:30:30.976 live live-4: restore took 1.021s
+00:30:34.274 live live-2: readd took 22ms
+00:30:50.431 live live-1 remove slow: plan+prep 281.667µs, delta 14.455886ms, verify 10.56027248s, after 432ns
+00:30:50.431 live live-1: remove took 10.575s
+00:30:59.740 t=9m0s heap=31704KiB inuse=46672KiB rss=112MiB gor=427 fds=201 gate=91/12 counted=3534 gone=1165 issued=15599 stale=8791 fin=1 rows=42 users=2369 uniq=5701 cpu=114s short=7ms moved=1454MiB child(rss=62MiB fds=448 cpu=142s)
+00:31:03.409 live live-0 remove slow: plan+prep 419.226µs, delta 16.843651ms, verify 11.463425204s, after 476ns
+00:31:03.409 live live-0: remove took 11.481s
+00:31:04.079 live live-3: readd took 18ms
+00:31:21.814 live live-4 drop slow: plan+prep 373.161µs, delta 15.436373ms, verify 11.965612588s, after 341ns
+00:31:21.814 live live-4: drop took 11.981s
+00:31:22.918 live live-0: readd took 21ms
+00:31:23.465 live live-1: readd took 28ms
+00:31:29.740 t=9m30s heap=37420KiB inuse=52760KiB rss=122MiB gor=749 fds=357 gate=177/23 counted=3501 gone=1121 issued=16576 stale=9819 fin=1 rows=42 users=2380 uniq=5860 cpu=120s short=15ms moved=1519MiB child(rss=66MiB fds=805 cpu=149s)
+00:31:35.912 live live-2 remove slow: plan+prep 258.911µs, delta 13.647703ms, verify 11.465312784s, after 542ns
+00:31:35.912 live live-2: remove took 11.479s
+00:31:48.255 live live-0 drop slow: plan+prep 268.481µs, delta 14.298807ms, verify 6.469156597s, after 710ns
+00:31:48.255 live live-0: drop took 6.484s
+00:31:48.823 live live-1: limit took 14ms
+00:31:50.149 live live-3: limit took 23ms
+00:31:54.231 live live-4: drop took 3.486s
+00:31:59.738 t=10m0s heap=34922KiB inuse=49816KiB rss=123MiB gor=592 fds=282 gate=137/18 counted=3507 gone=1091 issued=17534 stale=10661 fin=1 rows=54 users=2416 uniq=6016 cpu=126s short=12ms moved=1599MiB child(rss=65MiB fds=636 cpu=157s)
+00:32:10.947 live live-0 rotate slow: plan+prep 242.573µs, delta 19.769667ms, verify 12.493649499s, after 1.149127ms
+00:32:10.947 live live-0: rotate took 12.515s
+00:32:11.849 driver: snapshot (xray rebuild)
+2026/10/27 00:32:11.869172 [Warning] core: Xray 26.10.21 started
+00:32:16.518 live live-2: readd took 34ms
+00:32:26.427 live live-3 drop slow: plan+prep 423.429µs, delta 19.49597ms, verify 6.481187981s, after 404ns
+00:32:26.427 live live-3: drop took 6.501s
+00:32:29.741 t=10m30s heap=35817KiB inuse=55352KiB rss=125MiB gor=566 fds=290 gate=131/19 counted=2583 gone=196 issued=7532 stale=779 fin=2 rows=41 users=2387 uniq=6178 cpu=132s short=3ms moved=1669MiB child(rss=67MiB fds=645 cpu=164s)
+00:32:39.571 live live-1 drop slow: plan+prep 310.68µs, delta 14.884569ms, verify 12.464443111s, after 591ns
+00:32:39.571 live live-1: drop took 12.48s
+00:32:40.225 driver: killing the stream
+00:32:49.067 live live-0: rotate took 3.482s
+00:32:59.738 t=11m0s heap=37641KiB inuse=56840KiB rss=127MiB gor=643 fds=310 gate=149/19 counted=2865 gone=481 issued=8625 stale=1931 fin=2 rows=43 users=2384 uniq=6322 cpu=137s short=10ms moved=1742MiB child(rss=65MiB fds=694 cpu=171s)
+00:33:01.810 live live-2 rotate slow: plan+prep 270.831µs, delta 13.405513ms, verify 11.46050174s, after 2.001371ms
+00:33:01.810 live live-2: rotate took 11.476s
+00:33:14.507 live live-3 drop slow: plan+prep 355.897µs, delta 13.946473ms, verify 11.55895719s, after 298ns
+00:33:14.507 live live-3: drop took 11.573s
+00:33:17.967 live live-1: drop took 2.581s
+00:33:29.746 t=11m30s heap=38394KiB inuse=57448KiB rss=125MiB gor=580 fds=277 gate=136/17 counted=3139 gone=764 issued=9765 stale=3074 fin=2 rows=46 users=2375 uniq=6483 cpu=143s short=8ms moved=1813MiB child(rss=66MiB fds=621 cpu=178s)
+00:33:30.757 live live-2 rotate slow: plan+prep 371.535µs, delta 25.749298ms, verify 11.460903334s, after 2.070194ms
+00:33:30.757 live live-2: rotate took 11.489s
+00:33:31.486 live live-0: limit took 13ms
+00:33:38.277 live live-1 rotate slow: plan+prep 299.987µs, delta 13.95718ms, verify 5.469175155s, after 1.832635ms
+00:33:38.277 live live-1: rotate took 5.485s
+00:33:39.333 live live-3: limit took 20ms
+00:33:43.768 live live-4: drop took 3.489s
+00:33:59.741 t=12m0s heap=38049KiB inuse=56824KiB rss=130MiB gor=590 fds=264 gate=132/18 counted=3360 gone=997 issued=10789 stale=4118 fin=1 rows=48 users=2363 uniq=6625 cpu=149s short=8ms moved=1883MiB child(rss=66MiB fds=625 cpu=185s)
+00:34:02.035 live live-0: drop took 3.493s
+00:34:03.640 live live-3: restore took 1.027s
+00:34:05.103 live live-2: limit took 14ms
+00:34:07.048 live live-4: restore took 1.02s
+00:34:08.409 live live-1: limit took 13ms
+00:34:21.355 live live-0: restore took 1.02s
+00:34:27.706 live live-3 rotate slow: plan+prep 500.593µs, delta 18.775279ms, verify 5.060555737s, after 673.309µs
+00:34:27.706 live live-3: rotate took 5.081s
+00:34:28.480 live live-4: limit took 15ms
+00:34:29.746 t=12m30s heap=42350KiB inuse=62704KiB rss=138MiB gor=848 fds=387 gate=194/27 counted=3516 gone=1133 issued=11930 stale=5225 fin=1 rows=32 users=2383 uniq=6786 cpu=156s short=4ms moved=1972MiB child(rss=68MiB fds=896 cpu=194s)
+00:34:39.180 live live-2: limit took 14ms
+00:34:55.904 live live-1 drop slow: plan+prep 346.627µs, delta 13.683606ms, verify 6.469194211s, after 693ns
+00:34:55.904 live live-1: drop took 6.483s
+00:34:56.543 live live-0: limit took 19ms
+00:34:59.743 t=13m0s heap=40983KiB inuse=61088KiB rss=136MiB gor=686 fds=315 gate=156/20 counted=3507 gone=1109 issued=12902 stale=6118 fin=1 rows=51 users=2398 uniq=6926 cpu=163s short=3ms moved=2071MiB child(rss=65MiB fds=727 cpu=203s)
+00:35:09.043 live live-2 remove slow: plan+prep 421.727µs, delta 13.872056ms, verify 11.462053141s, after 466ns
+00:35:09.043 live live-2: remove took 11.476s
+00:35:10.076 live live-3: limit took 14ms
+00:35:17.588 live live-4 rotate slow: plan+prep 205.8µs, delta 13.120797ms, verify 6.47565957s, after 1.289149ms
+00:35:17.588 live live-4: rotate took 6.49s
+00:35:29.744 t=13m30s heap=38907KiB inuse=57408KiB rss=130MiB gor=519 fds=238 gate=111/14 counted=3480 gone=1100 issued=13831 stale=7107 fin=1 rows=41 users=2380 uniq=7066 cpu=169s short=3ms moved=2139MiB child(rss=63MiB fds=517 cpu=210s)
+00:35:31.357 live live-0 remove slow: plan+prep 300.284µs, delta 14.092762ms, verify 10.156973831s, after 589ns
+00:35:31.357 live live-0: remove took 10.171s
+00:35:32.963 live live-1: restore took 1.023s
+00:35:37.995 live live-2: readd took 18ms
+00:35:38.641 live live-4: limit took 20ms
+00:35:41.333 driver: killing the stream
+00:35:49.614 live live-3: drop took 3.484s
+00:35:59.741 t=14m0s heap=40900KiB inuse=60344KiB rss=131MiB gor=623 fds=288 gate=136/17 counted=3454 gone=1103 issued=14738 stale=8078 fin=1 rows=52 users=2351 uniq=7206 cpu=175s short=9ms moved=2214MiB child(rss=65MiB fds=634 cpu=218s)
+00:36:03.787 live live-1 remove slow: plan+prep 370.192µs, delta 25.73627ms, verify 11.465988662s, after 366ns
+00:36:03.787 live live-1: remove took 11.492s
+00:36:04.957 live live-0: readd took 16ms
+00:36:11.394 live live-2 rotate slow: plan+prep 190.771µs, delta 16.673469ms, verify 5.775801601s, after 1.268711ms
+00:36:11.394 live live-2: rotate took 5.794s
+00:36:24.089 live live-4 remove slow: plan+prep 2.047982ms, delta 14.461403ms, verify 11.363944332s, after 374ns
+00:36:24.089 live live-4: remove took 11.38s
+00:36:25.675 live live-3: restore took 1.021s
+00:36:29.741 t=14m30s heap=40360KiB inuse=59376KiB rss=134MiB gor=587 fds=274 gate=127/16 counted=3453 gone=1103 issued=15713 stale=8995 fin=1 rows=51 users=2350 uniq=7358 cpu=181s short=9ms moved=2280MiB child(rss=63MiB fds=600 cpu=225s)
+00:36:31.930 live live-0: rotate took 4.975s
+00:36:33.138 live live-1: readd took 16ms
+00:36:37.665 live live-2: drop took 3.491s
+00:36:48.917 live live-3: limit took 14ms
+00:36:49.737 live live-4: readd took 19ms
+00:36:59.745 t=15m0s heap=43564KiB inuse=64800KiB rss=141MiB gor=783 fds=366 gate=181/23 counted=3448 gone=1088 issued=16666 stale=9934 fin=1 rows=42 users=2360 uniq=7508 cpu=187s short=12ms moved=2366MiB child(rss=68MiB fds=834 cpu=233s)
+00:37:08.066 live live-1 remove slow: plan+prep 400.377µs, delta 14.073347ms, verify 11.46502232s, after 403ns
+00:37:08.066 live live-1: remove took 11.48s
+00:37:08.716 live live-0: limit took 14ms
+00:37:21.839 live live-2 rotate slow: plan+prep 291.471µs, delta 21.655545ms, verify 12.36774827s, after 783.01µs
+00:37:21.839 live live-2: rotate took 12.391s
+00:37:22.783 driver: snapshot (xray rebuild)
+2026/10/27 00:37:22.814382 [Warning] core: Xray 26.10.21 started
+00:37:27.999 live live-1: readd took 28ms
+00:37:29.766 t=15m30s heap=44836KiB inuse=65768KiB rss=135MiB gor=810 fds=391 gate=179/24 counted=2449 gone=74 issued=7126 stale=281 fin=2 rows=46 users=2375 uniq=7668 cpu=194s short=11ms moved=2446MiB child(rss=68MiB fds=855 cpu=240s)
+00:37:40.953 live live-3 rotate slow: plan+prep 294.005µs, delta 13.653765ms, verify 11.765062443s, after 1.477396ms
+00:37:40.953 live live-3: rotate took 11.781s
+00:37:42.642 live live-2: restore took 1.016s
+00:37:56.064 live live-4 rotate slow: plan+prep 732.405µs, delta 39.561738ms, verify 12.465500253s, after 10.642552ms
+00:37:56.065 live live-4: rotate took 12.517s
+00:37:59.777 t=16m0s heap=43859KiB inuse=66408KiB rss=144MiB gor=750 fds=351 gate=171/24 counted=2772 gone=419 issued=8382 stale=1622 fin=2 rows=36 users=2353 uniq=7828 cpu=199s short=11ms moved=2538MiB child(rss=68MiB fds=793 cpu=247s)
+00:38:08.158 live live-0 remove slow: plan+prep 278.298µs, delta 15.810262ms, verify 11.464556865s, after 444ns
+00:38:08.158 live live-0: remove took 11.481s
+00:38:21.487 live live-1 rotate slow: plan+prep 239.184µs, delta 14.177883ms, verify 12.465899756s, after 1.116576ms
+00:38:21.487 live live-1: rotate took 12.481s
+00:38:22.864 live live-0: readd took 32ms
+00:38:29.778 t=16m30s heap=47076KiB inuse=69472KiB rss=141MiB gor=872 fds=405 gate=203/28 counted=3023 gone=680 issued=9411 stale=2710 fin=2 rows=38 users=2343 uniq=7969 cpu=206s short=12ms moved=2627MiB child(rss=73MiB fds=933 cpu=254s)
+00:38:35.621 live live-2 rotate slow: plan+prep 559.747µs, delta 23.307552ms, verify 11.460655571s, after 1.704418ms
+00:38:35.621 live live-2: rotate took 11.486s
+00:38:47.976 live live-3 remove slow: plan+prep 1.311661ms, delta 18.514105ms, verify 11.466974589s, after 333ns
+00:38:47.977 live live-3: remove took 11.488s
+00:38:49.272 driver: killing the stream
+00:38:54.435 live live-1: limit took 18ms
+00:38:55.631 live live-3: readd took 22ms
+00:38:57.093 live live-4: limit took 17ms
+00:38:58.300 live live-0: limit took 50ms
+00:38:59.772 t=17m0s heap=49584KiB inuse=71912KiB rss=148MiB gor=977 fds=453 gate=229/30 counted=3273 gone=918 issued=10517 stale=3824 fin=1 rows=46 users=2355 uniq=8119 cpu=212s short=11ms moved=2721MiB child(rss=74MiB fds=1028 cpu=261s)
+00:39:07.603 live live-2: limit took 21ms
+00:39:13.057 live live-3: rotate took 2.078s
+00:39:18.530 live live-4: limit took 17ms
+00:39:20.595 live live-0: limit took 31ms
+00:39:29.779 t=17m30s heap=48024KiB inuse=72240KiB rss=153MiB gor=878 fds=418 gate=211/28 counted=3416 gone=1077 issued=11451 stale=4847 fin=1 rows=46 users=2339 uniq=8249 cpu=219s short=7ms moved=2831MiB child(rss=68MiB fds=957 cpu=269s)
+00:39:33.337 live live-1 rotate slow: plan+prep 250.843µs, delta 21.039342ms, verify 6.515307322s, after 1.220193ms
+00:39:33.337 live live-1: rotate took 6.538s
+00:39:44.344 live live-3 remove slow: plan+prep 264.083µs, delta 18.244331ms, verify 10.463532161s, after 365ns
+00:39:44.344 live live-3: remove took 10.482s
+00:39:56.908 live live-2 remove slow: plan+prep 210.1µs, delta 30.039311ms, verify 11.469713173s, after 416ns
+00:39:56.908 live live-2: remove took 11.5s
+00:39:59.797 t=18m0s heap=44246KiB inuse=66408KiB rss=147MiB gor=448 fds=205 gate=90/12 counted=3373 gone=1029 issued=12397 stale=5799 fin=1 rows=48 users=2344 uniq=8389 cpu=224s short=8ms moved=2911MiB child(rss=61MiB fds=455 cpu=275s)
+00:40:09.199 live live-0 remove slow: plan+prep 1.795172ms, delta 16.55058ms, verify 11.471781013s, after 414ns
+00:40:09.199 live live-0: remove took 11.49s
+00:40:10.312 live live-1: limit took 18ms
+00:40:11.119 live live-3: readd took 18ms
+00:40:11.740 live live-4: limit took 57ms
+00:40:13.835 live live-2: readd took 17ms
+00:40:17.528 live live-0: readd took 32ms
+00:40:29.798 t=18m30s heap=51593KiB inuse=75832KiB rss=152MiB gor=936 fds=450 gate=225/30 counted=3364 gone=1025 issued=13352 stale=6771 fin=1 rows=24 users=2339 uniq=8529 cpu=230s short=5ms moved=2991MiB child(rss=72MiB fds=1043 cpu=282s)
+00:40:36.232 live live-3 drop slow: plan+prep 3.315238ms, delta 18.299227ms, verify 5.666444471s, after 392ns
+00:40:36.232 live live-3: drop took 5.688s
+00:40:42.897 live live-4 rotate slow: plan+prep 373.49µs, delta 22.110285ms, verify 5.161826565s, after 2.261235ms
+00:40:42.897 live live-4: rotate took 5.187s
+00:40:48.850 live live-1: rotate took 4.878s
+00:40:51.362 live live-0: rotate took 1.984s
+00:40:55.699 live live-3: restore took 1.016s
+00:40:57.405 live live-2: limit took 21ms
+00:40:59.754 t=19m0s heap=51469KiB inuse=74328KiB rss=154MiB gor=942 fds=453 gate=222/29 counted=3336 gone=974 issued=14272 stale=7588 fin=1 rows=70 users=2362 uniq=8669 cpu=237s short=8ms moved=3095MiB child(rss=71MiB fds=1011 cpu=291s)
+00:41:04.350 live live-4 rotate slow: plan+prep 217.902µs, delta 25.06452ms, verify 5.466100215s, after 633.312µs
+00:41:04.350 live live-4: rotate took 5.492s
+00:41:07.811 live live-0: limit took 14ms
+00:41:29.772 t=19m30s heap=51702KiB inuse=74672KiB rss=156MiB gor=913 fds=435 gate=213/28 counted=3362 gone=984 issued=15269 stale=8511 fin=1 rows=38 users=2378 uniq=8819 cpu=245s short=5ms moved=3207MiB child(rss=70MiB fds=964 cpu=300s)
+00:41:30.074 live live-4 rotate slow: plan+prep 2.579213ms, delta 18.669656ms, verify 12.46360637s, after 1.022181ms
+00:41:30.074 live live-4: rotate took 12.486s
+00:41:31.546 live live-1: limit took 16ms
+00:41:42.844 live live-3: rotate took 4.8s
+00:41:47.000 live live-0: rotate took 2.778s
+00:41:51.535 live live-2: rotate took 3.482s
+00:41:52.817 driver: killing the stream
+00:41:59.753 t=20m0s heap=52476KiB inuse=75152KiB rss=155MiB gor=955 fds=456 gate=228/29 counted=3417 gone=1055 issued=16138 stale=9439 fin=1 rows=60 users=2362 uniq=8959 cpu=252s short=5ms moved=3317MiB child(rss=72MiB fds=1015 cpu=310s)
+00:42:10.439 live live-4 drop slow: plan+prep 267.723µs, delta 41.620419ms, verify 12.465723031s, after 356ns
+00:42:10.439 live live-4: drop took 12.508s
+00:42:22.678 live live-0 remove slow: plan+prep 275.463µs, delta 14.249189ms, verify 11.461554746s, after 398ns
+00:42:22.678 live live-0: remove took 11.476s
+00:42:23.577 driver: snapshot (xray rebuild)
+2026/10/27 00:42:23.615303 [Warning] core: Xray 26.10.21 started
+00:42:28.661 live live-1: limit took 21ms
+00:42:29.755 t=20m30s heap=47475KiB inuse=69400KiB rss=138MiB gor=646 fds=327 gate=141/19 counted=2399 gone=45 issued=6878 stale=187 fin=1 rows=46 users=2354 uniq=9089 cpu=259s short=8ms moved=3408MiB child(rss=68MiB fds=687 cpu=317s)
+00:42:41.609 live live-2 remove slow: plan+prep 6.136352ms, delta 19.763032ms, verify 11.477880301s, after 354ns
+00:42:41.609 live live-2: remove took 11.504s
+00:42:54.451 live live-3 remove slow: plan+prep 258.2µs, delta 25.281337ms, verify 11.469411588s, after 442ns
+00:42:54.451 live live-3: remove took 11.495s
+00:42:55.846 live live-0: readd took 16ms
+00:42:58.282 live live-4: restore took 1.016s
+00:42:59.253 live live-1: limit took 17ms
+00:42:59.744 t=21m0s heap=46792KiB inuse=68560KiB rss=144MiB gor=602 fds=289 gate=135/18 counted=2695 gone=342 issued=8032 stale=1363 fin=2 rows=24 users=2353 uniq=9229 cpu=262s short=10ms moved=3454MiB child(rss=64MiB fds=634 cpu=322s)
+00:43:03.174 live live-2: readd took 16ms
+00:43:03.914 live live-3: readd took 16ms
+00:43:29.759 t=21m30s heap=50678KiB inuse=74048KiB rss=160MiB gor=786 fds=373 gate=181/24 counted=2960 gone=592 issued=9129 stale=2393 fin=2 rows=32 users=2368 uniq=9369 cpu=269s short=9ms moved=3552MiB child(rss=68MiB fds=834 cpu=330s)
+00:43:32.109 live live-3 remove slow: plan+prep 319.797µs, delta 14.744253ms, verify 11.464712122s, after 273ns
+00:43:32.109 live live-3: remove took 11.48s
+00:43:45.597 live live-1 rotate slow: plan+prep 368.37µs, delta 19.95502ms, verify 12.468872048s, after 1.75361ms
+00:43:45.597 live live-1: rotate took 12.491s
+00:43:46.162 live live-0: limit took 13ms
+00:43:47.299 live live-2: limit took 16ms
+00:43:58.885 live live-4 remove slow: plan+prep 250.19µs, delta 12.99513ms, verify 10.560294291s, after 452ns
+00:43:58.885 live live-4: remove took 10.574s
+00:43:59.748 t=22m0s heap=49787KiB inuse=71984KiB rss=154MiB gor=628 fds=291 gate=136/18 counted=3202 gone=842 issued=10172 stale=3461 fin=1 rows=36 users=2360 uniq=9509 cpu=275s short=6ms moved=3625MiB child(rss=65MiB fds=647 cpu=338s)
+00:44:10.927 live live-1 remove slow: plan+prep 371.928µs, delta 14.55695ms, verify 10.761424197s, after 473ns
+00:44:10.927 live live-1: remove took 10.776s
+00:44:23.306 live live-2 remove slow: plan+prep 370.527µs, delta 14.276834ms, verify 11.466020663s, after 697ns
+00:44:23.306 live live-2: remove took 11.481s
+00:44:29.740 t=22m30s heap=43172KiB inuse=64192KiB rss=149MiB gor=106 fds=47 gate=0/0 counted=3416 gone=1063 issued=11164 stale=4466 fin=1 rows=38 users=2353 uniq=9649 cpu=278s short=2ms moved=3656MiB child(rss=57MiB fds=145 cpu=341s)
+00:44:35.128 live live-0 remove slow: plan+prep 303.496µs, delta 14.251628ms, verify 10.862518082s, after 682ns
+00:44:35.128 live live-0: remove took 10.877s
+00:44:35.979 live live-1: readd took 22ms
+00:44:37.479 live live-2: readd took 18ms
+00:44:38.930 live live-3: readd took 16ms
+00:44:40.058 live live-4: readd took 19ms
+00:44:53.081 driver: killing the stream
+00:44:59.746 t=23m0s heap=51545KiB inuse=75256KiB rss=158MiB gor=628 fds=294 gate=138/18 counted=3532 gone=1159 issued=12315 stale=5516 fin=1 rows=30 users=2373 uniq=9819 cpu=283s short=13ms moved=3716MiB child(rss=66MiB fds=659 cpu=348s)
+00:45:10.039 live live-2 remove slow: plan+prep 420.565µs, delta 13.486617ms, verify 11.466067505s, after 555ns
+00:45:10.039 live live-2: remove took 11.48s
+00:45:11.110 live live-0: readd took 22ms
+00:45:24.333 live live-3 rotate slow: plan+prep 304.545µs, delta 16.318056ms, verify 12.466711244s, after 1.298205ms
+00:45:24.333 live live-3: rotate took 12.485s
+00:45:27.278 live live-1: drop took 2.414s
+00:45:28.622 live live-2: readd took 19ms
+00:45:29.786 t=23m30s heap=56464KiB inuse=79520KiB rss=158MiB gor=921 fds=430 gate=211/29 counted=3457 gone=1097 issued=13306 stale=6513 fin=1 rows=46 users=2360 uniq=9959 cpu=289s short=9ms moved=3793MiB child(rss=69MiB fds=971 cpu=355s)
+00:45:40.372 live live-4 remove slow: plan+prep 318.443µs, delta 23.110018ms, verify 10.559293511s, after 483ns
+00:45:40.373 live live-4: remove took 10.583s
+00:45:53.338 live live-0 remove slow: plan+prep 379.559µs, delta 19.137989ms, verify 11.467550747s, after 479ns
+00:45:53.338 live live-0: remove took 11.487s
+00:45:58.065 live live-3: drop took 3.476s
+00:45:59.745 t=24m0s heap=52913KiB inuse=74368KiB rss=158MiB gor=617 fds=277 gate=127/16 counted=3446 gone=1074 issued=14195 stale=7373 fin=1 rows=54 users=2372 uniq=10089 cpu=295s short=6ms moved=3866MiB child(rss=63MiB fds=590 cpu=362s)
+00:45:59.900 live live-1: restore took 1.018s
+00:46:00.926 live live-4: readd took 17ms
+00:46:09.643 live live-2 rotate slow: plan+prep 402.117µs, delta 16.155406ms, verify 6.473782512s, after 2.302138ms
+00:46:09.643 live live-2: rotate took 6.493s
+00:46:18.871 live live-1: drop took 3.498s
+00:46:20.376 live live-0: readd took 17ms
+00:46:24.420 live live-4: limit took 15ms
+00:46:29.764 t=24m30s heap=57422KiB inuse=80976KiB rss=164MiB gor=900 fds=419 gate=206/28 counted=3467 gone=1097 issued=15147 stale=8289 fin=1 rows=44 users=2370 uniq=10239 cpu=302s short=7ms moved=3952MiB child(rss=71MiB fds=940 cpu=370s)
+00:46:32.288 live live-1: restore took 1.017s
+00:46:40.821 live live-2 rotate slow: plan+prep 364.076µs, delta 15.478038ms, verify 6.464820951s, after 2.123181ms
+00:46:40.821 live live-2: rotate took 6.483s
+00:46:41.819 live live-3: limit took 14ms
+00:46:51.386 live live-4 rotate slow: plan+prep 303.479µs, delta 14.748265ms, verify 5.971442998s, after 1.742752ms
+00:46:51.386 live live-4: rotate took 5.988s
+00:46:59.749 t=25m0s heap=57150KiB inuse=81392KiB rss=167MiB gor=780 fds=363 gate=175/23 counted=3462 gone=1109 issued=16035 stale=9294 fin=1 rows=57 users=2353 uniq=10379 cpu=310s short=5ms moved=4056MiB child(rss=70MiB fds=908 cpu=380s)
+00:47:10.954 live live-0 remove slow: plan+prep 510.83µs, delta 23.363518ms, verify 11.463232888s, after 343ns
+00:47:10.954 live live-0: remove took 11.487s
+00:47:11.667 live live-2: limit took 14ms
+00:47:12.878 live live-4: limit took 15ms
+00:47:21.857 live live-1 drop slow: plan+prep 336.122µs, delta 16.838853ms, verify 5.464100084s, after 807ns
+00:47:21.857 live live-1: drop took 5.481s
+00:47:22.472 live live-3: limit took 15ms
+00:47:23.683 driver: snapshot (xray rebuild)
+2026/10/27 00:47:23.701876 [Warning] core: Xray 26.10.21 started
+00:47:29.746 t=25m30s heap=54406KiB inuse=77760KiB rss=159MiB gor=648 fds=311 gate=131/18 counted=2421 gone=73 issued=7016 stale=265 fin=1 rows=43 users=2348 uniq=10539 cpu=317s short=6ms moved=4135MiB child(rss=68MiB fds=654 cpu=388s)
+00:47:44.461 live live-2 rotate slow: plan+prep 430.255µs, delta 13.620033ms, verify 6.473504051s, after 1.59245ms
+00:47:44.461 live live-2: rotate took 6.489s
+00:47:45.309 live live-0: readd took 20ms
+00:47:46.561 live live-4: limit took 14ms
+00:47:53.562 driver: killing the stream
+00:47:59.750 t=26m0s heap=58120KiB inuse=81824KiB rss=166MiB gor=793 fds=368 gate=175/24 counted=2717 gone=376 issued=8217 stale=1461 fin=2 rows=38 users=2341 uniq=10699 cpu=323s short=9ms moved=4211MiB child(rss=72MiB fds=840 cpu=396s)
+00:48:04.622 VIOLATION: live-1 rotate: live connection live-1#1|e1 was NOT cut
+00:48:05.625 live live-1 rotate slow: plan+prep 739.322µs, delta 13.700046ms, verify 7.490611104s, after 1.687584ms
+00:48:05.625 live live-1: rotate took 7.507s
+00:48:09.082 live live-3: rotate took 2.681s
+00:48:10.188 live live-2: limit took 14ms
+00:48:26.425 live live-4: rotate took 3.491s
+00:48:29.750 t=26m30s heap=60481KiB inuse=85368KiB rss=169MiB gor=772 fds=350 gate=162/25 counted=2970 gone=645 issued=9271 stale=2571 fin=2 rows=42 users=2325 uniq=10840 cpu=331s short=13ms moved=4306MiB child(rss=73MiB fds=782 cpu=405s)
+00:48:32.252 live live-0: drop took 4.881s
+00:48:33.643 live live-1: limit took 13ms
+00:48:34.647 live live-2: limit took 15ms
+00:48:47.363 live live-0: restore took 1.02s
+00:48:48.738 live live-3: limit took 12ms
+00:48:58.263 live live-2: drop took 2.579s
+00:48:59.748 t=27m0s heap=60566KiB inuse=85960KiB rss=175MiB gor=865 fds=388 gate=181/25 counted=3226 gone=887 issued=10394 stale=3720 fin=1 rows=34 users=2339 uniq=10990 cpu=338s short=16ms moved=4398MiB child(rss=70MiB fds=849 cpu=413s)
+00:49:08.503 live live-4: rotate took 3.483s
+00:49:10.503 live live-3: restore took 1.016s
+00:49:20.431 live live-1 rotate slow: plan+prep 656.682µs, delta 26.522153ms, verify 5.66811298s, after 1.595468ms
+00:49:20.431 live live-1: rotate took 5.697s
+00:49:22.701 live live-2: limit took 14ms
+00:49:29.240 live live-0: limit took 15ms
+00:49:29.753 t=27m30s heap=62291KiB inuse=86352KiB rss=172MiB gor=872 fds=403 gate=192/26 counted=3488 gone=1151 issued=11605 stale=4926 fin=1 rows=41 users=2337 uniq=11160 cpu=346s short=12ms moved=4490MiB child(rss=70MiB fds=873 cpu=422s)
+00:49:45.958 live live-3 drop slow: plan+prep 337.689µs, delta 14.144355ms, verify 5.663787235s, after 363ns
+00:49:45.958 live live-3: drop took 5.678s
+00:49:50.249 live live-4: drop took 3.484s
+00:49:58.600 live live-2 rotate slow: plan+prep 477.373µs, delta 16.529759ms, verify 5.767263752s, after 1.149376ms
+00:49:58.600 live live-2: rotate took 5.785s
+00:49:59.749 t=28m0s heap=60488KiB inuse=84072KiB rss=176MiB gor=754 fds=342 gate=161/21 counted=3481 gone=1153 issued=12579 stale=5912 fin=1 rows=56 users=2328 uniq=11300 cpu=353s short=10ms moved=4578MiB child(rss=68MiB fds=763 cpu=430s)
+00:50:02.853 live live-0: drop took 3.483s
+00:50:03.726 live live-1: limit took 16ms
+00:50:08.098 live live-3: drop took 3.08s
+00:50:26.045 live live-4: limit took 15ms
+00:50:29.760 t=28m30s heap=61414KiB inuse=86776KiB rss=169MiB gor=757 fds=344 gate=162/20 counted=3474 gone=1145 issued=13557 stale=6959 fin=1 rows=33 users=2329 uniq=11440 cpu=359s short=8ms moved=4656MiB child(rss=67MiB fds=748 cpu=438s)
+00:50:35.779 live live-0: restore took 1.037s
+00:50:39.004 live live-2: drop took 2.584s
+00:50:43.230 live live-1: rotate took 3.185s
+00:50:46.745 live live-3: drop took 2.381s
+00:50:50.352 live live-4: limit took 14ms
+00:50:54.109 driver: killing the stream
+00:50:59.752 t=29m0s heap=60885KiB inuse=86560KiB rss=170MiB gor=721 fds=329 gate=156/19 counted=3455 gone=1115 issued=14512 stale=7849 fin=1 rows=66 users=2340 uniq=11580 cpu=365s short=3ms moved=4733MiB child(rss=64MiB fds=715 cpu=446s)
+00:51:01.079 live live-0: rotate took 1.985s
+00:51:03.423 live live-1: restore took 1.016s
+00:51:04.835 live live-2: limit took 15ms
+00:51:17.658 live live-3: restore took 1.019s
+00:51:27.855 live live-4 rotate slow: plan+prep 316.217µs, delta 16.260002ms, verify 6.471405694s, after 1.132254ms
+00:51:27.855 live live-4: rotate took 6.489s
+00:51:29.768 t=29m30s heap=65025KiB inuse=88424KiB rss=174MiB gor=847 fds=393 gate=191/24 counted=3431 gone=1083 issued=15512 stale=8850 fin=1 rows=52 users=2348 uniq=11730 cpu=373s short=6ms moved=4819MiB child(rss=68MiB fds=866 cpu=455s)
+00:51:31.941 live live-0: rotate took 3.514s
+00:51:37.128 live live-1: remove took 4.589s
+00:51:38.931 live live-2: restore took 1.019s
+00:51:40.890 live live-4: restore took 1.015s
+00:51:51.390 live live-1: readd took 18ms
+00:51:59.749 t=30m0s heap=63661KiB inuse=89504KiB rss=177MiB gor=933 fds=441 gate=212/29 counted=3456 gone=1094 issued=16592 stale=9800 fin=1 rows=43 users=2362 uniq=11900 cpu=380s short=13ms moved=4908MiB child(rss=69MiB fds=968 cpu=464s)
+00:52:05.099 live live-0 rotate slow: plan+prep 232.875µs, delta 14.423195ms, verify 6.476682337s, after 778.088µs
+00:52:05.099 live live-0: rotate took 6.492s
+00:52:10.612 live live-3: remove took 4.582s
+00:52:17.567 live live-1 rotate slow: plan+prep 301.821µs, delta 14.168107ms, verify 5.967071569s, after 980.561µs
+00:52:17.567 live live-1: rotate took 5.983s
+00:52:24.807 live live-2 rotate slow: plan+prep 269.379µs, delta 16.831554ms, verify 6.475578638s, after 1.2152ms
+00:52:24.808 live live-2: rotate took 6.494s
+00:52:25.740 driver: snapshot (xray rebuild)
+2026/10/27 00:52:25.763562 [Warning] core: Xray 26.10.21 started
+00:52:29.755 t=30m30s heap=60860KiB inuse=86824KiB rss=178MiB gor=710 fds=354 gate=148/20 counted=2375 gone=25 issued=6833 stale=107 fin=1 rows=65 users=2350 uniq=12040 cpu=388s short=7ms moved=4997MiB child(rss=65MiB fds=722 cpu=473s)
+00:52:37.230 live live-0 rotate slow: plan+prep 353.596µs, delta 16.973037ms, verify 6.467791446s, after 786.082µs
+00:52:37.230 live live-0: rotate took 6.486s
+00:52:38.292 live live-3: readd took 20ms
+00:52:50.073 live live-4 remove slow: plan+prep 279.17µs, delta 14.862059ms, verify 10.661278022s, after 520ns
+00:52:50.073 live live-4: remove took 10.676s
+00:52:59.754 t=31m0s heap=62138KiB inuse=88552KiB rss=175MiB gor=666 fds=317 gate=142/18 counted=2724 gone=373 issued=8229 stale=1454 fin=2 rows=34 users=2351 uniq=12210 cpu=394s short=2ms moved=5070MiB child(rss=65MiB fds=669 cpu=480s)
+00:53:02.897 live live-0 remove slow: plan+prep 380.154µs, delta 38.966896ms, verify 11.462363267s, after 477ns
+00:53:02.897 live live-0: remove took 11.502s
+00:53:14.912 live live-1 remove slow: plan+prep 371.47µs, delta 20.349692ms, verify 11.466752962s, after 564ns
+00:53:14.913 live live-1: remove took 11.488s
+00:53:16.129 live live-0: readd took 18ms
+00:53:28.869 live live-2 remove slow: plan+prep 253.425µs, delta 20.733832ms, verify 11.4660776s, after 294ns
+00:53:28.869 live live-2: remove took 11.487s
+00:53:29.749 t=31m30s heap=57944KiB inuse=84000KiB rss=172MiB gor=302 fds=135 gate=43/6 counted=2992 gone=660 issued=9364 stale=2675 fin=2 rows=40 users=2332 uniq=12360 cpu=398s short=3ms moved=5117MiB child(rss=60MiB fds=349 cpu=486s)
+00:53:40.771 live live-3 remove slow: plan+prep 361.026µs, delta 13.917244ms, verify 11.266961304s, after 476ns
+00:53:40.771 live live-3: remove took 11.281s
+00:53:54.296 live live-0 rotate slow: plan+prep 422.514µs, delta 35.74264ms, verify 12.46842194s, after 2.26962ms
+00:53:54.296 live live-0: rotate took 12.507s
+00:53:55.707 driver: killing the stream
+00:53:59.749 t=32m0s heap=57749KiB inuse=82416KiB rss=172MiB gor=299 fds=142 gate=47/6 counted=3205 gone=912 issued=10296 stale=3772 fin=1 rows=28 users=2293 uniq=12490 cpu=401s short=2ms moved=5135MiB child(rss=56MiB fds=246 cpu=489s)
+00:54:00.361 live live-0: limit took 15ms
+00:54:01.237 live live-1: readd took 19ms
+00:54:02.499 live live-2: readd took 20ms
+00:54:03.930 live live-4: readd took 18ms
+00:54:11.167 live live-3: readd took 16ms
+00:54:29.761 t=32m30s heap=67971KiB inuse=97752KiB rss=188MiB gor=999 fds=472 gate=230/30 counted=3429 gone=1102 issued=11328 stale=4680 fin=1 rows=30 users=2327 uniq=12630 cpu=408s short=10ms moved=5227MiB child(rss=72MiB fds=1034 cpu=498s)
+00:54:31.703 live live-3: limit took 15ms
+00:54:34.160 live live-0: limit took 19ms
+00:54:55.113 live live-1 remove slow: plan+prep 376.83µs, delta 14.622992ms, verify 10.7590855s, after 470ns
+00:54:55.113 live live-1: remove took 10.774s
+00:54:59.756 t=33m0s heap=65902KiB inuse=91920KiB rss=188MiB gor=705 fds=340 gate=156/22 counted=3418 gone=1070 issued=12412 stale=5738 fin=1 rows=48 users=2348 uniq=12780 cpu=417s short=17ms moved=5326MiB child(rss=70MiB fds=734 cpu=508s)
+00:55:02.949 live live-2 rotate slow: plan+prep 314.34µs, delta 13.82321ms, verify 6.472066698s, after 1.532575ms
+00:55:02.950 live live-2: rotate took 6.488s
+00:55:04.036 live live-4: limit took 19ms
+00:55:14.729 live live-0: limit took 16ms
+00:55:26.739 live live-3 remove slow: plan+prep 267.337µs, delta 39.583522ms, verify 11.4673969s, after 396ns
+00:55:26.739 live live-3: remove took 11.507s
+00:55:27.925 live live-1: readd took 23ms
+00:55:29.754 t=33m30s heap=66643KiB inuse=92992KiB rss=181MiB gor=821 fds=381 gate=176/23 counted=3408 gone=1066 issued=13305 stale=6649 fin=1 rows=42 users=2342 uniq=12910 cpu=423s short=10ms moved=5406MiB child(rss=67MiB fds=798 cpu=516s)
+00:55:31.979 live live-4: drop took 3.487s
+00:55:44.716 live live-2 remove slow: plan+prep 220.143µs, delta 15.020429ms, verify 11.465968373s, after 560ns
+00:55:44.716 live live-2: remove took 11.481s
+00:55:56.817 live live-0 remove slow: plan+prep 262.929µs, delta 19.426808ms, verify 10.659384027s, after 341ns
+00:55:56.817 live live-0: remove took 10.679s
+00:55:58.188 live live-1: limit took 15ms
+00:55:59.364 live live-2: readd took 21ms
+00:55:59.761 t=34m0s heap=63896KiB inuse=88672KiB rss=179MiB gor=528 fds=241 gate=100/17 counted=3396 gone=1011 issued=14277 stale=7489 fin=1 rows=38 users=2385 uniq=13050 cpu=428s short=4ms moved=5464MiB child(rss=62MiB fds=491 cpu=522s)
+00:56:00.309 live live-3: readd took 17ms
+00:56:11.160 live live-4: restore took 1.017s
+00:56:29.756 t=34m30s heap=67016KiB inuse=94560KiB rss=185MiB gor=711 fds=348 gate=161/21 counted=3408 gone=1021 issued=15223 stale=8444 fin=1 rows=34 users=2387 uniq=13190 cpu=435s short=7ms moved=5543MiB child(rss=67MiB fds=742 cpu=530s)
+00:56:30.018 live live-1 rotate slow: plan+prep 283.549µs, delta 14.749559ms, verify 11.76055867s, after 2.001142ms
+00:56:30.018 live live-1: rotate took 11.778s
+00:56:31.053 live live-0: readd took 20ms
+00:56:38.318 VIOLATION: live-2 drop: live connection live-2#1|e1 was NOT cut
+00:56:39.319 live live-2 drop slow: plan+prep 419.426µs, delta 19.588662ms, verify 7.487117262s, after 832ns
+00:56:39.319 live live-2: drop took 7.507s
+00:56:51.343 live live-1 remove slow: plan+prep 318.779µs, delta 15.288534ms, verify 10.659956025s, after 434ns
+00:56:51.343 live live-1: remove took 10.676s
+00:56:52.810 live live-2: limit took 14ms
+00:56:57.007 live live-3: rotate took 3.511s
+00:56:57.808 driver: killing the stream
+00:56:59.766 t=35m0s heap=68457KiB inuse=95304KiB rss=191MiB gor=788 fds=366 gate=168/23 counted=3421 gone=1037 issued=16323 stale=9515 fin=1 rows=66 users=2384 uniq=13360 cpu=442s short=7ms moved=5636MiB child(rss=68MiB fds=783 cpu=539s)
+00:57:02.877 live live-1: readd took 18ms
+00:57:09.032 live live-4 rotate slow: plan+prep 9.19258ms, delta 31.356944ms, verify 5.159588086s, after 568.988µs
+00:57:09.032 live live-4: rotate took 5.201s
+00:57:15.100 live live-0: limit took 26ms
+00:57:25.880 driver: snapshot (xray rebuild)
+2026/10/27 00:57:25.902866 [Warning] core: Xray 26.10.21 started
+00:57:29.774 t=35m30s heap=67959KiB inuse=98776KiB rss=191MiB gor=769 fds=381 gate=159/24 counted=2428 gone=45 issued=6950 stale=181 fin=1 rows=48 users=2383 uniq=13510 cpu=451s short=6ms moved=5740MiB child(rss=68MiB fds=788 cpu=549s)
+00:57:42.253 live live-3 remove slow: plan+prep 243.393µs, delta 17.604672ms, verify 11.467355393s, after 586ns
+00:57:42.253 live live-3: remove took 11.485s
+00:57:53.428 live live-1 rotate slow: plan+prep 313.88µs, delta 12.87876ms, verify 10.455857351s, after 679.523µs
+00:57:53.428 live live-1: rotate took 10.47s
+00:57:59.752 t=36m0s heap=66030KiB inuse=96576KiB rss=187MiB gor=644 fds=305 gate=131/20 counted=2726 gone=354 issued=8148 stale=1413 fin=2 rows=32 users=2372 uniq=13660 cpu=456s short=5ms moved=5810MiB child(rss=70MiB fds=648 cpu=556s)
+00:58:00.370 live live-2 rotate slow: plan+prep 365.222µs, delta 15.663696ms, verify 5.569754002s, after 1.63922ms
+00:58:00.370 live live-2: rotate took 5.587s
+00:58:05.272 live live-0: rotate took 3.478s
+00:58:12.488 live live-4 rotate slow: plan+prep 319.929µs, delta 14.030656ms, verify 5.868920214s, after 1.730529ms
+00:58:12.488 live live-4: rotate took 5.885s
+00:58:13.498 live live-3: readd took 17ms
+00:58:20.028 live live-2: restore took 1.023s
+00:58:29.759 t=36m30s heap=72659KiB inuse=103048KiB rss=195MiB gor=944 fds=442 gate=206/27 counted=2939 gone=583 issued=9070 stale=2407 fin=1 rows=45 users=2356 uniq=13780 cpu=463s short=7ms moved=5900MiB child(rss=73MiB fds=927 cpu=564s)
+00:58:34.796 live live-4 rotate slow: plan+prep 291.226µs, delta 14.14525ms, verify 12.274505456s, after 1.706928ms
+00:58:34.796 live live-4: rotate took 12.291s
+00:58:40.960 live live-1 rotate slow: plan+prep 355.79µs, delta 16.898568ms, verify 5.561372997s, after 1.65409ms
+00:58:40.960 live live-1: rotate took 5.58s
+00:58:53.390 live live-0 rotate slow: plan+prep 417.935µs, delta 15.86572ms, verify 11.562977884s, after 1.181887ms
+00:58:53.390 live live-0: rotate took 11.58s
+00:58:59.756 t=37m0s heap=74869KiB inuse=106864KiB rss=198MiB gor=970 fds=456 gate=210/28 counted=3189 gone=858 issued=10148 stale=3580 fin=1 rows=54 users=2331 uniq=13930 cpu=471s short=6ms moved=6005MiB child(rss=71MiB fds=964 cpu=574s)
+00:59:00.075 live live-2 rotate slow: plan+prep 667.533µs, delta 17.775736ms, verify 5.260929284s, after 1.162498ms
+00:59:00.075 live live-2: rotate took 5.281s
+00:59:06.133 live live-3: rotate took 4.576s
+00:59:06.754 live live-4: limit took 15ms
+00:59:25.666 VIOLATION: live-1 remove: live connection live-1#1|e1 was NOT cut
+00:59:25.666 live live-1 remove slow: plan+prep 183.359µs, delta 15.906292ms, verify 11.46368027s, after 482ns
+00:59:25.666 live live-1: remove took 11.48s
+00:59:29.751 t=37m30s heap=71646KiB inuse=101480KiB rss=201MiB gor=795 fds=372 gate=171/22 counted=3402 gone=1087 issued=11187 stale=4666 fin=1 rows=52 users=2315 uniq=14080 cpu=478s short=4ms moved=6109MiB child(rss=70MiB fds=787 cpu=583s)
+00:59:31.999 live live-0 rotate slow: plan+prep 340.38µs, delta 14.001327ms, verify 5.471062379s, after 1.092938ms
+00:59:31.999 live live-0: rotate took 5.487s
+00:59:45.788 live live-2 drop slow: plan+prep 339.65µs, delta 14.210111ms, verify 12.466480338s, after 591ns
+00:59:45.788 live live-2: drop took 12.481s
+00:59:47.148 live live-3: limit took 17ms
+00:59:59.320 live live-4 remove slow: plan+prep 210.175µs, delta 14.465781ms, verify 11.463266387s, after 536ns
+00:59:59.320 live live-4: remove took 11.478s
+00:59:59.754 t=38m0s heap=69378KiB inuse=97816KiB rss=197MiB gor=610 fds=293 gate=120/16 counted=3395 gone=1083 issued=12228 stale=5625 fin=1 rows=38 users=2312 uniq=14230 cpu=485s short=2ms moved=6186MiB child(rss=63MiB fds=566 cpu=591s)
+01:00:00.697 driver: killing the stream
+01:00:06.105 live live-0: limit took 27ms
+01:00:06.924 live live-1: readd took 18ms
+01:00:08.451 live live-2: restore took 1.016s
+01:00:11.628 live live-3: drop took 2.085s
+01:00:17.112 live live-4: readd took 15ms
+01:00:29.762 t=38m30s heap=75478KiB inuse=106672KiB rss=199MiB gor=969 fds=450 gate=211/29 counted=3468 gone=1149 issued=13287 stale=6688 fin=1 rows=36 users=2319 uniq=14390 cpu=492s short=6ms moved=6272MiB child(rss=70MiB fds=958 cpu=599s)
+01:00:31.578 live live-0: limit took 13ms
+01:00:35.837 live live-3: limit took 14ms
+01:00:41.334 live live-1: drop took 4.978s
+01:00:49.140 live live-4 drop slow: plan+prep 473.243µs, delta 23.861925ms, verify 6.472125352s, after 461ns
+01:00:49.140 live live-4: drop took 6.496s
+01:00:59.756 t=39m0s heap=73233KiB inuse=102720KiB rss=203MiB gor=754 fds=363 gate=163/23 counted=3456 gone=1125 issued=14299 stale=7655 fin=1 rows=54 users=2331 uniq=14540 cpu=500s short=11ms moved=6368MiB child(rss=67MiB fds=764 cpu=608s)
+01:01:03.449 live live-2 rotate slow: plan+prep 380.328µs, delta 19.918171ms, verify 12.46367712s, after 2.080496ms
+01:01:03.449 live live-2: rotate took 12.486s
+01:01:09.903 live live-3: rotate took 4.977s
+01:01:14.688 live live-0: rotate took 3.487s
+01:01:27.294 live live-1 drop slow: plan+prep 364.967µs, delta 14.135163ms, verify 11.458063861s, after 370ns
+01:01:27.294 live live-1: drop took 11.473s
+01:01:29.765 t=39m30s heap=73345KiB inuse=102392KiB rss=200MiB gor=662 fds=305 gate=134/18 counted=3462 gone=1155 issued=15253 stale=8697 fin=1 rows=63 users=2307 uniq=14690 cpu=507s short=7ms moved=6457MiB child(rss=65MiB fds=639 cpu=617s)
+01:01:39.996 live live-2 remove slow: plan+prep 309µs, delta 14.601643ms, verify 11.463489213s, after 340ns
+01:01:39.996 live live-2: remove took 11.478s
+01:01:40.808 live live-1: limit took 14ms
+01:01:42.145 live live-3: limit took 14ms
+01:01:46.858 live live-4: drop took 3.493s
+01:01:47.585 live live-2: readd took 26ms
+01:01:59.759 t=40m0s heap=75131KiB inuse=104344KiB rss=196MiB gor=758 fds=336 gate=155/20 counted=3471 gone=1159 issued=16215 stale=9663 fin=1 rows=44 users=2312 uniq=14840 cpu=513s short=10ms moved=6527MiB child(rss=69MiB fds=716 cpu=624s)
+01:02:02.324 live live-0 rotate slow: plan+prep 395.927µs, delta 21.604402ms, verify 6.47312232s, after 1.366827ms
+01:02:02.324 live live-0: rotate took 6.497s
+01:02:12.626 live live-3: restore took 1.02s
+01:02:19.147 live live-1 rotate slow: plan+prep 384.83µs, delta 15.219237ms, verify 5.167014282s, after 1.605125ms
+01:02:19.147 live live-1: rotate took 5.184s
+01:02:20.881 live live-4: restore took 1.016s
+01:02:25.803 live live-2: limit took 21ms
+01:02:26.488 driver: snapshot (xray rebuild)
+2026/10/27 01:02:26.508785 [Warning] core: Xray 26.10.21 started
+01:02:29.758 t=40m30s heap=73239KiB inuse=106016KiB rss=202MiB gor=755 fds=374 gate=151/21 counted=2331 gone=43 issued=6586 stale=162 fin=1 rows=44 users=2288 uniq=14970 cpu=520s short=7ms moved=6608MiB child(rss=68MiB fds=743 cpu=633s)
+01:02:41.619 live live-3 remove slow: plan+prep 339.228µs, delta 13.261657ms, verify 10.45955623s, after 683ns
+01:02:41.619 live live-3: remove took 10.473s
+01:02:52.473 live live-0 remove slow: plan+prep 307.652µs, delta 14.447403ms, verify 10.156744583s, after 375ns
+01:02:52.473 live live-0: remove took 10.172s
+01:02:54.769 live live-1: restore took 1.017s
+01:02:56.184 live live-3: readd took 18ms
+01:02:57.216 live live-4: limit took 13ms
+01:02:59.765 t=41m0s heap=75946KiB inuse=108200KiB rss=200MiB gor=833 fds=394 gate=178/24 counted=2666 gone=349 issued=7886 stale=1306 fin=2 rows=31 users=2317 uniq=15130 cpu=525s short=6ms moved=6661MiB child(rss=68MiB fds=824 cpu=639s)
+01:03:01.022 driver: killing the stream
+01:03:09.132 live live-2: rotate took 3.481s
+01:03:10.386 live live-0: readd took 21ms
+01:03:18.646 live live-1: rotate took 2.976s
+01:03:29.768 t=41m30s heap=77955KiB inuse=112688KiB rss=208MiB gor=955 fds=458 gate=213/28 counted=2931 gone=643 issued=9014 stale=2486 fin=2 rows=60 users=2288 uniq=15280 cpu=533s short=7ms moved=6764MiB child(rss=70MiB fds=966 cpu=648s)
+01:03:31.995 live live-4 rotate slow: plan+prep 283.82µs, delta 17.514214ms, verify 12.463884275s, after 1.323177ms
+01:03:31.995 live live-4: rotate took 12.483s
+01:03:44.731 live live-3 rotate slow: plan+prep 386.161µs, delta 13.998706ms, verify 11.559260213s, after 1.790872ms
+01:03:44.731 live live-3: rotate took 11.575s
+01:03:46.023 live live-0: limit took 14ms
+01:03:57.860 live live-2 remove slow: plan+prep 351.815µs, delta 14.12544ms, verify 10.862569514s, after 425ns
+01:03:57.860 live live-2: remove took 10.877s
+01:03:59.759 t=42m0s heap=76918KiB inuse=111296KiB rss=209MiB gor=701 fds=332 gate=145/18 counted=3239 gone=893 issued=10335 stale=3625 fin=2 rows=54 users=2346 uniq=15450 cpu=540s short=4ms moved=6859MiB child(rss=67MiB fds=676 cpu=658s)
+01:04:08.963 live live-1 remove slow: plan+prep 291.832µs, delta 15.845202ms, verify 10.557851788s, after 285ns
+01:04:08.963 live live-1: remove took 10.574s
+01:04:09.802 live live-2: readd took 21ms
+01:04:10.744 live live-3: limit took 16ms
+01:04:15.172 live live-4: drop took 3.476s
+01:04:21.727 live live-0 rotate slow: plan+prep 251.854µs, delta 14.591643ms, verify 5.360627949s, after 1.589478ms
+01:04:21.727 live live-0: rotate took 5.377s
+01:04:27.553 live live-1: readd took 18ms
+01:04:29.758 t=42m30s heap=79350KiB inuse=113640KiB rss=209MiB gor=849 fds=394 gate=180/27 counted=3469 gone=1100 issued=11402 stale=4671 fin=1 rows=51 users=2369 uniq=15600 cpu=547s short=9ms moved=6936MiB child(rss=75MiB fds=878 cpu=665s)
+01:04:35.104 live live-2 rotate slow: plan+prep 238.267µs, delta 14.822097ms, verify 6.06461444s, after 1.145133ms
+01:04:35.104 live live-2: rotate took 6.081s
+01:04:41.715 live live-3 drop slow: plan+prep 309.771µs, delta 20.129998ms, verify 5.864675647s, after 408ns
+01:04:41.715 live live-3: drop took 5.885s
+01:04:54.718 live live-0 drop slow: plan+prep 272.801µs, delta 19.071819ms, verify 11.861116924s, after 671ns
+01:04:54.718 live live-0: drop took 11.88s
+01:04:55.703 live live-2: limit took 14ms
+01:04:57.304 live live-3: restore took 1.025s
+01:04:59.184 live live-4: restore took 1.015s
+01:04:59.757 t=43m0s heap=81384KiB inuse=114888KiB rss=213MiB gor=947 fds=438 gate=201/28 counted=3515 gone=1182 issued=12454 stale=5836 fin=1 rows=48 users=2333 uniq=15750 cpu=554s short=13ms moved=7032MiB child(rss=75MiB fds=926 cpu=674s)
+01:05:20.302 live live-1 rotate slow: plan+prep 269.695µs, delta 14.007752ms, verify 12.462195133s, after 1.446706ms
+01:05:20.302 live live-1: rotate took 12.478s
+01:05:27.068 live live-0 drop slow: plan+prep 294.7µs, delta 12.366642ms, verify 5.464616103s, after 428ns
+01:05:27.068 live live-0: drop took 5.477s
+01:05:27.676 live live-2: limit took 13ms
+01:05:29.764 t=43m30s heap=81619KiB inuse=114272KiB rss=212MiB gor=891 fds=409 gate=179/24 counted=3528 gone=1190 issued=13456 stale=6827 fin=1 rows=54 users=2338 uniq=15900 cpu=562s short=15ms moved=7128MiB child(rss=70MiB fds=842 cpu=683s)
+01:05:40.727 live live-3 rotate slow: plan+prep 339.741µs, delta 18.685676ms, verify 12.462424245s, after 2.111241ms
+01:05:40.728 live live-3: rotate took 12.484s
+01:05:53.376 live live-4 remove slow: plan+prep 243.361µs, delta 16.080612ms, verify 11.464484107s, after 406ns
+01:05:53.376 live live-4: remove took 11.481s
+01:05:54.766 live live-0: limit took 21ms
+01:05:59.505 live live-1: drop took 3.489s
+01:05:59.758 t=44m0s heap=80075KiB inuse=112416KiB rss=214MiB gor=802 fds=368 gate=162/20 counted=3491 gone=1156 issued=14436 stale=7792 fin=1 rows=47 users=2335 uniq=16050 cpu=569s short=19ms moved=7209MiB child(rss=67MiB fds=739 cpu=691s)
+01:06:13.255 live live-3 rotate slow: plan+prep 276.561µs, delta 15.531667ms, verify 12.466198675s, after 1.114812ms
+01:06:13.255 live live-3: rotate took 12.483s
+01:06:14.203 driver: killing the stream
+01:06:24.831 live live-0 rotate slow: plan+prep 289.831µs, delta 28.412047ms, verify 5.572093869s, after 1.203456ms
+01:06:24.831 live live-0: rotate took 5.602s
+01:06:29.763 t=44m30s heap=79226KiB inuse=110592KiB rss=208MiB gor=693 fds=318 gate=128/18 counted=3490 gone=1153 issued=15460 stale=8816 fin=1 rows=64 users=2337 uniq=16210 cpu=574s short=14ms moved=7276MiB child(rss=69MiB fds=621 cpu=698s)
+01:06:31.971 live live-2 rotate slow: plan+prep 238.835µs, delta 14.136333ms, verify 5.76416934s, after 1.492244ms
+01:06:31.972 live live-2: rotate took 5.78s
+01:06:32.832 live live-3: limit took 15ms
+01:06:33.660 live live-4: readd took 16ms
+01:06:35.326 live live-1: restore took 1.019s
+01:06:45.669 live live-0: restore took 1.017s
+01:06:59.198 live live-2: rotate took 4.872s
+01:06:59.759 live live-3: limit took 24ms
+01:06:59.766 t=45m0s heap=85999KiB inuse=118368KiB rss=217MiB gor=965 fds=450 gate=205/30 counted=3456 gone=1115 issued=16449 stale=9795 fin=1 rows=48 users=2341 uniq=16360 cpu=582s short=14ms moved=7374MiB child(rss=72MiB fds=952 cpu=707s)
+01:07:16.753 live live-0 remove slow: plan+prep 236.585µs, delta 16.863034ms, verify 10.963613766s, after 373ns
+01:07:16.753 live live-0: remove took 10.981s
+01:07:24.128 live live-1 rotate slow: plan+prep 272.012µs, delta 14.414635ms, verify 6.065184974s, after 1.126599ms
+01:07:24.128 live live-1: rotate took 6.081s
+01:07:29.759 t=45m30s heap=81427KiB inuse=113584KiB rss=217MiB gor=879 fds=415 gate=186/23 counted=3497 gone=1157 issued=17565 stale=10813 fin=1 rows=58 users=2340 uniq=16530 cpu=589s short=11ms moved=7466MiB child(rss=68MiB fds=834 cpu=716s)
+01:07:37.260 live live-3 rotate slow: plan+prep 353.318µs, delta 15.255611ms, verify 12.464643852s, after 640.285µs
+01:07:37.260 live live-3: rotate took 12.481s
+01:07:37.768 driver: snapshot (xray rebuild)
+2026/10/27 01:07:37.788783 [Warning] core: Xray 26.10.21 started
+01:07:43.187 live live-2: limit took 19ms
+01:07:56.008 live live-4 remove slow: plan+prep 353.714µs, delta 28.598415ms, verify 11.469110122s, after 447ns
+01:07:56.008 live live-4: remove took 11.498s
+01:07:56.641 live live-0: readd took 20ms
+01:07:59.764 t=46m0s heap=79306KiB inuse=110320KiB rss=214MiB gor=719 fds=346 gate=138/19 counted=2581 gone=221 issued=7648 stale=871 fin=2 rows=38 users=2360 uniq=16680 cpu=596s short=9ms moved=7537MiB child(rss=67MiB fds=694 cpu=723s)
+01:08:10.546 live live-1 rotate slow: plan+prep 381.638µs, delta 15.646935ms, verify 12.482191424s, after 2.116812ms
+01:08:10.546 live live-1: rotate took 12.5s
+01:08:11.206 live live-2: limit took 14ms
+01:08:18.206 live live-3 rotate slow: plan+prep 460.516µs, delta 20.558271ms, verify 5.568431392s, after 1.694622ms
+01:08:18.206 live live-3: rotate took 5.591s
+01:08:29.770 t=46m30s heap=80722KiB inuse=113544KiB rss=210MiB gor=691 fds=326 gate=135/18 counted=2877 gone=517 issued=8844 stale=2089 fin=2 rows=36 users=2360 uniq=16830 cpu=602s short=11ms moved=7610MiB child(rss=66MiB fds=643 cpu=731s)
+01:08:31.064 live live-1 remove slow: plan+prep 312.165µs, delta 16.632133ms, verify 11.465086049s, after 570ns
+01:08:31.064 live live-1: remove took 11.482s
+01:08:32.320 live live-4: readd took 15ms
+01:08:39.912 live live-2 rotate slow: plan+prep 356.451µs, delta 15.401795ms, verify 6.265493745s, after 670.676µs
+01:08:39.912 live live-2: rotate took 6.282s
+01:08:53.493 live live-0 rotate slow: plan+prep 233.72µs, delta 16.987953ms, verify 12.463814187s, after 1.66732ms
+01:08:53.493 live live-0: rotate took 12.483s
+01:08:54.116 live live-1: readd took 16ms
+01:08:59.762 t=47m0s heap=82885KiB inuse=117480KiB rss=214MiB gor=878 fds=409 gate=184/24 counted=3137 gone=761 issued=9993 stale=3146 fin=1 rows=49 users=2376 uniq=16980 cpu=609s short=9ms moved=7689MiB child(rss=68MiB fds=852 cpu=739s)
+01:09:05.029 live live-3 remove slow: plan+prep 300.455µs, delta 16.734499ms, verify 10.359281042s, after 470ns
+01:09:05.029 live live-3: remove took 10.376s
+01:09:17.016 live live-2 remove slow: plan+prep 228.843µs, delta 14.533791ms, verify 10.658244334s, after 437ns
+01:09:17.016 live live-2: remove took 10.673s
+01:09:18.151 driver: killing the stream
+01:09:29.753 t=47m30s heap=77106KiB inuse=110016KiB rss=215MiB gor=477 fds=221 gate=78/12 counted=3388 gone=1006 issued=11089 stale=4249 fin=1 rows=56 users=2382 uniq=17130 cpu=615s short=21ms moved=7754MiB child(rss=68MiB fds=408 cpu=746s)
+01:09:33.681 live live-0 remove slow: plan+prep 288.298µs, delta 16.062513ms, verify 10.960975998s, after 508ns
+01:09:33.681 live live-0: remove took 10.977s
+01:09:39.343 live live-1 rotate slow: plan+prep 361.323µs, delta 15.999744ms, verify 5.060000856s, after 898.757µs
+01:09:39.343 live live-1: rotate took 5.077s
+01:09:40.256 live live-3: readd took 17ms
+01:09:53.165 live live-4 rotate slow: plan+prep 418.171µs, delta 15.796652ms, verify 11.559813662s, after 1.671209ms
+01:09:53.165 live live-4: rotate took 11.578s
+01:09:53.948 live live-0: readd took 17ms
+01:09:59.765 t=48m0s heap=83792KiB inuse=117000KiB rss=211MiB gor=810 fds=390 gate=171/23 counted=3444 gone=1075 issued=12125 stale=5332 fin=1 rows=48 users=2369 uniq=17280 cpu=620s short=14ms moved=7809MiB child(rss=69MiB fds=801 cpu=753s)
+01:10:07.892 live live-1 drop slow: plan+prep 328.266µs, delta 14.640179ms, verify 12.465773343s, after 319ns
+01:10:07.892 live live-1: drop took 12.481s
+01:10:08.962 live live-2: readd took 17ms
+01:10:21.305 live live-3 remove slow: plan+prep 267.252µs, delta 17.11591ms, verify 11.463568113s, after 328ns
+01:10:21.305 live live-3: remove took 11.481s
+01:10:22.763 live live-4: limit took 14ms
+01:10:29.763 t=48m30s heap=84554KiB inuse=118248KiB rss=219MiB gor=805 fds=392 gate=176/21 counted=3433 gone=1037 issued=13103 stale=6247 fin=1 rows=46 users=2396 uniq=17420 cpu=628s short=18ms moved=7893MiB child(rss=68MiB fds=792 cpu=761s)
+01:10:37.142 live live-0 drop slow: plan+prep 247.18µs, delta 15.225622ms, verify 12.464718192s, after 538ns
+01:10:37.142 live live-0: drop took 12.48s
+01:10:38.958 live live-1: restore took 1.016s
+01:10:49.650 live live-2 remove slow: plan+prep 373.015µs, delta 15.572884ms, verify 9.65424708s, after 376ns
+01:10:49.650 live live-2: remove took 9.67s
+01:10:51.061 live live-3: readd took 19ms
+01:10:59.776 t=49m0s heap=82760KiB inuse=114864KiB rss=221MiB gor=686 fds=321 gate=137/19 counted=3463 gone=1078 issued=14241 stale=7392 fin=1 rows=44 users=2385 uniq=17590 cpu=634s short=17ms moved=7961MiB child(rss=68MiB fds=642 cpu=769s)
+01:11:04.788 live live-4 rotate slow: plan+prep 332.617µs, delta 15.748845ms, verify 12.465691087s, after 2.771401ms
+01:11:04.788 live live-4: rotate took 12.485s
+01:11:06.461 live live-2: readd took 28ms
+01:11:09.938 live live-0: restore took 1.027s
+01:11:22.671 live live-3 remove slow: plan+prep 467.856µs, delta 26.194429ms, verify 11.466530102s, after 516ns
+01:11:22.671 live live-3: remove took 11.493s
+01:11:26.700 live live-1: rotate took 3.486s
+01:11:29.779 t=49m30s heap=86383KiB inuse=118824KiB rss=223MiB gor=830 fds=384 gate=170/23 counted=3492 gone=1120 issued=15337 stale=8557 fin=1 rows=58 users=2372 uniq=17760 cpu=644s short=18ms moved=8045MiB child(rss=71MiB fds=799 cpu=780s)
+01:11:39.635 live live-2 rotate slow: plan+prep 2.510275ms, delta 23.206587ms, verify 11.559260514s, after 813.514µs
+01:11:39.635 live live-2: rotate took 11.586s
+01:11:42.605 live live-0: drop took 1.678s
+01:11:43.924 live live-3: readd took 24ms
+01:11:51.450 live live-4 rotate slow: plan+prep 489.731µs, delta 22.046788ms, verify 6.468012191s, after 1.509859ms
+01:11:51.450 live live-4: rotate took 6.492s
+01:11:58.267 live live-1 rotate slow: plan+prep 289.073µs, delta 19.273563ms, verify 5.668815238s, after 1.277884ms
+01:11:58.267 live live-1: rotate took 5.69s
+01:11:59.769 t=50m0s heap=86966KiB inuse=119832KiB rss=222MiB gor=944 fds=452 gate=205/29 counted=3492 gone=1106 issued=16258 stale=9448 fin=1 rows=58 users=2386 uniq=17900 cpu=652s short=18ms moved=8137MiB child(rss=70MiB fds=944 cpu=789s)
+01:12:24.004 live live-2 remove slow: plan+prep 305.684µs, delta 16.379719ms, verify 11.462390281s, after 256ns
+01:12:24.004 live live-2: remove took 11.479s
+01:12:24.660 driver: killing the stream
+01:12:29.483 live live-0: limit took 14ms
+01:12:29.763 t=50m30s heap=86582KiB inuse=122240KiB rss=220MiB gor=844 fds=401 gate=176/23 counted=3576 gone=1224 issued=17196 stale=10553 fin=1 rows=40 users=2352 uniq=18050 cpu=660s short=17ms moved=8232MiB child(rss=70MiB fds=829 cpu=799s)
+01:12:34.160 live live-1: rotate took 3.481s
+01:12:35.106 live live-3: limit took 22ms
+01:12:35.714 live live-4: limit took 14ms
+01:12:37.865 driver: snapshot (xray rebuild)
+2026/10/27 01:12:37.887518 [Warning] core: Xray 26.10.21 started
+01:12:42.893 live live-2: readd took 19ms
+01:12:59.763 t=51m0s heap=86297KiB inuse=119544KiB rss=225MiB gor=892 fds=443 gate=185/25 counted=2604 gone=217 issued=7574 stale=834 fin=1 rows=50 users=2387 uniq=18200 cpu=667s short=6ms moved=8314MiB child(rss=73MiB fds=888 cpu=807s)
+01:13:09.039 live live-0 drop slow: plan+prep 350.16µs, delta 21.994678ms, verify 9.234477338s, after 931ns
+01:13:09.039 live live-0: drop took 9.257s
+01:13:10.548 live live-1: limit took 15ms
+01:13:23.793 live live-2 rotate slow: plan+prep 387.04µs, delta 15.067507ms, verify 11.860108155s, after 715.395µs
+01:13:23.793 live live-2: rotate took 11.876s
+01:13:24.743 live live-3: limit took 15ms
+01:13:29.766 t=51m30s heap=87414KiB inuse=122560KiB rss=227MiB gor=826 fds=407 gate=178/25 counted=2862 gone=495 issued=8659 stale=1978 fin=2 rows=36 users=2367 uniq=18340 cpu=675s short=7ms moved=8411MiB child(rss=72MiB fds=837 cpu=817s)
+01:13:36.685 live live-4 drop slow: plan+prep 261.078µs, delta 13.666408ms, verify 10.653826385s, after 469ns
+01:13:36.685 live live-4: drop took 10.668s
+01:13:38.961 live live-0: restore took 1.023s
+01:13:39.782 live live-1: limit took 14ms
+01:13:42.372 live live-4: limit took 16ms
+01:13:55.361 live live-3 remove slow: plan+prep 273.367µs, delta 14.207939ms, verify 11.464035219s, after 564ns
+01:13:55.361 live live-3: remove took 11.479s
+01:13:56.742 live live-2: limit took 15ms
+01:13:59.770 t=52m0s heap=88627KiB inuse=123296KiB rss=228MiB gor=800 fds=379 gate=167/22 counted=3116 gone=808 issued=9753 stale=3228 fin=1 rows=33 users=2308 uniq=18490 cpu=683s short=3ms moved=8504MiB child(rss=68MiB fds=788 cpu=826s)
+01:14:01.711 live live-3: readd took 20ms
+01:14:16.286 live live-0 drop slow: plan+prep 9.936154ms, delta 13.891403ms, verify 6.067884785s, after 540ns
+01:14:16.286 live live-0: drop took 6.092s
+01:14:17.759 live live-1: limit took 19ms
+01:14:29.770 t=52m30s heap=88524KiB inuse=123056KiB rss=231MiB gor=782 fds=382 gate=169/24 counted=3338 gone=1018 issued=10749 stale=4226 fin=1 rows=40 users=2320 uniq=18630 cpu=690s short=7ms moved=8598MiB child(rss=68MiB fds=788 cpu=836s)
+01:14:29.811 live live-4 rotate slow: plan+prep 210.177µs, delta 16.677917ms, verify 6.066775819s, after 1.512225ms
+01:14:29.811 live live-4: rotate took 6.085s
+01:14:48.679 live live-2 rotate slow: plan+prep 316.517µs, delta 13.540858ms, verify 11.558067784s, after 1.763693ms
+01:14:48.679 live live-2: rotate took 11.574s
+01:14:59.762 t=53m0s heap=89957KiB inuse=123264KiB rss=231MiB gor=837 fds=410 gate=186/25 counted=3402 gone=1056 issued=11744 stale=5149 fin=1 rows=40 users=2346 uniq=18770 cpu=698s short=16ms moved=8689MiB child(rss=69MiB fds=861 cpu=845s)
+01:15:02.005 live live-3 drop slow: plan+prep 318.241µs, delta 17.230273ms, verify 12.46572329s, after 390ns
+01:15:02.005 live live-3: drop took 12.483s
+01:15:03.520 live live-0: limit took 16ms
+01:15:11.224 live live-1 rotate slow: plan+prep 334.62µs, delta 19.301519ms, verify 6.472519412s, after 634.274µs
+01:15:11.224 live live-1: rotate took 6.493s
+01:15:17.453 live live-4 rotate slow: plan+prep 323.809µs, delta 20.652301ms, verify 5.062447103s, after 1.540376ms
+01:15:17.453 live live-4: rotate took 5.085s
+01:15:18.236 live live-3: limit took 13ms
+01:15:29.771 t=53m30s heap=88857KiB inuse=121504KiB rss=230MiB gor=678 fds=328 gate=139/19 counted=3445 gone=1101 issued=12815 stale=6152 fin=1 rows=49 users=2344 uniq=18930 cpu=705s short=12ms moved=8772MiB child(rss=65MiB fds=639 cpu=854s)
+01:15:31.944 live live-2 remove slow: plan+prep 280.887µs, delta 14.011459ms, verify 10.658849446s, after 361ns
+01:15:31.944 live live-2: remove took 10.673s
+01:15:32.862 driver: killing the stream
+01:15:39.053 live live-0: restore took 1.017s
+01:15:44.007 live live-4: rotate took 3.487s
+01:15:44.626 live live-1: limit took 14ms
+01:15:59.764 t=54m0s heap=90361KiB inuse=124192KiB rss=228MiB gor=757 fds=366 gate=158/21 counted=3387 gone=1080 issued=13673 stale=7141 fin=1 rows=33 users=2307 uniq=19060 cpu=712s short=11ms moved=8847MiB child(rss=67MiB fds=755 cpu=861s)
+01:16:00.424 live live-3: restore took 1.022s
+01:16:02.776 live live-2: readd took 19ms
+01:16:05.601 live live-0: limit took 52ms
+01:16:15.101 live live-4 rotate slow: plan+prep 282.528µs, delta 15.068118ms, verify 6.069371384s, after 1.356785ms
+01:16:15.101 live live-4: rotate took 6.086s
+01:16:21.303 live live-1: rotate took 4.773s
+01:16:29.774 t=54m30s heap=96870KiB inuse=131768KiB rss=236MiB gor=945 fds=449 gate=203/28 counted=3417 gone=1097 issued=14738 stale=8203 fin=1 rows=46 users=2320 uniq=19220 cpu=720s short=8ms moved=8946MiB child(rss=71MiB fds=933 cpu=871s)
+01:16:46.446 live live-2 remove slow: plan+prep 308.449µs, delta 22.180987ms, verify 11.464649008s, after 410ns
+01:16:46.446 live live-2: remove took 11.487s
+01:16:47.644 live live-0: limit took 15ms
+01:16:59.763 t=55m0s heap=91119KiB inuse=124064KiB rss=237MiB gor=733 fds=349 gate=148/20 counted=3458 gone=1115 issued=15749 stale=9134 fin=1 rows=44 users=2343 uniq=19370 cpu=727s short=10ms moved=9030MiB child(rss=67MiB fds=698 cpu=879s)
+01:17:00.395 live live-3 rotate slow: plan+prep 424.393µs, delta 15.998685ms, verify 11.961092077s, after 1.00616ms
+01:17:00.395 live live-3: rotate took 11.979s
+01:17:13.081 live live-1 remove slow: plan+prep 308.325µs, delta 15.317954ms, verify 11.467740739s, after 367ns
+01:17:13.082 live live-1: remove took 11.483s
+01:17:14.181 live live-2: readd took 20ms
+01:17:26.220 live live-3 remove slow: plan+prep 358.767µs, delta 13.979712ms, verify 10.858501291s, after 325ns
+01:17:26.220 live live-3: remove took 10.873s
+01:17:28.516 live live-4: restore took 1.018s
+01:17:29.766 t=55m30s heap=93221KiB inuse=124648KiB rss=231MiB gor=503 fds=231 gate=81/12 counted=3493 gone=1134 issued=16783 stale=10102 fin=1 rows=50 users=2359 uniq=19530 cpu=733s short=18ms moved=9090MiB child(rss=68MiB fds=527 cpu=886s)
+01:17:41.205 live live-0 remove slow: plan+prep 346.221µs, delta 22.7398ms, verify 11.464336149s, after 699ns
+01:17:41.205 live live-0: remove took 11.487s
+01:17:41.732 driver: snapshot (xray rebuild)
+2026/10/27 01:17:41.766508 [Warning] core: Xray 26.10.21 started
+01:17:46.911 live live-1: readd took 18ms
+01:17:59.774 t=56m0s heap=89832KiB inuse=124928KiB rss=220MiB gor=494 fds=242 gate=81/13 counted=2541 gone=176 issued=7457 stale=685 fin=2 rows=28 users=2365 uniq=19680 cpu=737s short=16ms moved=9130MiB child(rss=68MiB fds=449 cpu=891s)
+01:17:59.968 live live-2 rotate slow: plan+prep 307.413µs, delta 13.347381ms, verify 12.467005527s, after 1.881605ms
+01:17:59.968 live live-2: rotate took 12.483s
+01:18:01.333 live live-3: readd took 17ms
+01:18:12.699 live live-4 rotate slow: plan+prep 392.9µs, delta 15.629363ms, verify 10.456951509s, after 1.027131ms
+01:18:12.699 live live-4: rotate took 10.474s
+01:18:14.201 live live-0: readd took 23ms
+01:18:29.767 t=56m30s heap=98148KiB inuse=132640KiB rss=237MiB gor=984 fds=462 gate=209/29 counted=2871 gone=508 issued=8766 stale=2004 fin=2 rows=33 users=2363 uniq=19850 cpu=744s short=18ms moved=9216MiB child(rss=73MiB fds=960 cpu=899s)
+01:18:32.472 live live-1 rotate slow: plan+prep 312.479µs, delta 12.732352ms, verify 11.461315174s, after 694.508µs
+01:18:32.472 live live-1: rotate took 11.475s
+01:18:33.380 driver: killing the stream
+01:18:49.338 live live-0 remove slow: plan+prep 333.201µs, delta 16.348805ms, verify 11.262565151s, after 470ns
+01:18:49.338 live live-0: remove took 11.279s
+01:18:59.765 t=57m0s heap=96341KiB inuse=131416KiB rss=246MiB gor=796 fds=383 gate=164/22 counted=3098 gone=756 issued=9735 stale=3109 fin=2 rows=54 users=2342 uniq=19980 cpu=751s short=17ms moved=9309MiB child(rss=70MiB fds=787 cpu=907s)
+01:19:03.226 live live-1 rotate slow: plan+prep 291.267µs, delta 12.734074ms, verify 12.463969698s, after 1.131711ms
+01:19:03.226 live live-1: rotate took 12.478s
+01:19:15.999 live live-2 remove slow: plan+prep 344.067µs, delta 16.714574ms, verify 11.464277286s, after 298ns
+01:19:15.999 live live-2: remove took 11.481s
+01:19:27.262 live live-3 remove slow: plan+prep 398.063µs, delta 17.278528ms, verify 9.855089905s, after 289ns
+01:19:27.262 live live-3: remove took 9.873s
+01:19:28.744 live live-0: readd took 16ms
+01:19:29.314 live live-2: readd took 15ms
+01:19:29.768 t=57m30s heap=96069KiB inuse=130336KiB rss=239MiB gor=738 fds=335 gate=137/24 counted=3387 gone=1029 issued=11058 stale=4289 fin=2 rows=36 users=2358 uniq=20160 cpu=757s short=18ms moved=9371MiB child(rss=65MiB fds=673 cpu=914s)
+01:19:34.619 live live-1: rotate took 4.581s
+01:19:46.218 live live-4 rotate slow: plan+prep 273.035µs, delta 15.205204ms, verify 10.554577039s, after 1.480435ms
+01:19:46.218 live live-4: rotate took 10.572s
+01:19:47.351 live live-3: readd took 16ms
+01:19:49.531 live live-2: limit took 14ms
+01:19:59.773 t=58m0s heap=101948KiB inuse=136200KiB rss=250MiB gor=1070 fds=506 gate=233/30 counted=3492 gone=1166 issued=12023 stale=5359 fin=1 rows=44 users=2326 uniq=20300 cpu=764s short=17ms moved=9457MiB child(rss=76MiB fds=1051 cpu=922s)
+01:20:09.675 live live-3: limit took 14ms
+01:20:10.829 live live-4: limit took 16ms
+01:20:11.909 live live-0: limit took 14ms
+01:20:13.040 live live-1: limit took 15ms
+01:20:24.396 live live-2: rotate took 3.18s
+01:20:29.771 t=58m30s heap=102813KiB inuse=141136KiB rss=257MiB gor=1062 fds=501 gate=228/30 counted=3489 gone=1155 issued=13092 stale=6389 fin=1 rows=39 users=2334 uniq=20450 cpu=772s short=12ms moved=9570MiB child(rss=73MiB fds=1031 cpu=932s)
+01:20:45.400 live live-4 rotate slow: plan+prep 237.308µs, delta 14.102007ms, verify 11.662722729s, after 1.432798ms
+01:20:45.400 live live-4: rotate took 11.679s
+01:20:57.192 live live-0 remove slow: plan+prep 282.227µs, delta 18.360276ms, verify 10.957765579s, after 227ns
+01:20:57.192 live live-0: remove took 10.976s
+01:20:59.763 t=59m0s heap=100112KiB inuse=136784KiB rss=253MiB gor=870 fds=406 gate=175/23 counted=3493 gone=1145 issued=14124 stale=7366 fin=1 rows=57 users=2348 uniq=20600 cpu=779s short=5ms moved=9672MiB child(rss=69MiB fds=809 cpu=940s)
+01:21:10.295 live live-1 rotate slow: plan+prep 223.115µs, delta 14.327785ms, verify 12.464730243s, after 638.845µs
+01:21:10.295 live live-1: rotate took 12.48s
+01:21:11.318 live live-0: readd took 15ms
+01:21:12.620 live live-2: limit took 14ms
+01:21:25.168 live live-3 remove slow: plan+prep 195.037µs, delta 14.620122ms, verify 11.462561568s, after 383ns
+01:21:25.168 live live-3: remove took 11.477s
+01:21:29.766 t=59m30s heap=100447KiB inuse=138520KiB rss=251MiB gor=686 fds=317 gate=124/18 counted=3471 gone=1123 issued=15053 stale=8326 fin=1 rows=44 users=2348 uniq=20740 cpu=786s short=12ms moved=9758MiB child(rss=70MiB fds=615 cpu=948s)
+01:21:37.971 live live-1 remove slow: plan+prep 346.229µs, delta 13.965862ms, verify 11.46331774s, after 239ns
+01:21:37.971 live live-1: remove took 11.478s
+01:21:39.329 driver: killing the stream
+01:21:49.485 live live-2 rotate slow: plan+prep 297.211µs, delta 14.105543ms, verify 5.563053541s, after 1.559127ms
+01:21:49.485 live live-2: rotate took 5.579s
+01:21:53.605 live live-0: rotate took 3.179s
+01:21:54.362 live live-1: readd took 18ms
+01:21:55.659 live live-3: readd took 21ms
+01:21:56.765 live live-4: limit took 15ms
+01:21:59.771 t=1h0m0s heap=104838KiB inuse=140648KiB rss=252MiB gor=1065 fds=506 gate=228/30 counted=3415 gone=1071 issued=16020 stale=9289 fin=1 rows=55 users=2344 uniq=20890 cpu=791s short=20ms moved=9825MiB child(rss=74MiB fds=1027 cpu=955s)
+01:22:00.257 load phase over after 1h0m1s
+01:22:00.331 clients: wrote 9.60 GiB, read 9.54 GiB, short conns ok=306821 fail=204, long deaths=1192, dials=310826, instance sets=612 (child rss=75MiB gor=666 fds=997)
+01:22:00.332 clients stopped; waiting for the counters to settle
+01:22:29.760 t=1h0m30s heap=94562KiB inuse=129216KiB rss=202MiB gor=185 fds=93 gate=0/0 counted=3178 gone=834 issued=16020 stale=9289 fin=1 rows=10 users=2344 uniq=20890 cpu=792s short=21ms moved=9827MiB child(rss=75MiB fds=477 cpu=955s)
+01:22:40.378 idle (clients gone, users installed): conns=0 gor=185 fds=93
+01:22:40.379 accounting (client raw bytes vs panel-side accounted bytes, max per session summed):
+01:22:40.379   live-0     wrote=  1696617237 accUp=  1679246075 (1.024% unaccounted)  read=  1681662287 accDown=  1681919879 (+0.015%)
+01:22:40.379   live-0#1   wrote=   347715753 accUp=   344829533 (0.830% unaccounted)  read=   344829533 accDown=   344829533 (+0.000%)
+01:22:40.379   live-1     wrote=  1672484547 accUp=  1660726654 (0.703% unaccounted)  read=  1662734297 accDown=  1662949025 (+0.013%)
+01:22:40.379   live-1#1   wrote=   327948716 accUp=   326155696 (0.547% unaccounted)  read=   326155696 accDown=   326155696 (+0.000%)
+01:22:40.379   live-2     wrote=  1732722877 accUp=  1723855859 (0.512% unaccounted)  read=  1725976982 accDown=  1726202966 (+0.013%)
+01:22:40.379   live-2#1   wrote=   320928769 accUp=   318250930 (0.834% unaccounted)  read=   318250930 accDown=   318250930 (+0.000%)
+01:22:40.379   live-3     wrote=  1668923259 accUp=  1656531779 (0.742% unaccounted)  read=  1658656757 accDown=  1658884133 (+0.014%)
+01:22:40.379   live-3#1   wrote=   335945996 accUp=   334135830 (0.539% unaccounted)  read=   334134806 accDown=   334134806 (+0.000%)
+01:22:40.379   live-4     wrote=  1801390177 accUp=  1791932937 (0.525% unaccounted)  read=  1794496289 accDown=  1794769769 (+0.015%)
+01:22:40.379   live-4#1   wrote=   399412560 accUp=   398753332 (0.165% unaccounted)  read=   398753332 accDown=   398753332 (+0.000%)
+01:22:40.379   TOTAL      wrote= 10304089891 accUp= 10234418625 (0.6762% unaccounted)  read= 10245650909 accDown= 10246850069 (+0.0117%)
+01:22:40.496 after removing everything: panel hash cd612e787582
+01:22:40.496 all users removed; draining for 2m30s
+01:22:59.758 t=1h1m0s heap=86232KiB inuse=122360KiB rss=179MiB gor=185 fds=93 gate=0/0 counted=2921 gone=2921 issued=16020 stale=16020 fin=1 rows=40 users=0 uniq=20890 cpu=793s short=0ms moved=9827MiB child(rss=75MiB fds=477 cpu=955s)
+01:23:29.757 t=1h1m30s heap=86181KiB inuse=122304KiB rss=179MiB gor=185 fds=93 gate=0/0 counted=2651 gone=2651 issued=16020 stale=16020 fin=1 rows=0 users=0 uniq=20890 cpu=793s short=0ms moved=9827MiB child(rss=75MiB fds=477 cpu=955s)
+01:23:59.762 t=1h2m0s heap=86166KiB inuse=122296KiB rss=179MiB gor=185 fds=93 gate=0/0 counted=2344 gone=2344 issued=16020 stale=16020 fin=0 rows=0 users=0 uniq=20890 cpu=793s short=0ms moved=9827MiB child(rss=75MiB fds=477 cpu=955s)
+01:24:29.757 t=1h2m30s heap=86166KiB inuse=122296KiB rss=179MiB gor=185 fds=93 gate=0/0 counted=2344 gone=2344 issued=16020 stale=16020 fin=0 rows=0 users=0 uniq=20890 cpu=793s short=0ms moved=9827MiB child(rss=53MiB fds=455 cpu=955s)
+01:24:59.757 t=1h3m0s heap=86020KiB inuse=122264KiB rss=179MiB gor=185 fds=93 gate=0/0 counted=0 gone=0 issued=16020 stale=16020 fin=1 rows=10 users=0 uniq=20890 cpu=793s short=0ms moved=9827MiB child(rss=53MiB fds=455 cpu=955s)
+01:25:10.529 drained: heap_live=86021KiB rss=179MiB gor=185 fds=93 counted=0 gone=0 issued=16020 stale=16020 gate=0/0/0 finals=1
+2026/10/27 01:25:10.583789 [Warning] core: Xray 26.10.21 started
+01:25:29.759 t=1h3m30s heap=78193KiB inuse=115112KiB rss=178MiB gor=186 fds=93 gate=0/0 counted=0 gone=0 issued=0 stale=0 fin=1 rows=0 users=0 uniq=20890 cpu=793s short=0ms moved=9827MiB child(rss=53MiB fds=455 cpu=955s)
+01:25:30.615 rebuilt empty: heap_live=78074KiB rss=171MiB gor=186 fds=93 counted=0 issued=0
+01:25:30.662 SUMMARY
+streams=21 kills=20 snapshots=13 (fallback 0) deltas=2273 resync(in-sync=20, snapshot=1) leases=128 ack-not-ok=0 hash-mismatch=0
+ghost batches=1788 ops=71520 fresh added=17880 removed=17686 unique users installed=20890
+live transitions: batches=485 rotations=129 restores=40 limit changes=103
+revocation: slots revoked=817 (with a live connection beforehand=804, proven cut=801, no live connection to check=13), new connection refused=817
+collateral: untouched live connections checked=844 lost=0
+traffic reports=660 rows=5466 heartbeats=248
+baseline: heap_live=8.9MiB rss=52.4MiB goroutines=43 fds=24
+idle:     heap_live=87.6MiB rss=188.0MiB goroutines=185 fds=93
+drained:  heap_live=84.0MiB rss=179.1MiB goroutines=185 fds=93 counted=0 issued=16020
+rebuilt:  heap_live=76.2MiB rss=171.8MiB goroutines=186 fds=93
+retained credentials after the drain: 16020 issued entries cost 508 B each (drained heap - rebuilt heap)
+distinct users installed=20890, distinct (user, inbound) pairs=102012
+peaks: heap_live=102.4MiB rss=257.6MiB goroutines=1070 fds=506
+
+    soak_drive_test.go:607: live-1 rotate: live connection live-1#1|e1 was NOT cut
+    soak_drive_test.go:607: live-2 drop: live connection live-2#1|e1 was NOT cut
+    soak_drive_test.go:607: live-1 remove: live connection live-1#1|e1 was NOT cut
+    soak_drive_test.go:618: goroutines: 186 after the drain and a rebuild, baseline 43 (+8 allowed)
+    soak_drive_test.go:621: open fds: 93 after the drain and a rebuild, baseline 24 (+8 allowed)
+    soak_drive_test.go:624: live heap 76.2 MiB after the drain and a rebuild, baseline 8.9 MiB (+24 MiB allowed)
+--- FAIL: TestSoak (3821.18s)
+FAIL
+FAIL	akari/agent	3821.220s
+FAIL
+make: *** [Makefile:162: soak] Error 1

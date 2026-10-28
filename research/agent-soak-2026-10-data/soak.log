@@ -1,0 +1,74 @@
+23:41:30.275 soak: duration 5m0s, live users 5, ghosts 3000, out /home/user/akari-workspace/.work/agent-soak/run-5m
+23:41:40.413 baseline: heap_live=9085KiB rss=56MiB goroutines=43 fds=24 users=1510 counted=1510 issued=3926
+23:41:40.568 clients up: 30 slots
+23:41:55.605 t=15s heap=19997KiB inuse=28968KiB rss=87MiB gor=826 fds=392 gate=205/27 counted=1570 gone=17 issued=4126 stale=35 fin=1 rows=12 users=1553 uniq=1570 child(rss=64MiB fds=922)
+23:42:10.591 t=30s heap=18999KiB inuse=27832KiB rss=90MiB gor=742 fds=354 gate=181/24 counted=1603 gone=27 issued=4233 stale=68 fin=1 rows=23 users=1576 uniq=1603 child(rss=64MiB fds=840)
+23:42:25.586 t=45s heap=19006KiB inuse=27848KiB rss=86MiB gor=725 fds=342 gate=174/24 counted=1603 gone=27 issued=4233 stale=68 fin=1 rows=8 users=1576 uniq=1603 child(rss=65MiB fds=818)
+23:42:31.514 driver: killing the stream
+23:42:40.593 t=1m0s heap=17976KiB inuse=26728KiB rss=85MiB gor=701 fds=331 gate=169/22 counted=1696 gone=65 issued=4542 stale=241 fin=1 rows=17 users=1631 uniq=1696 child(rss=63MiB fds=790)
+23:42:55.592 t=1m15s heap=22412KiB inuse=33096KiB rss=95MiB gor=916 fds=425 gate=219/30 counted=1886 gone=118 issued=5213 stale=391 fin=1 rows=20 users=1768 uniq=1886 child(rss=68MiB fds=999)
+23:43:10.592 t=1m30s heap=22533KiB inuse=33144KiB rss=96MiB gor=932 fds=435 gate=227/30 counted=1964 gone=152 issued=5502 stale=513 fin=1 rows=25 users=1812 uniq=1964 child(rss=68MiB fds=1015)
+23:43:25.590 t=1m45s heap=20888KiB inuse=30872KiB rss=93MiB gor=732 fds=348 gate=177/23 counted=2009 gone=201 issued=5678 stale=718 fin=1 rows=36 users=1808 uniq=2009 child(rss=66MiB fds=815)
+23:43:40.600 t=2m0s heap=20725KiB inuse=31112KiB rss=89MiB gor=698 fds=332 gate=170/23 counted=2009 gone=201 issued=5678 stale=718 fin=1 rows=8 users=1808 uniq=2009 child(rss=64MiB fds=787)
+23:43:55.595 t=2m15s heap=20621KiB inuse=30760KiB rss=89MiB gor=684 fds=328 gate=167/23 counted=1996 gone=188 issued=5678 stale=718 fin=1 rows=16 users=1808 uniq=2009 child(rss=64MiB fds=789)
+23:44:03.063 driver: snapshot (xray rebuild)
+23:44:08.372 driver: killing the stream
+23:44:10.592 t=2m30s heap=22662KiB inuse=33656KiB rss=90MiB gor=614 fds=318 gate=145/19 counted=1808 gone=0 issued=4960 stale=0 fin=1 rows=28 users=1808 uniq=2009 child(rss=62MiB fds=708)
+23:44:25.590 t=2m45s heap=23221KiB inuse=34824KiB rss=96MiB gor=627 fds=319 gate=149/20 counted=1889 gone=143 issued=5255 stale=639 fin=2 rows=12 users=1746 uniq=2084 child(rss=63MiB fds=731)
+23:44:40.597 t=3m0s heap=23671KiB inuse=35632KiB rss=95MiB gor=696 fds=337 gate=172/23 counted=1889 gone=143 issued=5255 stale=639 fin=2 rows=16 users=1746 uniq=2084 child(rss=65MiB fds=798)
+23:44:55.595 t=3m15s heap=23649KiB inuse=35800KiB rss=94MiB gor=699 fds=339 gate=173/23 counted=1889 gone=143 issued=5255 stale=639 fin=2 rows=8 users=1746 uniq=2084 child(rss=65MiB fds=807)
+23:45:10.601 t=3m30s heap=23860KiB inuse=36200KiB rss=97MiB gor=701 fds=339 gate=172/23 counted=1889 gone=143 issued=5255 stale=639 fin=1 rows=16 users=1746 uniq=2084 child(rss=64MiB fds=792)
+23:45:22.040 driver: killing the stream
+23:45:25.596 t=3m45s heap=23282KiB inuse=35496KiB rss=94MiB gor=676 fds=332 gate=167/23 counted=1889 gone=143 issued=5255 stale=639 fin=0 rows=8 users=1746 uniq=2084 child(rss=64MiB fds=773)
+23:45:40.597 t=4m0s heap=25703KiB inuse=39024KiB rss=103MiB gor=859 fds=407 gate=212/27 counted=2014 gone=210 issued=5703 stale=886 fin=1 rows=16 users=1804 uniq=2203 child(rss=67MiB fds=947)
+23:45:55.592 t=4m15s heap=25419KiB inuse=38192KiB rss=103MiB gor=828 fds=392 gate=204/27 counted=2014 gone=210 issued=5703 stale=886 fin=1 rows=19 users=1804 uniq=2203 child(rss=67MiB fds=923)
+23:46:10.604 t=4m30s heap=26070KiB inuse=39264KiB rss=102MiB gor=860 fds=407 gate=209/27 counted=2014 gone=210 issued=5703 stale=886 fin=1 rows=9 users=1804 uniq=2203 child(rss=67MiB fds=947)
+23:46:25.602 t=4m45s heap=25836KiB inuse=38848KiB rss=102MiB gor=828 fds=389 gate=202/27 counted=1876 gone=72 issued=5703 stale=886 fin=1 rows=18 users=1804 uniq=2203 child(rss=66MiB fds=909)
+23:46:40.599 t=5m0s heap=26424KiB inuse=39312KiB rss=102MiB gor=819 fds=388 gate=200/27 counted=1876 gone=72 issued=5703 stale=886 fin=1 rows=9 users=1804 uniq=2203 child(rss=67MiB fds=915)
+23:46:41.758 load phase over after 5m1s
+23:46:41.800 clients: wrote 0.29 GiB, read 0.29 GiB, short conns ok=29746 fail=12, long deaths=68, dials=29967, instance sets=57 (child rss=67MiB gor=676 fds=988)
+23:46:41.803 clients stopped; waiting for the counters to settle
+23:46:55.590 t=5m15s heap=18694KiB inuse=28904KiB rss=97MiB gor=46 fds=29 gate=0/0 counted=1876 gone=72 issued=5703 stale=886 fin=0 rows=10 users=1804 uniq=2203 child(rss=67MiB fds=459)
+23:47:10.588 t=5m30s heap=15828KiB inuse=25600KiB rss=74MiB gor=46 fds=29 gate=0/0 counted=1876 gone=72 issued=5703 stale=886 fin=0 rows=0 users=1804 uniq=2203 child(rss=67MiB fds=459)
+23:47:21.809 idle (clients gone, users installed): conns=0 gor=46 fds=29
+23:47:21.809 accounting (client raw bytes vs panel-side accounted bytes, max per session summed):
+23:47:21.810   live-0     wrote=    48610889 accUp=    48584916 (0.053% unaccounted)  read=    48800750 accDown=    48823718 (+0.047%)
+23:47:21.810   live-0#1   wrote=     9078715 accUp=     9072571 (0.068% unaccounted)  read=     9072571 accDown=     9072571 (+0.000%)
+23:47:21.810   live-1     wrote=    47848782 accUp=    47793834 (0.115% unaccounted)  read=    48027005 accDown=    48051821 (+0.052%)
+23:47:21.810   live-1#1   wrote=    10597857 accUp=    10594273 (0.034% unaccounted)  read=    10594273 accDown=    10594273 (+0.000%)
+23:47:21.810   live-2     wrote=    45423446 accUp=    45374826 (0.107% unaccounted)  read=    45578493 accDown=    45600141 (+0.047%)
+23:47:21.810   live-2#1   wrote=     8579518 accUp=     8563900 (0.182% unaccounted)  read=     8563900 accDown=     8563900 (+0.000%)
+23:47:21.810   live-3     wrote=    60316604 accUp=    60248077 (0.114% unaccounted)  read=    60508004 accDown=    60535652 (+0.046%)
+23:47:21.810   live-3#1   wrote=    12521259 accUp=    12517675 (0.029% unaccounted)  read=    12517675 accDown=    12517675 (+0.000%)
+23:47:21.810   live-4     wrote=    56775209 accUp=    56745384 (0.053% unaccounted)  read=    57013433 accDown=    57041993 (+0.050%)
+23:47:21.810   live-4#1   wrote=     9580229 accUp=     9574085 (0.064% unaccounted)  read=     9574085 accDown=     9574085 (+0.000%)
+23:47:21.810   TOTAL      wrote=   309332508 accUp=   309069541 (0.0850% unaccounted)  read=   310250189 accDown=   310375829 (+0.0405%)
+23:47:21.858 after removing everything: panel hash 4bb34d000ea0
+23:47:21.858 all users removed; draining for 2m30s
+23:47:25.591 t=5m45s heap=13329KiB inuse=23488KiB rss=72MiB gor=46 fds=29 gate=0/0 counted=1876 gone=1876 issued=5703 stale=5703 fin=1 rows=22 users=0 uniq=2203 child(rss=67MiB fds=459)
+23:47:40.599 t=6m0s heap=13175KiB inuse=23328KiB rss=69MiB gor=46 fds=29 gate=0/0 counted=1820 gone=1820 issued=5703 stale=5703 fin=1 rows=0 users=0 uniq=2203 child(rss=67MiB fds=459)
+23:47:55.604 t=6m15s heap=13174KiB inuse=23328KiB rss=67MiB gor=46 fds=29 gate=0/0 counted=1804 gone=1804 issued=5703 stale=5703 fin=1 rows=0 users=0 uniq=2203 child(rss=67MiB fds=459)
+23:48:10.612 t=6m30s heap=13174KiB inuse=23320KiB rss=67MiB gor=46 fds=29 gate=0/0 counted=1804 gone=1804 issued=5703 stale=5703 fin=1 rows=0 users=0 uniq=2203 child(rss=67MiB fds=459)
+23:48:25.594 t=6m45s heap=13174KiB inuse=23320KiB rss=67MiB gor=46 fds=29 gate=0/0 counted=1804 gone=1804 issued=5703 stale=5703 fin=0 rows=0 users=0 uniq=2203 child(rss=67MiB fds=459)
+23:48:40.589 t=7m0s heap=13174KiB inuse=23320KiB rss=67MiB gor=46 fds=29 gate=0/0 counted=1804 gone=1804 issued=5703 stale=5703 fin=0 rows=0 users=0 uniq=2203 child(rss=67MiB fds=459)
+23:48:55.587 t=7m15s heap=13174KiB inuse=23320KiB rss=67MiB gor=46 fds=29 gate=0/0 counted=1804 gone=1804 issued=5703 stale=5703 fin=0 rows=0 users=0 uniq=2203 child(rss=48MiB fds=453)
+23:49:10.599 t=7m30s heap=13174KiB inuse=23320KiB rss=67MiB gor=46 fds=29 gate=0/0 counted=1804 gone=1804 issued=5703 stale=5703 fin=0 rows=0 users=0 uniq=2203 child(rss=48MiB fds=453)
+23:49:25.585 t=7m45s heap=13154KiB inuse=23368KiB rss=67MiB gor=46 fds=29 gate=0/0 counted=0 gone=0 issued=5703 stale=5703 fin=1 rows=10 users=0 uniq=2203 child(rss=48MiB fds=453)
+23:49:40.586 t=8m0s heap=13122KiB inuse=23336KiB rss=67MiB gor=46 fds=29 gate=0/0 counted=0 gone=0 issued=5703 stale=5703 fin=1 rows=0 users=0 uniq=2203 child(rss=48MiB fds=453)
+23:49:51.865 drained: heap_live=13056KiB rss=67MiB gor=46 fds=29 counted=0 gone=0 issued=5703 stale=5703 gate=0/0/0 finals=1
+23:49:55.585 t=8m15s heap=10257KiB inuse=20280KiB rss=68MiB gor=47 fds=29 gate=0/0 counted=0 gone=0 issued=0 stale=0 fin=1 rows=0 users=0 uniq=2203 child(rss=48MiB fds=453)
+23:50:10.585 t=8m30s heap=10163KiB inuse=20144KiB rss=67MiB gor=47 fds=29 gate=0/0 counted=0 gone=0 issued=0 stale=0 fin=1 rows=0 users=0 uniq=2203 child(rss=48MiB fds=453)
+23:50:11.893 rebuilt empty: heap_live=10106KiB rss=64MiB gor=47 fds=29 counted=0 issued=0
+23:50:11.906 SUMMARY
+streams=4 kills=3 snapshots=3 (fallback 0) deltas=45 resync(in-sync=3, snapshot=1) leases=8 ack-not-ok=0 hash-mismatch=0
+ghost ops=1040 fresh added=260 removed=210 unique users installed=2203
+live transitions: batches=19 rotations=6 restores=1 limit changes=5
+revocation: slots revoked=34 (with a live connection beforehand=33, proven cut=33, no live connection to check=1), new connection refused=34
+collateral: untouched live connections checked=31 lost=0
+traffic reports=46 rows=366 heartbeats=33
+baseline: heap_live=8.9MiB rss=56.0MiB goroutines=43 fds=24
+idle:     heap_live=15.4MiB rss=69.2MiB goroutines=46 fds=29
+drained:  heap_live=12.8MiB rss=67.8MiB goroutines=46 fds=29 counted=0 issued=5703
+rebuilt:  heap_live=9.9MiB rss=64.1MiB goroutines=47 fds=29
+peaks: heap_live=25.8MiB rss=103.4MiB goroutines=932 fds=435
+

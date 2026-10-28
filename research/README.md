@@ -1,15 +1,12 @@
-# research/：研究报告与验收清单
+# research/：研究报告
 
 只读分析的产出。结论以 `SPRINT.md` 的裁决为准；报告本身不随代码更新，除非注明"已复核"。
 
 | 文件 | 用途 | 日期 | 状态 |
 |---|---|---|---|
-| [`db-schema-review.md`](db-schema-review.md) | 阶段 0 数据库架构评审：局部重构方案、Q1–Q4、迁移压缩与编号 | 2026-10-05 | 用户已通过，已全部落地（#65 及阶段 A） |
-| [`ops-logic-review.md`](ops-logic-review.md) | 运营逻辑审查：从运营者和付费用户角度走业务流程，21 项发现 | 2026-10-06 | 批次 A/B/C 已落地（#83、#85）；批次 D 剩余与低优先项在 `PLAN-next.md` |
-| [`portal-gap.md`](portal-gap.md) | 新门户验收清单：面板用户功能逐项对照，每行对应一个 e2e | 2026-10-06，10-07 复核 | 全部覆盖，W36-b #89 已合并 |
-| [`admin-inventory.md`](admin-inventory.md) | 新后台验收清单：后端路由 + 旧后台功能 + v0.4 新功能，每行对应一个 e2e | 2026-10-07 | 全部覆盖，W33-b #90 已合并 |
-| [`test-deploy-2026-10.md`](test-deploy-2026-10.md) | 测试环境部署与升级测试（rc.1 / rc.2、灰度升级、坏版本回滚、面板升级与回滚） | 2026-10-06 → 10-07 | 完成；B1/B2 已修（#87、#88），低级别发现已修（#91） |
-| [`ux-audit-2026-10-02/`](ux-audit-2026-10-02/REPORT.md) | 旧前后台 UI 走查（W19），含爬取脚本 | 2026-10-02 | 历史：旧界面已被新门户与新后台取代 |
+| [`db-schema-review.md`](db-schema-review.md) | 阶段 0 数据库架构评审：局部重构方案、Q1–Q4 | 2026-10-05 | 已全部落地，作为设计依据保留（代码注释引用）；迁移编号部分已过时（迁移现为 `0001_baseline.sql` 起顺序编号） |
+| [`ops-logic-review.md`](ops-logic-review.md) | 运营逻辑审查：从运营者和付费用户角度走业务流程，21 项发现 | 2026-10-06 | 批次 A/B/C 已落地；低优先项在 `briefs/round-2026-10-28.md` |
+| [`agent-soak-2026-10.md`](agent-soak-2026-10.md) | agent 稳定性浸泡测试设计与结果（数据在 `agent-soak-2026-10-data/`） | 2026-10-27 | 完成；agent CLAUDE.md 引用 |
 | [`singbox-spike/`](singbox-spike/README.md) | sing-box 第二内核技术验证：补丁、原型、结论 | 2026-10-02 | 用户决定暂缓（R29）；重启前先读 |
 
-相关：后台设计稿在 `design/admin-v0.4/`（W33-a，已通过并实现为 `akari-panel/admin/`）。
+已完成的报告（体检、验收清单、测试部署、倍率调查、压测原始输出、旧 UI 走查）已删除，需要时查 git 历史。

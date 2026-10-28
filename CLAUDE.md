@@ -5,20 +5,20 @@
 
 | 目录 | 语言 | 角色 | 子文档 |
 |---|---|---|---|
-| `akari-panel/` | Rust + Svelte + React | 控制面板（`portal/` 门户 Svelte 5、`admin/` 后台 React）、契约正本 `proto/agent.proto`、集成冒烟 `smoke.sh` | `akari-panel/CLAUDE.md` |
+| `akari-panel/` | Rust + Svelte 5 + React | 控制面板（`portal/` 门户 Svelte 5、`admin/` 后台 React）、契约正本 `proto/agent.proto`、集成冒烟 `smoke.sh` | `akari-panel/CLAUDE.md` |
 | `akari-agent/` | Go | 节点 agent，内嵌 xray-core，出站 mTLS gRPC | `akari-agent/CLAUDE.md` |
 | `akari-client/` | Go（M4 MVP 已合并，**已暂停**） | 自研客户端，mihomo 作为独立子进程（GPL-3.0） | `akari-client/CLAUDE.md` |
 
 ## 权威文档（按顺序读）
 
-1. `HANDOVER-2026-10-26.md` — **最新交接（本地 → 云端）：现状、规则、进行中的 PR #160 与合并队列、排期、已知的坑（先读这个）**；门户还原的交接笔记与比对工具在 `handoff/portal-restore/`
-2. `SPRINT.md` — 裁决记录（只追加）；开头的"当前有效裁决索引"按主题列出仍有效的裁决
-3. `PLAN-next.md` — 下一版本待办（阶段 C/D/E、CodeQL、未实测项等）
-4. `PLAN-v0.4.md` — v0.4 决定 D1–D12、任务卡、中转规格；开头有执行状态
-5. `briefs/COMMON.md`、`briefs/DEFECT-CHECKLIST.md` — worker / 云端会话通用规则，风险分级与缺陷清单（T1 brief 必附）
-6. `research/README.md` — 研究报告与验收清单索引
+1. `PLAN-next.md` — 下一版本待办（只列未完成项）
+2. `briefs/round-2026-10-28.md` — 当前轮次的裁决与任务范围；`briefs/COMMON.md` — worker / 云端会话通用规则（必读）
+3. `SPRINT.md` — 裁决记录（只追加）；开头的"当前有效裁决索引"按主题列出仍有效的裁决
+4. `briefs/DEFECT-CHECKLIST.md`（风险分级与缺陷清单）、`briefs/RUST-STYLE.md`、`briefs/GO-STYLE.md`、`briefs/ENGINEERING.md`（工程规范）
+5. `research/README.md` — 仍有效的研究报告索引（数据库评审、运营逻辑审查、agent 浸泡测试、sing-box 验证）
+6. `upstream/` — 上游缺陷记录与补丁（xray ActivityTimer 自锁，agent README「xray-core 分支」引用）；`release-notes/` — 最近两次发版说明；`design/` — 仍被代码注释引用的设计稿与品牌 Logo
 
-已归档（`archive/`，只作历史）：旧交接（含 HANDOVER-2026-10-07）、OPUS-GUIDE、ROADMAP、两份 REVIEW、GITHUB 清单。`akari-panel/PLAN.md`、`akari-panel/HANDOVER.md` 是 2026-09-30 的旧文档，以上面的文档为准。
+`archive/` 只留 `PLAN-v0.4.md`（v0.4 决定 D1–D12 与中转规格，被 SPRINT 与代码注释引用，内容是历史记录）；其余历史文档已删除，查 git 历史。
 
 ## 已确认的战略决策（勿推翻）
 

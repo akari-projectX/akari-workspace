@@ -1,0 +1,13 @@
+streams=21 kills=20 snapshots=13 (fallback 0) deltas=2273 resync(in-sync=20, snapshot=1) leases=128 ack-not-ok=0 hash-mismatch=0
+ghost batches=1788 ops=71520 fresh added=17880 removed=17686 unique users installed=20890
+live transitions: batches=485 rotations=129 restores=40 limit changes=103
+revocation: slots revoked=817 (with a live connection beforehand=804, proven cut=801, no live connection to check=13), new connection refused=817
+collateral: untouched live connections checked=844 lost=0
+traffic reports=660 rows=5466 heartbeats=248
+baseline: heap_live=8.9MiB rss=52.4MiB goroutines=43 fds=24
+idle:     heap_live=87.6MiB rss=188.0MiB goroutines=185 fds=93
+drained:  heap_live=84.0MiB rss=179.1MiB goroutines=185 fds=93 counted=0 issued=16020
+rebuilt:  heap_live=76.2MiB rss=171.8MiB goroutines=186 fds=93
+retained credentials after the drain: 16020 issued entries cost 508 B each (drained heap - rebuilt heap)
+distinct users installed=20890, distinct (user, inbound) pairs=102012
+peaks: heap_live=102.4MiB rss=257.6MiB goroutines=1070 fds=506

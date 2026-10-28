@@ -1,0 +1,55 @@
+From ce7424b4f5afc73746094170eb5beb1043dadaa8 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Tue, 27 Oct 2026 03:16:40 +0000
+Subject: [PATCH] common/signal: ActivityTimer.SetTimeout must not deadlock on
+ its first check
+
+Periodic.Start runs Execute once synchronously while SetTimeout holds t.mu.
+If a check of the task being replaced is still running it can consume the
+token posted by Update; the synchronous check then calls finish, which locks
+t.mu again and deadlocks, leaking the connection's handler (goroutines and
+the socket). Make the synchronous first run only drain the token.
+
+Found by the akari-agent soak test (77 stuck handlers in one hour).
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01S3v6MPFtVVNoc5gXbpepDz
+---
+ common/signal/timer.go | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
+
+diff --git a/common/signal/timer.go b/common/signal/timer.go
+index d5b3560..c3e4368 100644
+--- a/common/signal/timer.go
++++ b/common/signal/timer.go
+@@ -65,9 +65,26 @@ func (t *ActivityTimer) SetTimeout(timeout time.Duration) {
+ 	if t.consumed.Load() {
+ 		return
+ 	}
++	// Periodic.Start runs Execute once synchronously, here, while t.mu is
++	// held. If a check of the task being replaced is still in flight it can
++	// take the token posted by Update below; check would then call finish,
++	// which locks t.mu again: a self-deadlock that leaks the connection's
++	// handler. The synchronous first run only drains the token and never
++	// calls check (later runs happen on the timer, after t.mu is released).
++	first := true
+ 	newCheckTask := &task.Periodic{
+ 		Interval: timeout,
+-		Execute:  t.check,
++		Execute: func() error {
++			if first {
++				first = false
++				select {
++				case <-t.updated:
++				default:
++				}
++				return nil
++			}
++			return t.check()
++		},
+ 	}
+ 	common.CloseIfExists(t.checkTask)
+ 	t.checkTask = newCheckTask
+-- 
+2.43.0
+
