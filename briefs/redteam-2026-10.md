@@ -47,3 +47,12 @@ Every worker reads briefs/COMMON.md, akari-panel/CLAUDE.md (hard invariants) and
   the derived inbound still needs per-entrance credentials.
 - Pre-auth gRPC decode size (the 64 MiB message cap applies before the first message is checked): accepted;
   enrollment is rate-limited per /64 and globally.
+
+## Lead decisions on area D (2026-10-28)
+- A-3, A-5, D-1 (encoded script URLs past the HTML-source check), D-2 (relative record names skipped the
+  confirmation): fixed in panel #231 (reviewed: owner check covers single writes, batch and both link routes;
+  raw-text elements handled in the placement scan).
+- D-3 (`/brand/*` reads the image bytes for a 304), D-7 (CSV: full-width `＝＋－＠` and leading-space formulas):
+  small follow-ups in PLAN-next, not blocking.
+- D-4 (short gateway messages in owner-visible errors), D-5 (Caddy probe outside `outbound`, owner-set host),
+  D-6 (Surge names with U+2028/9, admin-controlled): accepted, record only.
