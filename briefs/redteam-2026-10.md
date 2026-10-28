@@ -22,3 +22,16 @@ Every worker reads briefs/COMMON.md, akari-panel/CLAUDE.md (hard invariants) and
 - Delivery: one panel PR per area (agent PR if the issue is in the agent), label `full-ci`, not merged; PR body
   lists findings by severity. Lean disk (separate CARGO_TARGET_DIR under .work/, delete after). Commit trailer
   and PR footer as in COMMON.md. GraphQL is unavailable: open PRs with `gh api -X POST repos/.../pulls --input`.
+
+## Lead decisions on area A (2026-10-28)
+- A-3 (any admin can repoint a panel-critical DNS record): record writes on names the panel depends on
+  (`records::managed`: main/sub/node/passkey domains, server tls_domain, entrance connect_host) and
+  `POST /dns/link` / `/dns/link/server/{id}` become owner-only (403 `user.owner_only`, like the token writes);
+  other records stay open to every admin. Done in area D's PR.
+- A-4 (stolen session adds a passkey and disables password): no re-auth step (R18); the security_notice mail stays the
+  mitigation. No change.
+- A-5 (mail template HTML can carry a one-time code into an external URL): secret placeholders (codes, reset/verify
+  links, tokens) may appear only in text and in `<a href>`; any other attribute (src, style, srcset, background, …)
+  → 400. Done in area D's PR.
+- Info items: `__Host-` cookie prefix and same-site writes, admin routes answering 401/403 on the portal entry,
+  unlocked role read in guard_target — record only. CLAUDE.md lines about hosted rule sets: remove in area D's PR.
