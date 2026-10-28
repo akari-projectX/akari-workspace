@@ -139,3 +139,16 @@ Mechanism: xray `common/signal/timer.go` `SetTimeout` holds `t.mu` while `Period
 - Resources: baseline goroutines 43 / fds 24 / heap 8.9 MiB → after drain + empty Snapshot: 43 / 27 / 9.5 MiB (unpatched run: 186 / 93 / 76 MiB). xray ActivityTimer deadlocks: 0 (unpatched: 77/h). Peaks: goroutines 934, fds 443, heap 38 MiB, RSS 127 MiB.
 - `issued` after drain: 15 953 entries × ~601 B (by design, cleared by Rebuild).
 - Conn-close on kill (gate.go): xray sets `session.Inbound.Conn` only for the accepted per-client stream (TCP worker), per-session XHTTP `splitConn`, per-stream gRPC/Hysteria conns; UDP inbounds leave it nil — closing never affects another user (lead review of xray v26.10.21 source).
+
+## GC tuning measured (2026-10-28, agent main 44801b7)
+
+Four 10-minute soak runs, same seed, parent process only (clients unchanged); all soak assertions passed.
+
+| Run | GC cycles | GC CPU s | Process CPU s | GC share | CPU ms / MiB moved | heap-in-use avg/peak MiB | RSS avg/peak MiB |
+|---|---|---|---|---|---|---|---|
+| default | 314 | 8.7 | 139.6 | 6.2% | 86.2 | 49.7 / 72.2 | 105 / 124 |
+| default (repeat) | 337 | 9.7 | 152.2 | 6.4% | 87.6 | 50.5 / 73.8 | 106 / 123 |
+| GOGC=200 | 156 | 4.6 | 141.8 | 3.2% | 88.1 | 65.1 / 99.1 | 132 / 153 |
+| GOGC=200 + GOMEMLIMIT=256MiB | 159 | 4.8 | 148.5 | 3.2% | 86.0 | 66.6 / 103.4 | 133 / 157 |
+
+GOGC=200 halves GC work, but total CPU per MiB moved is within the run-to-run noise (~1.6%): about two thirds of the default GC CPU is idle mark workers on otherwise idle cores; the part competing with traffic is ~2% of process CPU. It costs ~+26 MiB RSS on average (+30 MiB peak). GOMEMLIMIT=256MiB never engaged. Decision: no GC setting in the unit, the OpenRC script or main.go. If a CPU-bound node ever needs it, set `GOGC=200` per node in a unit drop-in / conf.d rather than in code.
