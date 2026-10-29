@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>商店 · 打磨后</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+:root{--bg:#f7f8fa;--surface:#fff;--fg:#12151c;--body:#3a404c;--muted:#5c6473;--faint:#737b8a;--line:rgba(18,21,28,.09);--line2:rgba(18,21,28,.16);--hover:#eef0f4;--brand:#2563eb;--brand-ink:#1d4ed8;--brand-soft:rgba(37,99,235,.1);--ok:#15803d}
+body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Segoe UI','Microsoft YaHei','Noto Sans CJK SC',system-ui,sans-serif;color:var(--body)}
+a{color:var(--brand-ink);text-decoration:none}a:hover{color:var(--brand)}
+.hr{height:1px;background:var(--line)}
+.h{font-size:14px;font-weight:600;color:var(--fg)}
+.sub{margin-top:6px;font-size:13px;color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px 22px 18px;display:flex;flex-direction:column}
+.spec{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:18px}
+.spec div{text-align:center;padding:12px 0}
+.spec div+div{border-left:1px solid var(--line)}
+.spec small{display:block;font-size:12px;color:var(--muted)}
+.spec b{display:block;margin-top:4px;font-size:15px;font-weight:600;color:var(--fg)}
+.feat{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--body)}
+.btn{height:42px;border-radius:10px;border:0;background:var(--brand);color:#fff;font-size:14px;font-weight:600;font-family:inherit;width:100%}
+.fix{position:absolute;width:22px;height:22px;border-radius:50%;background:#e11d48;color:#fff;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px #fff;z-index:2}
+</style>
+</helmet>
+<div style="width:1440px;height:1462px;background:var(--bg);position:relative">
+  <header style="height:63px;border-bottom:1px solid var(--line)">
+    <div style="width:1128px;margin:0 auto;height:63px;display:flex;align-items:center">
+      <div style="font-size:27px;font-weight:600;color:var(--fg);width:178px">akar<span style="color:var(--brand)">i</span></div>
+      <nav style="display:flex;gap:28px;font-size:14px;flex:1"><a href="#" style="color:var(--muted);padding:20px 0">仪表盘</a><a href="#" style="color:var(--brand-ink);font-weight:600;padding:20px 0;border-bottom:2px solid var(--brand)">商店</a><a href="#" style="color:var(--muted);padding:20px 0">文档</a><a href="#" style="color:var(--muted);padding:20px 0">邀请</a><a href="#" style="color:var(--muted);padding:20px 0">工单</a><a href="#" style="color:var(--muted);padding:20px 0">更多 ⌄</a></nav>
+      <div style="display:flex;align-items:center;gap:22px;font-size:13px;font-weight:600;color:var(--muted)"><span>☾</span><span>EN</span><span style="color:var(--fg)">user ⌄</span></div>
+    </div>
+  </header>
+
+  <main style="width:1128px;margin:0 auto;padding-top:44px">
+    <h1 style="margin:0;font-size:32px;font-weight:600;color:var(--fg)">商店</h1>
+    <p style="margin:10px 0 0;font-size:14px;color:var(--muted)">管理当前订阅，随时续费或更换套餐。</p>
+
+    <section style="margin-top:44px">
+      <div style="display:flex;align-items:center;gap:8px"><span class="h">♛ 当前套餐 · E2E 标准</span><span style="font-size:12px;font-weight:600;color:var(--ok);background:rgba(21,128,61,.1);padding:2px 8px;border-radius:999px">生效中</span></div>
+      <div class="sub">到期 2026-11-29 · 300 Mbps</div>
+      <div style="margin-top:22px;display:flex;align-items:flex-end;gap:40px">
+        <div><div style="font-size:13px;color:var(--muted)">套餐剩余</div><div style="font-size:40px;font-weight:600;color:var(--fg);line-height:1.1">31<span style="font-size:14px;color:var(--muted);font-weight:400;margin-left:4px">天</span></div></div>
+        <div style="flex:1;padding-bottom:6px"><div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted)"><span>流量用量</span><span><b style="color:var(--fg)">0.0</b> / 100 GB</span></div><div style="margin-top:8px;height:6px;border-radius:999px;background:var(--hover)"></div><div style="margin-top:8px;font-size:12px;color:var(--faint)">2026-11-29 重置流量，剩余 100.0 GB</div></div>
+      </div>
+    </section>
+
+    <div class="hr" style="margin-top:40px"></div>
+
+    <section style="margin-top:40px;position:relative">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end">
+        <div><div class="h">选择套餐</div><div class="sub">价格为各周期按月折算后的最低价；购买时长在确认订单时选择</div></div>
+        <label style="position:relative;display:flex;align-items:center;gap:10px;font-size:13px;color:var(--body);padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface)"><span class="fix" style="left:-14px;top:-14px">14</span>用余额抵扣（余额 ¥200）<span style="width:34px;height:20px;border-radius:999px;background:var(--line2);position:relative;display:inline-block"><span style="position:absolute;left:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#fff"></span></span></label>
+      </div>
+
+      <div style="position:relative;margin-top:22px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px">
+        <span class="fix" style="left:-30px;top:10px">11</span>
+        <div class="card" style="border:2px solid var(--brand)">
+          <div style="display:flex;align-items:center;gap:8px"><span style="font-size:17px;font-weight:600;color:var(--fg)">E2E 标准</span><span style="font-size:11px;font-weight:600;color:var(--brand-ink);background:var(--brand-soft);padding:2px 6px;border-radius:5px">当前套餐</span></div>
+          <div style="margin-top:4px;font-size:13px;color:var(--muted)">日常使用</div>
+          <div style="margin-top:16px"><span style="font-size:15px;font-weight:600;color:var(--fg)">¥</span><span style="font-size:34px;font-weight:600;color:var(--fg)">12.50</span><span style="font-size:13px;color:var(--muted)"> /月起</span><div style="font-size:12px;color:var(--muted);margin-top:2px">2 种周期可选 · <b style="color:var(--ok)">年付省 17%</b></div></div>
+          <div class="spec"><div><small>流量</small><b>100 GB</b></div><div><small>重置</small><b>每月</b></div><div><small>速率</small><b>300 Mbps</b></div></div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px;flex:1"><div class="feat"><span style="color:var(--ok)">✓</span>全部节点</div><div class="feat"><span style="color:var(--ok)">✓</span>每月重置流量</div></div>
+          <button class="btn" style="margin-top:18px">续费</button>
+          <div style="margin-top:8px;text-align:center;font-size:12px;color:var(--faint)">从到期日顺延</div>
+        </div>
+        <div class="card" style="position:relative">
+          <span class="fix" style="right:-11px;top:120px">12</span>
+          <div style="display:flex;align-items:center;gap:8px"><span style="font-size:17px;font-weight:600;color:var(--fg)">E2E 高级</span><span style="position:relative;font-size:11px;font-weight:600;color:#fff;background:var(--brand);padding:2px 6px;border-radius:5px">推荐<span class="fix" style="right:-30px;top:-3px">13</span></span></div>
+          <div style="margin-top:4px;font-size:13px;color:var(--muted)">更多流量</div>
+          <div style="margin-top:16px"><span style="font-size:15px;font-weight:600;color:var(--fg)">¥</span><span style="font-size:34px;font-weight:600;color:var(--fg)">30</span><span style="font-size:13px;color:var(--muted)"> /月</span><div style="font-size:12px;color:var(--muted);margin-top:2px">月付</div></div>
+          <div class="spec"><div><small>流量</small><b>500 GB</b></div><div><small>重置</small><b>每月</b></div><div><small>速率</small><b>不限速</b></div></div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px;flex:1"><div class="feat"><span style="color:var(--ok)">✓</span>全部节点</div><div class="feat"><span style="color:var(--ok)">✓</span>每月重置流量</div></div>
+          <button class="btn" style="margin-top:18px">更换到此套餐</button>
+          <div style="margin-top:8px;text-align:center;font-size:12px;color:var(--faint)">旧套餐剩余价值自动抵扣</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="hr" style="margin-top:44px"></div>
+
+    <section style="margin-top:40px;position:relative">
+      <span class="fix" style="left:-30px;top:0">15</span>
+      <div class="h">流量重置包</div><div class="sub">不改变套餐与到期时间，立即把本周期已用流量清零</div>
+      <div style="margin-top:16px;display:flex;align-items:center;gap:16px;padding:16px 20px;border-radius:14px;background:var(--surface);border:1px solid var(--line);max-width:540px">
+        <div style="flex:1"><div style="font-size:15px;font-weight:600;color:var(--fg)">重置「E2E 标准」的流量</div><div style="font-size:12px;color:var(--muted);margin-top:3px">付款后立即生效</div></div>
+        <span style="font-size:20px;font-weight:600;color:var(--fg)">¥5</span>
+        <button style="height:34px;padding:0 16px;border-radius:9px;border:1px solid var(--line2);background:var(--surface);font-size:13px;font-weight:600;color:var(--fg);font-family:inherit">购买</button>
+      </div>
+    </section>
+  </main>
+
+  <footer style="position:absolute;left:0;right:0;bottom:0;padding-bottom:30px">
+    <div style="width:1128px;margin:0 auto;border-top:1px solid var(--line);padding-top:30px;display:flex;justify-content:space-between;font-size:13px;color:var(--muted)"><span>© 2026 Akari</span><span style="display:flex;gap:20px"><a href="#" style="color:var(--muted)">服务条款</a><a href="#" style="color:var(--muted)">隐私政策</a></span></div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1462}}'>
+class Component extends DCLogic { renderVals() { return {}; } }
+</script>
+</body>
+</html>

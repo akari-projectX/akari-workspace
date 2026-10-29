@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>线路 · 打磨后</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+:root{--bg:#f7f8fa;--surface:#fff;--fg:#12151c;--body:#3a404c;--muted:#5c6473;--faint:#737b8a;--line:rgba(18,21,28,.09);--line2:rgba(18,21,28,.16);--hover:#eef0f4;--brand:#2563eb;--brand-ink:#1d4ed8;--brand-soft:rgba(37,99,235,.1);--ok:#15803d;--warn:#b45309}
+body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Segoe UI','Microsoft YaHei','Noto Sans CJK SC',system-ui,sans-serif;color:var(--body)}
+a{color:var(--brand-ink);text-decoration:none}a:hover{color:var(--brand)}
+.big{font-size:34px;font-weight:600;color:var(--fg)}
+.u{font-size:14px;color:var(--muted);font-weight:400;margin-left:3px}
+.lbl{font-size:13px;color:var(--muted);margin-top:6px}
+.note{font-size:12px;color:var(--faint);margin-top:10px}
+.row{display:grid;grid-template-columns:minmax(0,1fr) 160px 110px 120px 100px;gap:16px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.flag{width:22px;height:15px;border-radius:2px}
+.fix{position:absolute;width:22px;height:22px;border-radius:50%;background:#e11d48;color:#fff;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 3px #fff;z-index:2}
+</style>
+</helmet>
+<div style="width:1440px;height:998px;background:var(--bg);position:relative">
+  <header style="height:63px;border-bottom:1px solid var(--line)">
+    <div style="width:1128px;margin:0 auto;height:63px;display:flex;align-items:center">
+      <div style="font-size:27px;font-weight:600;color:var(--fg);width:178px">akar<span style="color:var(--brand)">i</span></div>
+      <nav style="display:flex;gap:28px;font-size:14px;flex:1"><a href="#" style="color:var(--muted);padding:20px 0">仪表盘</a><a href="#" style="color:var(--muted);padding:20px 0">商店</a><a href="#" style="color:var(--muted);padding:20px 0">文档</a><a href="#" style="color:var(--muted);padding:20px 0">邀请</a><a href="#" style="color:var(--muted);padding:20px 0">工单</a><a href="#" style="color:var(--brand-ink);font-weight:600;padding:20px 0;border-bottom:2px solid var(--brand)">更多 ⌄</a></nav>
+      <div style="display:flex;align-items:center;gap:22px;font-size:13px;font-weight:600;color:var(--muted)"><span>☾</span><span>EN</span><span style="color:var(--fg)">user ⌄</span></div>
+    </div>
+  </header>
+
+  <main style="width:1128px;margin:0 auto;padding-top:44px">
+    <div style="position:relative;display:flex;justify-content:space-between;align-items:center">
+      <span class="fix" style="right:-30px;top:6px">17</span>
+      <div><h1 style="margin:0;font-size:32px;font-weight:600;color:var(--fg)">节点状态</h1><p style="margin:10px 0 0;font-size:14px;color:var(--muted)">订阅内所有线路的实时状态。倍率越低，同样的流量能用得越久。</p></div>
+      <button style="height:36px;padding:0 14px;border-radius:9px;border:1px solid var(--line2);background:var(--surface);font-size:13px;font-weight:600;color:var(--fg);font-family:inherit">↻ 刷新</button>
+    </div>
+
+    <section style="position:relative;margin-top:40px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:48px">
+      <div><div class="big">0<span class="u">/ 3</span></div><div class="lbl">在线线路</div><div class="note">离线的线路客户端会自动跳过</div></div>
+      <div><div class="big">—</div><div class="lbl">最低延迟</div><div class="note">暂无测速记录</div></div>
+      <div><div class="big">0.5<span class="u">×</span></div><div class="lbl">最低倍率</div><div class="note">按此刻生效的倍率</div></div>
+      <div style="position:relative"><span class="fix" style="left:-30px;top:4px">16</span><div class="big">2<span class="u">地区</span></div><div class="lbl">覆盖</div><div class="note">日本、香港</div></div>
+    </section>
+
+    <div style="height:1px;background:var(--line);margin-top:40px"></div>
+
+    <section style="margin-top:40px">
+      <div style="font-size:14px;font-weight:600;color:var(--fg)">全部线路</div>
+      <div style="margin-top:6px;font-size:13px;color:var(--muted)">共 3 条线路，点击「倍率」列可切换排序</div>
+      <div style="margin-top:18px;display:flex;align-items:center;justify-content:space-between;gap:16px">
+        <div style="position:relative;width:360px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position:absolute;left:12px;top:11px;color:var(--faint)" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><label for="nq" style="position:absolute;width:1px;height:1px;overflow:hidden">搜索</label><input id="nq" placeholder="搜索线路、地区或标签" style="width:100%;box-sizing:border-box;height:38px;padding:0 12px 0 36px;border-radius:10px;border:1px solid var(--line2);font-size:14px;font-family:inherit"></div>
+        <div style="display:flex;align-items:center;gap:16px;font-size:12px;color:var(--muted)"><span style="display:flex;align-items:center;gap:5px"><span style="width:7px;height:7px;border-radius:50%;background:var(--ok)"></span>在线</span><span style="display:flex;align-items:center;gap:5px"><span style="width:7px;height:7px;border-radius:50%;background:var(--faint)"></span>离线</span><span style="display:flex;align-items:center;gap:5px;color:var(--warn)"><span style="width:7px;height:7px;border-radius:50%;background:var(--warn)"></span>维护中</span><span style="width:16px;height:16px;border-radius:50%;border:1px solid var(--line2);display:inline-flex;align-items:center;justify-content:center;font-size:11px;color:var(--faint)">?</span></div>
+      </div>
+      <div style="position:relative;margin-top:16px">
+        <span class="fix" style="left:-30px;top:8px">18</span>
+        <div class="row" style="font-size:12px;font-weight:600;color:var(--muted);padding:10px 0"><span>线路</span><span>状态</span><span>延迟</span><span>标签</span><span style="justify-self:end">流量倍率 ↑</span></div>
+        <div class="row"><div style="display:flex;align-items:center;gap:12px"><span class="flag" style="background:#fff;border:1px solid var(--line2);display:flex;align-items:center;justify-content:center"><span style="width:6px;height:6px;border-radius:50%;background:#dc2626"></span></span><div><div style="font-size:15px;font-weight:600;color:var(--fg)">直连</div><div style="font-size:12px;color:var(--faint)">日本</div></div></div><span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)"><span style="width:7px;height:7px;border-radius:50%;background:var(--faint)"></span>离线</span><span style="font-size:13px;color:var(--faint)">—</span><span style="font-size:13px;color:var(--faint)">—</span><span style="justify-self:end;font-size:12px;font-weight:600;color:var(--ok);background:rgba(21,128,61,.1);padding:3px 8px;border-radius:999px">×0.5</span></div>
+        <div class="row"><div style="display:flex;align-items:center;gap:12px"><span class="flag" style="background:#dc2626"></span><div><div style="font-size:15px;font-weight:600;color:var(--fg)">直连</div><div style="font-size:12px;color:var(--faint)">香港</div></div></div><span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)"><span style="width:7px;height:7px;border-radius:50%;background:var(--faint)"></span>离线</span><span style="font-size:13px;color:var(--faint)">—</span><span style="font-size:13px;color:var(--faint)">—</span><span style="justify-self:end;font-size:12px;font-weight:600;color:var(--brand-ink);background:var(--brand-soft);padding:3px 8px;border-radius:999px">×1</span></div>
+        <div class="row"><div style="display:flex;align-items:center;gap:12px"><span class="flag" style="background:#dc2626"></span><div><div style="font-size:15px;font-weight:600;color:var(--fg)">IPLC</div><div style="font-size:12px;color:var(--faint)">香港</div></div></div><span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)"><span style="width:7px;height:7px;border-radius:50%;background:var(--faint)"></span>离线</span><span style="font-size:13px;color:var(--faint)">—</span><span style="font-size:13px;color:var(--faint)">—</span><span style="justify-self:end;font-size:12px;font-weight:600;color:var(--warn);background:rgba(180,83,9,.1);padding:3px 8px;border-radius:999px">×2</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer style="position:absolute;left:0;right:0;bottom:0;padding-bottom:30px">
+    <div style="width:1128px;margin:0 auto;border-top:1px solid var(--line);padding-top:30px;display:flex;justify-content:space-between;font-size:13px;color:var(--muted)"><span>© 2026 Akari</span><span style="display:flex;gap:20px"><a href="#" style="color:var(--muted)">服务条款</a><a href="#" style="color:var(--muted)">隐私政策</a></span></div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":998}}'>
+class Component extends DCLogic { renderVals() { return {}; } }
+</script>
+</body>
+</html>

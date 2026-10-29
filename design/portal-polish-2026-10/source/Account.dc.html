@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>设置 · 重新整理</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+:root{--bg:#f7f8fa;--surface:#fff;--fg:#12151c;--body:#3a404c;--muted:#5c6473;--faint:#737b8a;--line:rgba(18,21,28,.09);--line2:rgba(18,21,28,.16);--hover:#eef0f4;--brand:#2563eb;--brand-ink:#1d4ed8;--ok:#15803d;--danger:#dc2626}
+body{margin:0;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Segoe UI','Microsoft YaHei','Noto Sans CJK SC',system-ui,sans-serif;color:var(--body)}
+a{color:var(--brand-ink);text-decoration:none}a:hover{color:var(--brand)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.cardh{padding:18px 22px 4px;font-size:15px;font-weight:600;color:var(--fg)}
+.row{display:flex;align-items:center;gap:20px;padding:16px 22px}
+.row+.row{border-top:1px solid var(--line)}
+.main{flex:1;min-width:0}
+.t{font-size:14px;font-weight:600;color:var(--fg)}
+.d{margin-top:3px;font-size:13px;color:var(--muted)}
+.val{font-size:14px;color:var(--fg)}
+.b{height:34px;padding:0 14px;border-radius:9px;border:1px solid var(--line2);background:var(--surface);font-size:13px;font-weight:600;color:var(--fg);font-family:inherit;white-space:nowrap}
+.side a{display:block;padding:9px 12px;border-radius:9px;font-size:14px;color:var(--muted)}
+.ok{font-size:12px;font-weight:600;color:var(--ok);background:rgba(21,128,61,.1);padding:2px 8px;border-radius:999px}
+</style>
+</helmet>
+<div style="width:1440px;height:1797px;background:var(--bg);position:relative">
+  <header style="height:63px;border-bottom:1px solid var(--line)">
+    <div style="width:1128px;margin:0 auto;height:63px;display:flex;align-items:center">
+      <div style="font-size:27px;font-weight:600;color:var(--fg);width:178px">akar<span style="color:var(--brand)">i</span></div>
+      <nav style="display:flex;gap:28px;font-size:14px;flex:1"><a href="#" style="color:var(--muted);padding:20px 0">仪表盘</a><a href="#" style="color:var(--muted);padding:20px 0">商店</a><a href="#" style="color:var(--muted);padding:20px 0">文档</a><a href="#" style="color:var(--muted);padding:20px 0">邀请</a><a href="#" style="color:var(--muted);padding:20px 0">工单</a><a href="#" style="color:var(--brand-ink);font-weight:600;padding:20px 0;border-bottom:2px solid var(--brand)">更多 ⌄</a></nav>
+      <div style="display:flex;align-items:center;gap:22px;font-size:13px;font-weight:600;color:var(--muted)"><span>☾</span><span>EN</span><span style="color:var(--fg)">user ⌄</span></div>
+    </div>
+  </header>
+
+  <main style="width:1128px;margin:0 auto;padding-top:44px">
+    <h1 style="margin:0;font-size:32px;font-weight:600;color:var(--fg)">设置</h1>
+    <p style="margin:10px 0 0;font-size:14px;color:var(--muted)">账户、登录与安全、订阅链接、语言与明暗。</p>
+
+    <div style="margin-top:40px;display:grid;grid-template-columns:184px minmax(0,1fr);gap:48px;align-items:start">
+      <nav class="side" aria-label="设置分区"><a href="#" style="background:var(--surface);border:1px solid var(--line);color:var(--fg);font-weight:600">账户</a><a href="#">登录与安全</a><a href="#">订阅链接</a><a href="#">偏好</a><a href="#" style="color:var(--danger)">注销账户</a></nav>
+
+      <div style="display:flex;flex-direction:column;gap:20px;max-width:760px">
+        <section class="card">
+          <div class="cardh">账户</div>
+          <div class="row"><div class="main"><div class="t">邮箱</div><div class="d"><span class="val">user@e2e.test</span> <span class="ok" style="margin-left:6px">已验证</span></div><div class="d">登录、收据与找回密码都用这个地址</div></div><button class="b">更换</button></div>
+          <div class="row"><div class="main"><div class="t">套餐</div><div class="d"><span class="val">E2E 标准</span> · 2026-11-29 到期</div></div><a href="#" class="b" style="display:inline-flex;align-items:center">去续费</a></div>
+        </section>
+
+        <section class="card">
+          <div class="cardh">登录与安全</div>
+          <div class="row"><div class="main"><div class="t">密码</div><div class="d">已设置 · 修改后其他设备需要重新登录</div></div><button class="b">修改密码</button></div>
+          <div class="row"><div class="main"><div class="t">通行密钥</div><div class="d">还没有。用 Face ID、指纹或 Windows Hello 登录，不用输密码</div></div><button class="b">＋ 添加</button></div>
+          <div class="row" style="opacity:.6"><div class="main"><div class="t">只用通行密钥登录</div><div class="d">添加通行密钥后才能开启</div></div><span role="switch" aria-checked="false" aria-disabled="true" aria-label="只用通行密钥登录" style="width:36px;height:20px;border-radius:999px;background:var(--line2);position:relative;display:inline-block"><span style="position:absolute;left:2px;top:2px;width:16px;height:16px;border-radius:50%;background:#fff"></span></span></div>
+          <div class="row"><div class="main"><div class="t">退出所有设备</div><div class="d">结束所有设备上的登录，包括这一台</div></div><button class="b">全部退出</button></div>
+        </section>
+
+        <section class="card">
+          <div class="cardh">订阅链接</div>
+          <div class="row"><div class="main"><div class="t">链接状态 <span class="ok" style="margin-left:6px">正常</span></div><div class="d">它等同于账号凭证。怀疑泄露时重置：旧链接和所有设备上的连接立即失效</div></div><div style="display:flex;gap:8px"><a href="#" class="b" style="display:inline-flex;align-items:center">去导入</a><button class="b" style="color:var(--muted)">重置链接</button></div></div>
+        </section>
+
+        <section class="card">
+          <div class="cardh">偏好</div>
+          <div class="row"><div class="main"><div class="t">界面语言</div><div class="d">邮件也使用这门语言</div></div><div role="group" aria-label="界面语言" style="display:flex;padding:3px;border-radius:9px;background:var(--hover)"><button class="b" style="height:28px;border:0;box-shadow:0 1px 2px rgba(0,0,0,.08)">中文</button><button class="b" style="height:28px;border:0;background:transparent;color:var(--muted)">English</button></div></div>
+          <div class="row"><div class="main"><div class="t">明暗</div><div class="d">默认跟随系统</div></div><div role="group" aria-label="明暗" style="display:flex;padding:3px;border-radius:9px;background:var(--hover)"><button class="b" style="height:28px;border:0;background:transparent;color:var(--muted)">浅色</button><button class="b" style="height:28px;border:0;background:transparent;color:var(--muted)">深色</button><button class="b" style="height:28px;border:0;box-shadow:0 1px 2px rgba(0,0,0,.08)">跟随系统</button></div></div>
+        </section>
+
+        <section class="card" style="border-color:rgba(220,38,38,.3)">
+          <div class="row"><div class="main"><div class="t" style="color:var(--danger)">注销账户</div><div class="d">删除你的个人数据，不能恢复。付款与退款记录按法规匿名保留</div></div><button class="b" style="color:var(--danger)">注销账户…</button></div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer style="position:absolute;left:0;right:0;bottom:0;padding-bottom:30px">
+    <div style="width:1128px;margin:0 auto;border-top:1px solid var(--line);padding-top:30px;display:flex;justify-content:space-between;font-size:13px;color:var(--muted)"><span>© 2026 Akari</span><span style="display:flex;gap:20px"><a href="#" style="color:var(--muted)">服务条款</a><a href="#" style="color:var(--muted)">隐私政策</a></span></div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1797}}'>
+class Component extends DCLogic { renderVals() { return {}; } }
+</script>
+</body>
+</html>

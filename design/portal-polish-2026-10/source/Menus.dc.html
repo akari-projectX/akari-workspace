@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>教程与客户端菜单 · 打磨后</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+:root{--bg:#f7f8fa;--surface:#fff;--fg:#12151c;--body:#3a404c;--muted:#5c6473;--faint:#737b8a;--line:rgba(18,21,28,.09);--line2:rgba(18,21,28,.16);--hover:#eef0f4;--brand:#2563eb;--brand-ink:#1d4ed8;--brand-soft:rgba(37,99,235,.1)}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Segoe UI','Microsoft YaHei','Noto Sans CJK SC',system-ui,sans-serif;color:var(--body)}
+a{color:var(--brand-ink);text-decoration:none}
+.menu{background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 32px -12px rgba(13,21,38,.18),0 1px 3px rgba(13,21,38,.06);padding:6px}
+.mi{display:flex;align-items:center;gap:12px;padding:9px 10px;border-radius:8px;color:inherit}
+.ic{width:30px;height:30px;border-radius:8px;background:var(--hover);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--muted);flex:none}
+.n{font-size:14px;font-weight:600;color:var(--fg)}
+.s{font-size:12px;color:var(--faint);margin-top:1px}
+.cbtn{display:inline-flex;align-items:center;height:32px;padding:0 12px;border-radius:8px;border:1px solid var(--line2);background:var(--surface);font-size:13px;color:var(--fg);font-family:inherit}
+.grp{padding:8px 10px 4px;font-size:11px;font-weight:600;color:var(--faint);letter-spacing:.04em}
+</style>
+</helmet>
+<div style="width:1360px;height:600px;background:var(--bg);display:flex;gap:64px;padding:32px 40px;box-sizing:border-box;align-items:flex-start">
+  <div style="width:460px">
+    <div style="font-size:13px;color:var(--muted)">还没有客户端？<a href="#" style="font-weight:600">按平台查看教程 ⌃</a></div>
+    <div class="menu" style="margin-top:8px;width:300px">
+      <a href="#" class="mi" style="background:var(--brand-soft)"><span class="ic" style="background:var(--surface);color:var(--brand-ink)">安</span><div style="flex:1"><div class="n">Android <span style="font-size:11px;color:var(--brand-ink);margin-left:4px">当前设备</span></div><div class="s">Clash Meta for Android</div></div><span style="color:var(--brand-ink)">›</span></a>
+      <a href="#" class="mi"><span class="ic">Win</span><div style="flex:1"><div class="n">Windows</div><div class="s">Clash Verge Rev</div></div><span style="color:var(--faint)">›</span></a>
+      <a href="#" class="mi"><span class="ic">Mac</span><div style="flex:1"><div class="n">macOS</div><div class="s">Clash Verge Rev</div></div><span style="color:var(--faint)">›</span></a>
+      <a href="#" class="mi"><span class="ic">iOS</span><div style="flex:1"><div class="n">iOS</div><div class="s">Shadowrocket</div></div><span style="color:var(--faint)">›</span></a>
+      <a href="#" class="mi"><span class="ic">鸿</span><div style="flex:1"><div class="n">HarmonyOS</div><div class="s">Clash Meta for Android</div></div><span style="color:var(--faint)">›</span></a>
+      <a href="#" class="mi"><span class="ic">Lx</span><div style="flex:1"><div class="n">Linux</div><div class="s">sing-box / mihomo</div></div><span style="color:var(--faint)">›</span></a>
+      <a href="#" class="mi"><span class="ic">路</span><div style="flex:1"><div class="n">路由器</div><div class="s">OpenWrt / 梅林固件</div></div><span style="color:var(--faint)">›</span></a>
+    </div>
+  </div>
+
+  <div style="width:560px">
+    <div style="font-size:13px;color:var(--muted)">导入到客户端</div>
+    <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px"><a href="#" class="cbtn">Clash Verge / mihomo</a><a href="#" class="cbtn">Stash</a><a href="#" class="cbtn">Shadowrocket</a><a href="#" class="cbtn" style="background:var(--hover)">更多 ⌃</a></div>
+    <div class="menu" style="margin-top:8px;width:280px;margin-left:300px">
+      <div class="grp">一键导入</div>
+      <a href="#" class="mi"><span class="ic">SB</span><div style="flex:1"><div class="n">sing-box</div><div class="s">iOS · Android · macOS</div></div><span style="font-size:12px;font-weight:600;color:var(--brand-ink)">导入</span></a>
+      <a href="#" class="mi"><span class="ic">Hi</span><div style="flex:1"><div class="n">Hiddify</div><div class="s">Android · Windows · macOS</div></div><span style="font-size:12px;font-weight:600;color:var(--brand-ink)">导入</span></a>
+      <a href="#" class="mi"><span class="ic">Sg</span><div style="flex:1"><div class="n">Surge</div><div class="s">iOS · macOS</div></div><span style="font-size:12px;font-weight:600;color:var(--brand-ink)">导入</span></a>
+      <a href="#" class="mi"><span class="ic">Sf</span><div style="flex:1"><div class="n">Surfboard</div><div class="s">Android</div></div><span style="font-size:12px;font-weight:600;color:var(--brand-ink)">导入</span></a>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1360,"height":600}}'>
+class Component extends DCLogic { renderVals() { return {}; } }
+</script>
+</body>
+</html>

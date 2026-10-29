@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><style>
+body{margin:0;font-family:-apple-system,'PingFang SC','Noto Sans CJK SC',system-ui,sans-serif;background:#9a9ea7;color:#3a404c}
+.wrap{display:flex;gap:40px;padding:48px;align-items:flex-start}
+.dlg{width:440px;background:#fff;border-radius:16px;box-shadow:0 24px 64px -24px rgba(13,21,38,.45);position:relative}
+.hd{padding:22px 24px 0}
+.x{position:absolute;right:16px;top:16px;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#737b8a;font-size:16px}
+.t{font-size:17px;font-weight:600;color:#12151c}
+.d{margin-top:6px;font-size:13px;color:#5c6473;line-height:1.6}
+.bd{padding:16px 24px 0}
+.box{border-radius:10px;background:#f3f4f7;padding:12px 14px;font-size:13px;line-height:1.9;color:#3a404c}
+.box ul{margin:0;padding-left:18px}
+.ft{display:flex;justify-content:flex-end;gap:10px;padding:20px 24px 22px}
+.b{height:36px;padding:0 16px;border-radius:9px;border:1px solid rgba(18,21,28,.16);background:#fff;font-size:14px;font-weight:600;color:#12151c;font-family:inherit}
+.bp{background:#2563eb;border-color:#2563eb;color:#fff}
+.bd2{background:#dc2626;border-color:#dc2626;color:#fff}
+.bw{background:#b45309;border-color:#b45309;color:#fff}
+.lbl{display:flex;align-items:flex-start;gap:8px;margin-top:14px;font-size:13px;color:#3a404c}
+.row{display:flex;justify-content:space-between;font-size:13px;padding:4px 0}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.opt{border:1px solid rgba(18,21,28,.16);border-radius:10px;padding:10px 12px;font-size:13px}
+.opt.on{border:1.5px solid #2563eb;background:rgba(37,99,235,.06)}
+.sm{font-size:12px;color:#737b8a;margin-top:2px}
+.sec{font-size:13px;font-weight:600;color:#12151c;margin-top:16px}
+</style></head><body>
+<div class="wrap">
+  <div class="dlg">
+    <div class="x">✕</div>
+    <div class="hd"><div class="t">注销账户</div><div class="d">这是不可恢复的操作，请先看清会失去什么。</div></div>
+    <div class="bd">
+      <div class="box"><b style="color:#12151c">注销后你将失去</b><ul>
+        <li>套餐「标准版」立即失效，剩余时长作废</li>
+        <li>订阅链接、通行密钥、工单、流量明细全部删除，所有设备立即断线</li>
+        <li>账户有付款记录：财务记录匿名保留，其余个人数据删除</li></ul></div>
+      <div class="d" style="margin-top:12px">提交时用通行密钥验证身份（Face ID、指纹或锁屏密码）。<a style="color:#1d4ed8">改用密码验证</a></div>
+      <label class="lbl"><input type="checkbox" style="margin-top:2px">我已了解：注销后账户和上面这些内容都不可恢复</label>
+    </div>
+    <div class="ft"><button class="b">取消</button><button class="b bd2">永久注销</button></div>
+  </div>
+
+  <div class="dlg" style="width:400px">
+    <div class="x">✕</div>
+    <div class="hd"><div class="t">重置订阅？</div><div class="d">用于订阅链接泄露的情况。</div></div>
+    <div class="bd"><div class="box"><ul>
+      <li>旧的订阅链接立即失效</li>
+      <li>所有设备会立即断线，节点上的旧凭据同时作废</li>
+      <li>所有设备都要重新导入订阅</li>
+      <li>此操作不可撤销</li></ul></div></div>
+    <div class="ft"><button class="b">取消</button><button class="b bw">确认重置</button></div>
+  </div>
+
+  <div class="dlg" style="width:460px">
+    <div class="x">✕</div>
+    <div class="hd"><div class="t">确认订单</div><div class="d">价格由服务端计算，下面就是你要付的金额。</div></div>
+    <div class="bd">
+      <div class="box" style="background:#fff;border:1px solid rgba(18,21,28,.09);display:flex;justify-content:space-between;align-items:center"><div><b style="color:#12151c;font-size:14px">E2E 标准</b><div class="sm">100 GB 流量 · 300 Mbps</div></div><span style="font-size:12px;color:#5c6473">续费</span></div>
+      <div class="sec">购买时长</div>
+      <div class="seg"><div class="opt on"><b style="color:#1d4ed8">月付</b><div style="font-size:15px;font-weight:600;color:#12151c;margin-top:2px">¥15</div></div><div class="opt"><b style="color:#12151c">年付</b><div style="font-size:15px;font-weight:600;color:#12151c;margin-top:2px">¥150</div><div class="sm">每月 ¥12.5</div></div></div>
+      <div class="sec">优惠码 <span style="font-weight:400;color:#737b8a">选填</span></div>
+      <div style="display:flex;gap:8px;margin-top:8px"><input placeholder="有优惠码就填在这里" style="flex:1;height:36px;border-radius:9px;border:1px solid rgba(18,21,28,.16);padding:0 12px;font-size:13px;font-family:inherit"><button class="b">使用</button></div>
+      <div style="margin-top:16px;border-top:1px solid rgba(18,21,28,.09);padding-top:10px"><div class="row"><span>价格</span><span>¥15.00</span></div><div class="row"><span>余额抵扣</span><span style="color:#15803d">−¥15.00</span></div><div class="row" style="margin-top:4px"><b style="color:#12151c">应付</b><b style="color:#12151c;font-size:18px">¥0.00</b></div></div>
+    </div>
+    <div class="ft"><button class="b">取消</button><button class="b bp">确认开通</button></div>
+  </div>
+</div>
+</body></html>

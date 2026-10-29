@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>流量明细 · 打磨后</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+:root{--bg:#f7f8fa;--surface:#fff;--fg:#12151c;--body:#3a404c;--muted:#5c6473;--faint:#737b8a;--line:rgba(18,21,28,.09);--line2:rgba(18,21,28,.16);--hover:#eef0f4;--brand:#2563eb;--brand-ink:#1d4ed8}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Segoe UI','Microsoft YaHei','Noto Sans CJK SC',system-ui,sans-serif;color:var(--body)}
+.r{display:grid;grid-template-columns:150px repeat(4,minmax(0,1fr)) 240px;gap:16px;align-items:center;padding:13px 0;border-bottom:1px solid var(--line);font-size:13px;font-variant-numeric:tabular-nums}
+.r span:not(:first-child){text-align:right}
+</style>
+</helmet>
+<div style="width:1105px;height:1037px;background:var(--bg);padding:40px 72px;box-sizing:border-box">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end">
+    <div><div style="font-size:14px;font-weight:600;color:var(--fg)">明细记录</div><div style="margin-top:6px;font-size:13px;color:var(--muted)">10 月 1 日 – 29 日 · 有流量的 2 天</div></div>
+    <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--body)"><input type="checkbox" style="width:16px;height:16px;accent-color:var(--brand)">显示无流量的日子</label>
+  </div>
+  <div style="margin-top:18px">
+    <div class="r" style="font-size:12px;font-weight:600;color:var(--muted);padding:10px 0;border-bottom:1px solid var(--line2)"><span style="text-align:left">日期</span><span>下行</span><span>上行</span><span>合计</span><span>计费</span><span style="text-align:left;padding-left:16px">占比</span></div>
+    <div class="r"><span style="color:var(--fg)">10-29 周四 <span style="font-size:11px;color:var(--brand-ink);margin-left:4px">今天</span></span><span>4.59 GB</span><span>0.08 GB</span><span style="color:var(--fg);font-weight:600">4.67 GB</span><span>4.67 GB</span><span style="display:flex;align-items:center;gap:10px;padding-left:16px"><span style="flex:1;height:6px;border-radius:999px;background:var(--hover);overflow:hidden"><span style="display:block;width:57.1%;height:100%;background:var(--brand)"></span></span><span style="width:46px;text-align:right;color:var(--muted)">57.1%</span></span></div>
+    <div class="r"><span style="color:var(--fg)">10-28 周三</span><span>3.36 GB</span><span>0.15 GB</span><span style="color:var(--fg);font-weight:600">3.51 GB</span><span>3.51 GB</span><span style="display:flex;align-items:center;gap:10px;padding-left:16px"><span style="flex:1;height:6px;border-radius:999px;background:var(--hover);overflow:hidden"><span style="display:block;width:42.9%;height:100%;background:var(--brand)"></span></span><span style="width:46px;text-align:right;color:var(--muted)">42.9%</span></span></div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--line);font-size:13px;color:var(--faint);display:flex;justify-content:space-between"><span>10-01 – 10-27 共 27 天没有流量</span><button style="border:0;background:transparent;font-size:13px;font-weight:600;color:var(--brand-ink);font-family:inherit;cursor:pointer">展开 ⌄</button></div>
+    <div class="r" style="border-bottom:0;font-weight:600;color:var(--fg)"><span style="text-align:left">合计</span><span>7.95 GB</span><span>0.23 GB</span><span>8.18 GB</span><span>8.18 GB</span><span></span></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1105,"height":1037}}'>
+class Component extends DCLogic { renderVals() { return {}; } }
+</script>
+</body>
+</html>
