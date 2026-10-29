@@ -11,7 +11,7 @@ curl -fsSL https://github.com/akari-projectX/akari-panel/releases/download/v2.3.
 支持 Debian 12/13、Ubuntu 22.04/24.04；Docker 部署见 `docs/DEPLOY.md`，镜像（`deploy/.env` 的 `AKARI_IMAGE`）：
 
 ```
-ghcr.io/akari-projectx/akari-panel:2.3.0@sha256:<发布后填入 digest>
+ghcr.io/akari-projectx/akari-panel:2.3.0@sha256:e788a8dc6f38cd3822df6277b9752d9c3f12924b89d75160d92fea6202db7b1d
 ```
 
 使用前请按 `docs/DEPLOY.md`「Verify a release」校验签名。
