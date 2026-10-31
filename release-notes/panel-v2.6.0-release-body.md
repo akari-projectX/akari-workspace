@@ -48,3 +48,7 @@ ghcr.io/akari-projectx/akari-panel:2.6.0@sha256:REPLACE-WITH-THE-RELEASE-DIGEST
 - Android（含可以装安卓应用的鸿蒙手机）：Clash Meta for Android
 
 每篇都是「安装客户端 → 导入订阅（一键或手动）→ 开始使用 → 常见问题」。分类名与仪表盘「按平台查看教程」对得上，点哪个平台就进哪篇。
+
+## 依赖更新
+- 面板（Rust）：tonic / tonic-prost / tonic-prost-build 0.14.6 → 0.14.8、rustix 1.1.5 → 1.1.6。
+- 门户：svelte 5.57.2 → 5.57.3、@lucide/svelte 1.61 → 1.63；后台：@tanstack/react-query 5.104.5 → 5.105.0、react-router 8.5.0 → 8.5.1、lucide-react 1.61 → 1.63 等小版本更新。
