@@ -1,0 +1,29 @@
+> **可以从 v2.6.x 原地升级**（`akari-ctl upgrade`，无需重装），升级前安装器会先备份。本版只改用户门户的仪表盘，没有数据库迁移。
+>
+> **节点：不需要升级 agent。** 协议号仍为 8，v0.6.x 的 agent 照常工作；建议节点用 agent v0.6.3。
+
+## 安装
+
+```
+curl -fsSL https://github.com/akari-projectX/akari-panel/releases/download/v2.6.2/install.sh | sh
+```
+
+支持 Debian 12/13、Ubuntu 22.04/24.04；Docker 部署见 `docs/DEPLOY.md`，镜像（`deploy/.env` 的 `AKARI_IMAGE`）：
+
+```
+ghcr.io/akari-projectx/akari-panel:2.6.2@sha256:REPLACE-WITH-THE-RELEASE-DIGEST
+```
+
+使用前请按 `docs/DEPLOY.md`「Verify a release」校验签名。
+
+---
+
+本版调整仪表盘在手机上的顺序，并重做了「教程」一块。
+
+## 手机上的仪表盘顺序
+手机、平板和窄窗口里，仪表盘从上到下是：套餐 → 流量 → 接入配置（导入客户端）→ 活动 → 公告 → 教程 → 线路。电脑上的两栏排版不变。
+
+## 教程：本机优先
+- 大的一行是适合这台设备的那篇教程：平台图标、「适合这台设备 · 分类名」、文章标题，电脑上右边有「开始」按钮，整行点进文章。认不出设备时显示后台排第一的分类，写「从这里开始」。
+- 下面一行「其他设备」：其余分类的图标和平台名，只有一篇的直接进文章，有多篇的进文档页的那个分类。
+- 原来的四行列表去掉了（分类名会被截断，和标题重复）。
